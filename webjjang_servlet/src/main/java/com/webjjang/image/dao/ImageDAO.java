@@ -316,10 +316,7 @@ public class ImageDAO extends DAO{
 	
 	final String INCREASE = "update board set hit = hit + 1 "
 			+ " where no = ?"; 
-	final String VIEW= "select i.no, i.title, i.content, i.id, m.name  "
-			+ " to_char(i.writeDate, 'yyyy-mm-dd') writeDate , i.fileName "
-			+ " from image i, memeber m"
-			+ " where (i.no = ?) and (m.id = i.id) ";
+	final String VIEW= "select i.no, i.title, i.content, i.id, m.name ,to_char(i.writeDate, 'yyyy-mm-dd') writeDate, i.fileName  from image i, member m where (i.no = ?) and (m.id = i.id) ";
 	final String WRITE = "insert into image "
 			+ " (no, title, content, id, fileName) "
 			+ " values(image_seq.nextval, ?, ?, ?, ?)"; 

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="pageNav" tagdir="/WEB-INF/tags" %>
 <!DOCTYPE html>
 <html>
@@ -116,7 +116,7 @@ $(function(){
   	</c:if>
   		<!-- 데이터 표시 시작 -->
   	<div class="col-sm-4 dataRow">
-  		<div class="card" style="width:350px">
+  		<div class="card" style="width:100%">
 		  <img class="card-img-top" src=${vo.fileName } alt="image">
 		 <div class="card-body">
 		    <strong class="card-title">
