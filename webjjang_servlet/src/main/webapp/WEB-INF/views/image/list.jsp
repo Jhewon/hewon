@@ -20,8 +20,9 @@
 	opacity: 70%;
 	cursor: pointer;
 }
-h3{
+h2{
 	text-align: center;
+	margin-top: 10px;
 } 
 </style>
 
@@ -53,7 +54,7 @@ $(function(){
 </head>
 <body>
 <div class="container">
-	<h3>이미지 게시판 리스트</h3>
+	<h2>이미지 게시판 리스트</h2>
   <form action="list.do" id="searchForm">
   	<input name="page" value="1" type="hidden">
 	  <div class="row">

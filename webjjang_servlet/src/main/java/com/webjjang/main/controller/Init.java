@@ -15,6 +15,7 @@ import com.webjjang.boardreply.service.BoardReplyListService;
 import com.webjjang.boardreply.service.BoardReplyUpdateService;
 import com.webjjang.boardreply.service.BoardReplyWriteService;
 import com.webjjang.image.dao.ImageDAO;
+import com.webjjang.image.service.ImageChangeImageService;
 import com.webjjang.image.service.ImageDeleteService;
 import com.webjjang.image.service.ImageListService;
 import com.webjjang.image.service.ImageUpdateService;
@@ -70,7 +71,7 @@ public class Init {
 		
 		serviceMap.get("/member/login.do").setDAO(daoMap.get("memberDAO"));
 		
-		// ---- [이미지 게시판 객체 생성과 조립 ] -----------------------
+		// ----------------------- [이미지 게시판 객체 생성과 조립 ] -----------------------
 		// dao 생성
 		daoMap.put("imageDAO", new ImageDAO());
 		// service 생성
@@ -79,12 +80,14 @@ public class Init {
 		serviceMap.put("/image/write.do", new ImageWriteService());
 		serviceMap.put("/image/update.do", new ImageUpdateService());
 		serviceMap.put("/image/delete.do", new ImageDeleteService());
+		serviceMap.put("/image/changeImage.do", new ImageChangeImageService());
 		// 조립 dao->service
 		serviceMap.get("/image/list.do").setDAO(daoMap.get("imageDAO"));
 		serviceMap.get("/image/view.do").setDAO(daoMap.get("imageDAO"));
 		serviceMap.get("/image/write.do").setDAO(daoMap.get("imageDAO"));
-		serviceMap.get("/image/update.do").setDAO(daoMap.get("boardDAO"));
-		serviceMap.get("/image/delete.do").setDAO(daoMap.get("boardDAO"));
+		serviceMap.get("/image/update.do").setDAO(daoMap.get("imageDAO"));
+		serviceMap.get("/image/delete.do").setDAO(daoMap.get("imageDAO"));
+		serviceMap.get("/image/changeImage.do").setDAO(daoMap.get("imageDAO"));
 				
 		
 		
