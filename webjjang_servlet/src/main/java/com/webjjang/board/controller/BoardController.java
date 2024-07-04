@@ -67,7 +67,7 @@ public class BoardController {
 				Long inc = Long.parseLong(strInc);
 				// 전달 데이터 - 글번호, 조회수 증가 여부(1:증가, 0:증가 안함) : 배열 또는 Map				
 				// 가져온 데이터를 보내기 위해서 request 에 담는다.
-				result = Execute.execute(Init.get(uri),new Long[]{no, inc});
+				result = Execute.execute(Init.get(uri), new Long[]{no, inc});
 				request.setAttribute("vo", result);
 				
 				// 댓글 페이지 객체
