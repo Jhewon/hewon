@@ -18,6 +18,15 @@ img{
 <script>
 $(function(){
 	$('[data-toggle="tooltip"]').tooltip();   
+	
+	// 이벤트 처리
+	$("#deleteBtn").click(function(){
+		// js 경고장 - alert : 일반 경고, confirm : 확인/취소 , prompt : 키인
+		// 확인 창이 나타나느데 취소를 누르면 삭제 페이지를 이동하지 않는다.
+		if(!confirm("정말 삭제 하겠습니까?")) return false;
+		
+	});
+	
 });
 </script>
 </head>
@@ -54,14 +63,14 @@ $(function(){
 		</div>
 	</div>
 	
-		<!-- a tag : 데이터를 클릭하면 href의 정보를 가져와서 페이지 이동시킨다. -->
-	<a href="updateForm.do?no=${param.no }&page=${param.page }&perPageNum=${param.perPageNum}&key=${param.key}&word=${param.word}" 
-	  class="btn btn-primary" title="이미지를 제외한 정보만 수정합니다." data-toggle="tooltip" data-placement="top" id="updateBtn">수정</a>
-	
-	<a href="delete.do?no=${param.no }&page=${param.page }&perPageNum=${param.perPageNum}&key=${param.key}&word=${param.word}" 
-	class="btn btn-danger" >삭제</a>
-	
-	<a href="list.do?page=${param.page }&perPageNum=${param.perPageNum}&key=${param.key}&word=${param.word}" class="btn btn-info">리스트</a>
+	<c:if test="${ !empty login && login.id == vo.id }">
+			<!-- a tag : 데이터를 클릭하면 href의 정보를 가져와서 페이지 이동시킨다. -->
+		<a href="updateForm.do?no=${param.no }&page=${param.page }&perPageNum=${param.perPageNum}&key=${param.key}&word=${param.word}" 
+		  class="btn btn-primary" title="이미지를 제외한 정보만 수정합니다." data-toggle="tooltip" data-placement="top" id="updateBtn">수정</a>
+		<a href="delete.do?no=${vo.no }&deleteFileName=${vo.fileName }&perPageNum=${param.perPageNum}" id="deleteBtn"
+		class="btn btn-dark" >삭제</a>
+	</c:if>
+		<a href="list.do?page=${param.page }&perPageNum=${param.perPageNum}&key=${param.key}&word=${param.word}" class="btn btn-info">리스트</a>
 </div>
 <!-- container의 끝 -->
 

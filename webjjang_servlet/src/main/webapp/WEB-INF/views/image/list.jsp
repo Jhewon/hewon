@@ -20,14 +20,50 @@
 	opacity: 70%;
 	cursor: pointer;
 }
+.dataRow{
+	margin-top: 10px;
+}
 h2{
 	text-align: center;
 	margin-top: 10px;
 } 
+.imgDiv{
+	background: #F1FAFF;
+}
+.title{
+	height: 50px;
+}
 </style>
 
 <script type="text/javascript">
 $(function(){
+
+	// 이미지 사이즈 조정 5:4
+	let imgwidth = $(".imgDiv:first").width();
+	let imgheight = $(".imgDiv:first").height();
+	console.log("width = " + imgwidth  + " ,  height = " + imgheight)
+	// 높이 계산 - 너비는 동일하다. : 이미지와 이미지를 감싸고 있는 div의 높이로 사용
+	let height = imgheight/5 * 4;
+	// 전체 imgDiv의 높이를 조정한다.
+	$(".imgDiv").height(height);
+	// 이미지 배열로 처리하면 안된다. foreach 사용 - jquery each() 
+	$(".imgDiv>img").each(function(idx,image){
+		console.log(image);
+		// 이미지가 계산된 높이보다 크면 줄인다.
+		if($(image).height() > height){
+			let image_width = $(image).width();
+			let image_height = $(image).height();
+			let width = height / image_height * image_width;
+			
+			console.log(width);
+			// 이미지 높이 줄이기
+			$(image).height(height);
+			// 이미지 너비 줄이기
+			$(image).width(width);
+		}
+	});
+	
+	
 	// 이벤트 처리
 	$(".dataRow").click(function(){
 		// alert("click");
@@ -64,10 +100,8 @@ $(function(){
 			      <select name="key" id="key" class="form-control">
 			      	<option value="t">제목</option>
 			      	<option value="c">내용</option>
-			      	<option value="w">작성자</option>
 			      	<option value="tc">제목/내용</option>
-			      	<option value="tw">제목/작성자</option>
-			      	<option value="cw">내용/작성자</option>
+			      	<option value="f">파일명</option>
 			      	<option value="tcw">모두</option>
 			      </select>
 			  </div>
@@ -118,13 +152,15 @@ $(function(){
   		<!-- 데이터 표시 시작 -->
   	<div class="col-sm-4 dataRow">
   		<div class="card" style="width:100%">
+  		<div class="imgDiv text-center align-content-center ">
 		  <img class="card-img-top" src=${vo.fileName } alt="image">
+  		</div>
 		 <div class="card-body">
 		    <strong class="card-title">
 		    <span class="float-right">${vo.writeDate }</span>
 		    ${vo.name }(${vo.id })
 		    </strong>
-		    <p class="card-text"><span class="no">${vo.no}</span>. ${vo.title }</p>
+		    <p class="card-text text-truncate title"><span class="no">${vo.no}</span>. ${vo.title }</p>
 		 </div>
 		</div>
   	</div>
@@ -135,9 +171,9 @@ $(function(){
 	<div><pageNav:pageNav listURI="list.do" pageObject="${pageObject }"/></div> <!-- 페이지 네이션 -->
 	<c:if test="${ !empty login}">
 	<!-- 로그인이 되어있으면 보이게 하자 -->
-	<a href="writeForm.do?perPageNum=${pageObject.perPageNum }" class="btn btn-primary">등록</a>
 	</c:if>
   </c:if>
+	<a href="writeForm.do?perPageNum=${pageObject.perPageNum }" class="btn btn-primary">등록</a>
 </div>
 </body>
 </html>

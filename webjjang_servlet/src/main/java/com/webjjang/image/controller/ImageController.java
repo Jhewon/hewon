@@ -30,10 +30,12 @@ public class ImageController {
 		// 로그인 아이디 꺼내기 
 		HttpSession session = request.getSession();
 		LoginVO loginVO = (LoginVO) session.getAttribute("login");
+		
 		String id = null;
-//		
 		if(loginVO != null) id = loginVO.getId();
 		System.out.println(loginVO);
+		
+		
 		
 		// 파일 업로드 설정--------------------------------------------------------
 		// 파일의 상대 적인 저장 위치
@@ -165,18 +167,30 @@ public class ImageController {
 				break;
 			case "/image/delete.do":
 				System.out.println("5.이미지게시판 글삭제");
-				// 데이터 수집 - DB에서 실행에 필요한 데이터 - 글번호, 비밀번호 - BoardVO
+				// 데이터 수집 - DB에서 실행에 필요한 데이터 - 글번호, 아이디 - ImageVO
 				
 				no = Long.parseLong(request.getParameter("no"));
+				
 				
 				vo = new ImageVO();
 				vo.setNo(no);
 				vo.setId(id);
+				
 				// DB 처리
 				Execute.execute(Init.get(uri), vo);
+				
+				// 삭제할 파일 이름
+				String deleteFileName = request.getParameter("deleteFileName");
+
+				// 파일 삭제
+				File deleteFile = new File(request.getServletContext().getRealPath(deleteFileName));
+				 
+				if(deleteFile.exists()) deleteFile.delete(); 
+				
 				jsp = "redirect:list.do?perPageNum=" 
 						+ request.getParameter("perPageNum");
-				
+				// 매세지 처리
+				session.setAttribute("msg", "삭제 완룟");
 				break;
 			case "/image/changeImage.do":
 				System.out.println("4-2.이미바꾸기 처리");
@@ -192,7 +206,7 @@ public class ImageController {
 				no = Long.parseLong(multi.getParameter("no"));
 				fileName = multi.getFilesystemName("imageFile");
 				
-				String deleteFileName = multi.getParameter("deleteFileName");
+				deleteFileName = multi.getParameter("deleteFileName");
 				
 				// 변수 - vo 저장하고 Service : DB 에 처리할 데이터만 
 				vo = new ImageVO();
@@ -203,7 +217,7 @@ public class ImageController {
 				Execute.execute(Init.get(uri), vo);
 				
 				// 지난 이미지 파일이 존재하면 지운다.
-				File deleteFile = new File(request.getServletContext().getRealPath(deleteFileName));
+				deleteFile = new File(request.getServletContext().getRealPath(deleteFileName));
 				 
 				if(deleteFile.exists()) deleteFile.delete(); 
 				
