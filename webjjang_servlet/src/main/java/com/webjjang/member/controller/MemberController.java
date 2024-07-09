@@ -285,6 +285,31 @@ public class MemberController {
 				jsp = "redirect:list.do?" + pageObject.getPageQuery();
 				break;
 				
+			case "/member/changeStatus.do":
+				System.out.println("4-2.일반게시판 글수정 처리");
+				
+				// 데이터 수집(사용자->서버 : form - input - name)
+				id = request.getParameter("id");
+				 String status = request.getParameter("status");
+				
+				// 변수 - vo 저장하고 Service
+				vo = new MemberVO();
+				vo.setId(id);
+				vo.setStatus(status);
+				
+				// DB 적용하는 처리문 작성. BoardUpdateservice
+				Execute.execute(Init.get(uri), vo);
+				
+				// 페이지 정보 받기 & uri에 붙이기
+				pageObject = PageObject.getInstance(request);
+				// 메시지 처리 
+				session.setAttribute("msg","회원["+ id + "]님 상태 변경 완료 되었습니다.");
+				
+				
+				// 글보기로 자동 이동 -> jsp 정보를 작성해서 넘긴다.
+				jsp = "redirect:list.do?" + pageObject.getPageQuery();
+				break;	
+				
 			case "/member/delete.do":
 				System.out.println("5.일반게시판 글삭제");
 				// 데이터 수집 - DB에서 실행에 필요한 데이터 - 글번호, 비밀번호 - BoardVO

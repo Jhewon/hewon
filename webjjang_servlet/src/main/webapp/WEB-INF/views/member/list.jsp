@@ -44,6 +44,20 @@ $(function(){
 		else
 			$(this).next().find("button").prop("disabled", false);
 	});
+	
+	
+	let status = $("#status").val();
+	
+	
+	$(".gradeS").click(function(){
+		let grade = $(this).closest(".dataRow").find(".grade").val();
+		let status = $(this).closest(".dataRow").find(".status").data("data");
+		console.log(grade,status);
+		if(status != "정상" && grade == 9){
+			alert("상태 "+status +" 임");
+			return false;
+		}
+	});
 
 });
 </script>
@@ -93,12 +107,12 @@ $(function(){
 					<form action="changeGrade.do">
 					<input name="id" value="${vo.id }" type="hidden">
 						<div class="input-group mb-3">
-							<select class="form-control grade" name="gradeNo" data-data="${vo.gradeNo }">
+							<select class="form-control grade" name="gradeNo"  data-data="${vo.gradeNo }">
 							<option value="1" ${(vo.gradeNo == 1)?"selected":"" }>일반회원</option>
 							<option value="9" ${(vo.gradeNo == 9)?"selected":"" }>관리자</option>
 							</select>	
 								<div class="input-group-append">
-								<button class="btn btn-success " type="submit" disabled>변경</button>
+								<button class="btn btn-success gradeS" type="submit" disabled>변경</button>
 								</div>
 						</div>
 					</form>
@@ -107,14 +121,14 @@ $(function(){
 					<form action="changeStatus.do">
 					<input name="id" value="${vo.id }" type="hidden">
 						<div class="input-group mb-3">
-							<select class="form-control status" name="status" data-data="${vo.status }">
+							<select class="form-control status" name="status" id="status" data-data="${vo.status }">
 							<option  ${(vo.status == "정상")?"selected":"" }>정상</option>
 							<option  ${(vo.status == "탈퇴")?"selected":"" }>탈퇴</option>
 							<option  ${(vo.status == "휴면")?"selected":"" }>휴면</option>
 							<option  ${(vo.status == "강퇴")?"selected":"" }>강퇴</option>
 							</select>	
 								<div class="input-group-append">
-								<button class="btn btn-success" type="submit" disabled>변경</button>
+								<button class="btn btn-success " type="submit" disabled>변경</button>
 								</div>
 						</div>
 					</form>
