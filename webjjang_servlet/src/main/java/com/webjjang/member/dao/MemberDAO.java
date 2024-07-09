@@ -3,7 +3,6 @@ package com.webjjang.member.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.webjjang.notice.vo.NoticeVO;
 import com.webjjang.main.dao.DAO;
 import com.webjjang.member.vo.LoginVO;
 import com.webjjang.member.vo.MemberVO;
@@ -104,7 +103,7 @@ public class MemberDAO extends DAO{
 		return vo;
 	} // end of view()
 	
-	// 3. 회원가입 처리
+	// 3-1. 회원가입 처리
 	// MemberController - (Execute) - MemberViewService - [MemberDAO.write()]
 	public int write(MemberVO vo) throws Exception{
 		// 결과를 저장할 수 있는 변수 선언.
@@ -114,7 +113,7 @@ public class MemberDAO extends DAO{
 			// 1. 드라이버 확인 - DB
 			// 2. 연결
 			con = DB.getConnection();
-			// 3. sql - 아래 LIST
+			// 3. sql - 아래 WRITE
 			// 4. 실행 객체 & 데이터 세팅
 			pstmt = con.prepareStatement(WRITE);
 			pstmt.setString(1, vo.getId());
@@ -142,6 +141,39 @@ public class MemberDAO extends DAO{
 		// 결과 데이터를 리턴해 준다.
 		return result;
 	} // end of write()
+	
+	
+	// 3-2. 아이디 중복체크 처리
+	// MemberController - (Execute) - MemberCheckIdService - [MemberDAO.checkId()]
+	public String checkId(String id) throws Exception{
+		// 결과(id)를 저장할 수 있는 변수 선언.
+		String result = null;
+		try {
+			// 1. 드라이버 확인 - DB
+			// 2. 연결
+			con = DB.getConnection();
+			// 3. sql - 아래 VIEW
+			// 4. 실행 객체 & 데이터 세팅
+			pstmt = con.prepareStatement(CHECKID);
+			pstmt.setString(1, id);
+			// 5. 실행
+			rs = pstmt.executeQuery();
+			// 6. 표시 또는 담기
+			if(rs != null && rs.next()) {
+				// result : 넘겨 줘야할 id
+				result = rs.getString("id");
+			} // end of if
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			// 7. 닫기
+			DB.close(con, pstmt, rs);
+		} // end of try ~ catch ~ finally
+
+		// 결과 데이터(id)를 리턴해 준다.
+		return result;
+	} // end of checkId()
 	
 	
 	// 4. 회원정보 수정 처리
@@ -322,7 +354,9 @@ public class MemberDAO extends DAO{
 	final String WRITE = "insert into member "
 			+ " (id, pw, name, gender, birth, tel, email, photo) "
 			+ " values(?, ?, ?, ?, ?, ?, ?, ?)"; 
-	final String UPDATE= "update member "
+	final String CHECKID = " select id from member "
+			+ " where id = ? ";
+	final String UPDATE = "update member "
 			+ " set name = ?, gender = ?, birth = ?, tel = ?, "
 			+ " email = ?, photo = ? "
 			+ " where id = ? and pw = ?"; 
@@ -331,7 +365,7 @@ public class MemberDAO extends DAO{
 	final String LOGIN = "select m.id, m.name, m.gradeNo, "
 			+ " g.gradeName, m.photo, m.newMsgCnt "
 			+ " from member m, grade g "
-			+ " where (m.id = ? and m.pw = ? and status = '정상') "
+			+ " where (id = ? and pw = ? and status = '정상') "
 			+ " and (g.gradeNo = m.gradeNo) ";
 	final String UPDATE_CONDATE= "update member "
 			+ " set conDate = sysdate where id = ? "; 	

@@ -23,7 +23,7 @@ public class DB {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("** 드라이버가 없으므로 프로그램을 종료합니다.");
-			//System.exit(1);
+			// System.exit(1);
 		}
 	}
 	

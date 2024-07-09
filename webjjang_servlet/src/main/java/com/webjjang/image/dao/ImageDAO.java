@@ -66,7 +66,6 @@ public class ImageDAO extends DAO{
 		// 결과 데이터를 리턴해 준다.
 		return list;
 	} // end of list()
-	
 	// 1-2. 전체 데이터 개수 처리
 	// ImageController - (Execute) - ImageListService - [ImageDAO.getTotalRow()]
 	public Long getTotalRow(PageObject pageObject) throws Exception{
@@ -76,9 +75,13 @@ public class ImageDAO extends DAO{
 			// 1. 드라이버 확인 - DB
 			// 2. 연결
 			con = DB.getConnection();
-			// 3. sql - 아래 LIST
-			// 4. 실행 객체 & 데이터 세팅      // 전체 데이터 갯수 쿼리인 경우 검색 조건이 있으면 where 을 붙여라: true
-			pstmt = con.prepareStatement(TOTALROW + getSearch(pageObject,true));
+			// 3. sql - 아래 TOTALROW
+			System.out.println("ImageDAO.getTotalRow().sql="
+			+ TOTALROW + getSearch(pageObject, true));
+			// 4. 실행 객체 & 데이터 세팅
+			pstmt = con.prepareStatement(TOTALROW 
+					// 전체 데이터 개수 쿼리인 경우 검색 조건이 있으면 where를 붙여라:true
+					+ getSearch(pageObject, true));
 			int idx = 0;
 			idx = setSearchData(pageObject, pstmt, idx);
 			// 5. 실행
@@ -99,8 +102,8 @@ public class ImageDAO extends DAO{
 		return totalRow;
 	} // end of getTotalRow()
 	
-	// 2-2. 이미지 보기 처리
-	// ImageController - (Execute) - ImageListService - [ImageDAO.view()]
+	// 2. 이미지 보기 처리
+	// ImageController - (Execute) - ImageViewService - [ImageDAO.view()]
 	public ImageVO view(Long no) throws Exception{
 		// 결과를 저장할 수 있는 변수 선언.
 		ImageVO vo = null;
@@ -138,7 +141,7 @@ public class ImageDAO extends DAO{
 		return vo;
 	} // end of view()
 	
-	// 3. 글등록 처리
+	// 3. 등록 처리
 	// ImageController - (Execute) - ImageWriteService - [ImageDAO.write()]
 	public int write(ImageVO vo) throws Exception{
 		// 결과를 저장할 수 있는 변수 선언.
@@ -159,7 +162,7 @@ public class ImageDAO extends DAO{
 			result = pstmt.executeUpdate();
 			// 6. 표시 또는 담기
 			System.out.println();
-			System.out.println("*** 이미지등록 완료 ***");
+			System.out.println("*** 등록이 완료 되었습니다.");
 		} catch (Exception e) {
 			e.printStackTrace();
 			// 그외 처리 중 나타나는 오류에 대해서 사용자가 볼수 있는 예외로 만들어 전달한다.
@@ -173,8 +176,9 @@ public class ImageDAO extends DAO{
 		return result;
 	} // end of increase()
 	
+	
 	// 4. 글수정 처리
-	// ImageController - (Execute) - ImageViewService - [ImageDAO.update()]
+	// ImageController - (Execute) - ImageUpdateService - [ImageDAO.update()]
 	public int update(ImageVO vo) throws Exception{
 		// 결과를 저장할 수 있는 변수 선언.
 		int result = 0;
@@ -211,6 +215,7 @@ public class ImageDAO extends DAO{
 		return result;
 	} // end of update()
 	
+	
 	// 5. 글삭제 처리
 	// ImageController - (Execute) - ImageDeleteService - [ImageDAO.delete()]
 	public int delete(ImageVO vo) throws Exception{
@@ -230,14 +235,14 @@ public class ImageDAO extends DAO{
 			result = pstmt.executeUpdate();
 			// 6. 표시 또는 담기
 			if(result == 0) { // 글번호가 존재하지 않거나 비번 틀림. -> 예외로 처리한다.
-				throw new Exception("예외 발생 : 글번호가 맞지 않거나 본인글이 아닙니다. 정보를 확인해 주세요.");
+				throw new Exception("예외 발생 : 번호 맞지 않거나 본인 글이 아닙니다. 정보를 확인해 주세요.");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			// 특별한 예외는 그냥 전달한다.
 			if(e.getMessage().indexOf("예외 발생") >= 0) throw e;
 			// 그외 처리 중 나타나는 오류에 대해서 사용자가 볼수 있는 예외로 만들어 전달한다.
-			else throw new Exception("예외 발생 : 게시판 글삭제 DB 처리 중 예외가 발생했습니다.");
+			else throw new Exception("예외 발생 : 이미지 삭제 DB 처리 중 예외가 발생했습니다.");
 		} finally {
 			// 7. 닫기
 			DB.close(con, pstmt);
@@ -247,7 +252,8 @@ public class ImageDAO extends DAO{
 		return result;
 	} // end of delete()
 	
-	// 4. 이미지 변경 처리
+	
+	// 6. 이미지 변경 처리
 	// ImageController - (Execute) - ImageChangeService - [ImageDAO.changeImage()]
 	public int changeImage(ImageVO vo) throws Exception{
 		// 결과를 저장할 수 있는 변수 선언.
@@ -257,7 +263,7 @@ public class ImageDAO extends DAO{
 			// 1. 드라이버 확인 - DB
 			// 2. 연결
 			con = DB.getConnection();
-			// 3. sql - 아래 CHANGEIMAGE
+			// 3. sql - 아래 UPDATE
 			// 4. 실행 객체 & 데이터 세팅
 			pstmt = con.prepareStatement(CHANGEIMAGE);
 			pstmt.setString(1, vo.getFileName());
@@ -265,7 +271,7 @@ public class ImageDAO extends DAO{
 			// 5. 실행 - update : executeUpdate() -> int 결과가 나옴.
 			result = pstmt.executeUpdate();
 			// 6. 표시 또는 담기
-			if(result == 0) { // 번호가 존재하지 않는다. -> 예외로 처리한다.
+			if(result == 0) { // 글번호가 존재하지 않는다. -> 예외로 처리한다.
 				throw new Exception("예외 발생 : 번호가 맞지 않습니다. 정보를 확인해 주세요.");
 			}
 		} catch (Exception e) {
@@ -282,9 +288,8 @@ public class ImageDAO extends DAO{
 		// 결과 데이터를 리턴해 준다.
 		return result;
 	} // end of changeImage()
-		
 	
-	
+
 	
 	// 실행할 쿼리를 정의해 놓은 변수 선언.
 	
@@ -309,9 +314,9 @@ public class ImageDAO extends DAO{
 	// LIST에 검색을 처리해서 만들지는 sql문 작성 메서드
 	private String getListSQL(PageObject pageObject) {
 		String sql = LIST; 
-		 String word = pageObject.getWord();
-		 // 검색 쿼리 추가 - where 을 추가 안한다. : false
-		sql += getSearch(pageObject,false);
+		String word = pageObject.getWord();
+		// 검색 쿼리 추가 - where를 추가 안한다. : false
+		sql += getSearch(pageObject, false);
 		sql += " and (m.id = i.id) ";
 		sql += " order by no desc "
 				+ " ) "
@@ -320,23 +325,21 @@ public class ImageDAO extends DAO{
 	}
 	
 	// 리스트의 검색만 처리하는 쿼리 - where
-	// list() , getTotalRow() 에서 사용한다. list 는 where 반드시 넣는다. 이미 있다.
-	// getTotalRow() where 가없다. 그래서 검색 있는 경우 where 추가
-	private String getSearch(PageObject pageObject , boolean iswhere) {
+	// list(), getTotalRow()에서 사용한다. list는 where 반드시 넣는다. 이미 있다.
+	// getTotalRow() where가 없다. 그래서 검색 있는 경우 where 추가해야
+	private String getSearch(PageObject pageObject, boolean isWhere) {
 		String sql = "";
 		String key = pageObject.getKey();
 		String word = pageObject.getWord();
-		
 		if(word != null && !word.equals("")) {
 			// where 붙이기 처리
-			 if(iswhere) sql += "where 1=1 "; 
-			 sql += " and (";
+			if(isWhere) sql += " where 1=1 ";
+			sql += " and ( 1=0 ";
 		// key안에 t가 포함되어 있으면 title로 검색을 한다.
-			 sql += "1=0";
 			if(key.indexOf("t") >= 0) sql += " or title like ? ";
 			if(key.indexOf("c") >= 0) sql += " or content like ? ";
 			if(key.indexOf("f") >= 0) sql += " or fileName like ? ";
-			sql += ")";
+			sql += " ) ";
 		}
 		return sql;
 		
@@ -358,17 +361,20 @@ public class ImageDAO extends DAO{
 	
 	final String INCREASE = "update board set hit = hit + 1 "
 			+ " where no = ?"; 
-	final String VIEW= "select i.no, i.title, i.content, i.id, m.name ,to_char(i.writeDate, 'yyyy-mm-dd') writeDate, i.fileName  from image i, member m where (i.no = ?) and (m.id = i.id) ";
+	final String VIEW= "select i.no, i.title, i.content, i.id, m.name, "
+			+ " to_char(i.writeDate, 'yyyy-mm-dd') writeDate, i.fileName "
+			+ " from image i, member m "
+			+ " where (i.no = ?) and (m.id = i.id)";
 	final String WRITE = "insert into image "
 			+ " (no, title, content, id, fileName) "
 			+ " values(image_seq.nextval, ?, ?, ?, ?)"; 
 	final String UPDATE= "update image "
 			+ " set title = ?, content = ? "
-			+ " where no = ? and id = ? "; 
+			+ " where no = ? and id = ?"; 
 	final String DELETE= "delete from image "
 			+ " where no = ? and id = ?"; 
+	
 	final String CHANGEIMAGE= "update image "
 			+ " set fileName = ? "
 			+ " where no = ? "; 
-	
 }

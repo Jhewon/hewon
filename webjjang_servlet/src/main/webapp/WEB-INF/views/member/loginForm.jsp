@@ -4,31 +4,24 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title> 로그인</title>
-<style type="text/css">
-h3{
- text-align: center;
- margin-top: 10px;
-}
-</style>
+<title>로그인 폼</title>
 </head>
 <body>
 <div class="container">
+	<h3>로그인 폼</h3>
 	<form action="login.do" method="post">
-	<h3>로그인</h3>
 	  <div class="form-group">
-	    <label for="id">ID :</label>
-	    <input type="text" class="form-control" placeholder="Enter id" id="id" name="id" autocomplete="none">
+	    <label for="id">ID</label>
+	    <input type="text" class="form-control" placeholder="ID 입력"
+	     id="id" name="id" autocomplete="none">
 	  </div>
 	  <div class="form-group">
-	    <label for="pw">Password :</label>
-	    <input type="password" class="form-control" placeholder="Enter password" id="pw" name="pw" autocomplete="none">
+	    <label for="pw">Password</label>
+	    <input type="password" class="form-control"
+	     placeholder="password 입력" id="pw" name="pw">
 	  </div>
-	  
-	  <button type="submit" class="btn btn-primary">Login</button>
-</form>
-	
-	
+	  <button type="submit" class="btn btn-primary">로그인</button>
+	</form>
 </div>
 </body>
 </html>

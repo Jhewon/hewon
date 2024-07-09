@@ -16,8 +16,8 @@ public class ImageUpdateService implements Service {
 
 	@Override
 	public Integer service(Object obj) throws Exception {
-		// DB board에서 수정 쿼리 실행해서 데이터 처리
-		// ImageController - (Execute) - [ImageListService] - ImageDAO.update()
+		// DB image에서 수정 쿼리 실행해서 데이터 처리
+		// ImageController - (Execute) - [ImageUpdateService] - ImageDAO.update()
 		return dao.update((ImageVO)obj);
 	}
 

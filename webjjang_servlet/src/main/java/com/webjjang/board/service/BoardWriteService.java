@@ -9,11 +9,11 @@ public class BoardWriteService implements Service {
 
 	private BoardDAO dao;
 	
-	//dao setter 
+	// dao setter
 	public void setDAO(DAO dao) {
-		this.dao=(BoardDAO) dao;
+		this.dao = (BoardDAO) dao;
 	}
-	
+
 	@Override
 	public Integer service(Object obj) throws Exception {
 		// DB board에서 리스트 쿼리 실행해서 데이터 가져오기 - 리턴
@@ -21,7 +21,5 @@ public class BoardWriteService implements Service {
 		// BoardController - (Execute) - [BoardListService] - BoardDAO.list()
 		return dao.write((BoardVO)obj);
 	}
-
-	
 
 }

@@ -6,12 +6,12 @@ import com.webjjang.main.dao.DAO;
 import com.webjjang.main.service.Service;
 
 public class BoardViewService implements Service {
-	
+
 	private BoardDAO dao;
 	
-	//dao setter 
+	// dao setter
 	public void setDAO(DAO dao) {
-		this.dao=(BoardDAO) dao;
+		this.dao = (BoardDAO) dao;
 	}
 
 	@Override
@@ -21,14 +21,11 @@ public class BoardViewService implements Service {
 		Long no = objs[0];
 		Long inc = objs[1];
 		// DB board에서 조회수 1증가 하고 글보기 데이터 가져와서 리턴
-		
 		// 1. 조회수 1증가 : inc == 1
 		if(inc == 1) dao.increase(no);
 		// DB 처리는 DAO에서 처리 - BoardDAO.list()
 		// BoardController - (Execute) - [BoardListService] - BoardDAO.view()
 		return dao.view(no);
 	}
-
-	
 
 }

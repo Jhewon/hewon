@@ -1,77 +1,91 @@
 package com.webjjang.boardreply.controller;
 
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import com.webjjang.board_reply.vo.BoardReplyVO;
+import com.webjjang.board.service.BoardDeleteService;
+import com.webjjang.board.service.BoardListService;
+import com.webjjang.board.service.BoardUpdateService;
+import com.webjjang.board.service.BoardViewService;
+import com.webjjang.board.service.BoardWriteService;
+import com.webjjang.board.vo.BoardVO;
+import com.webjjang.boardreply.vo.BoardReplyVO;
 import com.webjjang.main.controller.Init;
-import com.webjjang.util.exe.Execute;
+import com.webjjang.util.page.PageObject;
 import com.webjjang.util.page.ReplyPageObject;
+import com.webjjang.util.exe.Execute;
+import com.webjjang.util.io.BoardPrint;
+import com.webjjang.util.io.In;
 
 // Board Module 에 맞는 메뉴 선택 , 데이터 수집(기능별), 예외 처리
 public class BoardReplyController {
 
-	
 	public String execute(HttpServletRequest request) {
-		System.out.println("BoardController.execute()");
+		System.out.println("BoardController.execute() --------------------------");
 		
-		// session 을 request 에서 부터 꺼낸다.
+		// session을 request에서 부터 꺼낸다.
 		HttpSession session = request.getSession();
-		// 메뉴 입력
+		
+		// uri
 		String uri = request.getRequestURI();
 		
-		//Object result = null;
+		Object result = null;
 		
 		String jsp = null;
 		
 		
 		// 입력 받는 데이터 선언
-		
+		Long no = 0L;
 		
 		try { // 정상 처리
 			
-			// 페이지 정보 받기 & uri 에 붙이기
-			ReplyPageObject pageObject  = ReplyPageObject.getInstance(request);
+			// 페이지 정보 받기 & uri에 붙이기
+			ReplyPageObject pageObject
+			= ReplyPageObject.getInstance(request);
 		
 			// 메뉴 처리 : CRUD DB 처리 - Controller - Service - DAO
 			switch (uri) {
 			case "/boardreply/write.do":
-				System.out.println("1.일반게시판 댓글 등록");
+				System.out.println("1.일반게시판 댓글 등록 처리");
 				
-				// 데이터 수집
+				// 데이터 수집(사용자->서버 : form - input - name)
 				String content = request.getParameter("content");
 				String writer = request.getParameter("writer");
 				String pw = request.getParameter("pw");
 				
-				//변수 - vo 저장하고 service
-				BoardReplyVO vo =new BoardReplyVO();
+				// 변수 - vo 저장하고 Service
+				BoardReplyVO vo = new BoardReplyVO();
 				vo.setNo(pageObject.getNo());
 				vo.setContent(content);
 				vo.setWriter(writer);
 				vo.setPw(pw);
 				
-				request.setAttribute("BoardReplyVO", Execute.execute(Init.get(uri),vo));
-				// jsp 정보 앞에 "redirect:"가 붙어있으면 redirect 를 아니면 jsp 로 forward 로 시킨다.
-				jsp = "redirect:/board/view.do?no=" + pageObject.getNo() + "&inc=0"
-						// 일반 게시판의 페이지 정보 붙이기
-						+"&" +pageObject.getPageObject().getPageQuery();
-				// 일반 게시판 글보기로 돌아간다. 페이지 정보도 가져간다.
+				// [BoardController] - BoardWriteService - BoardDAO.write(vo)
+				Execute.execute(Init.get(uri), vo);
 				
+				// jsp 정보 앞에 "redirect:"가 붙어 있어 redirect를
+				// 아니면 jsp로 forward로 시킨다.
+				// 
+				jsp = "redirect:/board/view.do?no=" + pageObject.getNo()
+					+ "&inc=0"
+					// 일반게시판의 페이지 & 검색 정보 붙이기
+					+ "&" + pageObject.getPageObject().getPageQuery()
+					// 일반게시판 댓글의 페이지
+					+ "&" + pageObject.getPageQuery()
+					;
 				session.setAttribute("msg", "댓글 등록이 성공적으로 되었습니다.");
 				break;
-				
 			case "/boardreply/update.do":
-				System.out.println("2.일반게시판 댓글 수정");
-				// 데이터 수집
+				System.out.println("2.일반게시판 댓글 수정 처리");
+				
+				// 데이터 수집(사용자->서버 : form - input - name)
 				Long rno = Long.parseLong(request.getParameter("rno"));
+				content = request.getParameter("content");
+				writer = request.getParameter("writer");
+				pw = request.getParameter("pw");
 				
-				 content = request.getParameter("content");
-				 writer = request.getParameter("writer");
-				 pw = request.getParameter("pw");
-				
-				//변수 - vo 저장하고 service
-				vo =new BoardReplyVO();
+				// 변수 - vo 저장하고 Service
+				vo = new BoardReplyVO();
 				vo.setRno(rno);
 				vo.setContent(content);
 				vo.setWriter(writer);
@@ -81,12 +95,12 @@ public class BoardReplyController {
 				Execute.execute(Init.get(uri), vo);
 				
 				// 글보기로 자동 이동 -> jsp 정보를 작성해서 넘긴다.
-				jsp = "redirect:/board/view.do?no=" + pageObject.getNo() + "&inc=0" + "&" 
-						// 일반 게시판의 페이지 검색 정보 붙이기
-						+pageObject.getPageObject().getPageQuery();
-				session.setAttribute("msg", "댓글이 수정 되었습니다.");
+				jsp = "redirect:/board/view.do?no=" + pageObject.getNo() + "&inc=0"
+						// 일반게시판의 페이지 & 검색 정보 붙이기
+						+ "&" + pageObject.getPageObject().getPageQuery()
+						;
+				session.setAttribute("msg", "댓글이 수정되었습니다.");
 				break;
-				
 			case "/boardreply/delete.do":
 				System.out.println("3.일반게시판 댓글 삭제");
 				// 데이터 수집 - DB에서 실행에 필요한 데이터 - 글번호, 비밀번호 - BoardVO
@@ -102,23 +116,19 @@ public class BoardReplyController {
 				Execute.execute(Init.get(uri), deleteVO);
 				System.out.println();
 				System.out.println("***************************");
-				System.out.println("**  " + deleteVO.getRno()+ "글이 삭제되었습니다.  **");
+				System.out.println("**  " + deleteVO.getNo()+ "글이 삭제되었습니다.  **");
 				System.out.println("***************************");
 				
 				// 글보기로 자동 이동 -> jsp 정보를 작성해서 넘긴다.
-				jsp = "redirect:/board/view.do?no=" + pageObject.getNo() + "&inc=0" 
-						// 일반 게시판의 페이지 검색 정보 붙이기
-						+"&" 
-						+pageObject.getPageObject().getPageQuery()
-						+"&" 
-						// 일반게시판 댓글의 페이지
-						+pageObject.getPageQuery();
-				session.setAttribute("msg", "댓글이 삭제 되었습니다.");
+				jsp = "redirect:/board/view.do?no=" + pageObject.getNo() + "&inc=0"
+						// 일반게시판의 페이지 & 검색 정보 붙이기
+						+ "&" + pageObject.getPageObject().getPageQuery()
+						;
+				
+				session.setAttribute("msg", "댓글이 삭제되었습니다.");
 				break;
 			case "0":
 				
-				return jsp;
-
 			default:
 				System.out.println("####################################");;
 				System.out.println("## 잘못된 메뉴를 선택하셨습니다.          ##");;
@@ -138,7 +148,7 @@ public class BoardReplyController {
 			System.out.println("$%@ 조치 : 데이터를 확인 후 다시 실행해 보세요.");
 			System.out.println("$%@     : 계속 오류가 나면 전산담당자에게 연락하세요.");
 			System.out.println("$%@$%@$%@$%@$%@$%@$%@$%@$%@$%@$%@$%@$%@$%@$%@");
-		} // end of try~catch		
+		} // end of try~catch
 		return jsp;
 	} // end of execute()
 	

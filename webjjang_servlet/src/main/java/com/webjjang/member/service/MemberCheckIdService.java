@@ -5,7 +5,7 @@ import com.webjjang.main.service.Service;
 import com.webjjang.member.dao.MemberDAO;
 import com.webjjang.member.vo.LoginVO;
 
-public class MemberLoginService implements Service {
+public class MemberCheckIdService implements Service {
 
 	private MemberDAO dao;
 	
@@ -15,11 +15,11 @@ public class MemberLoginService implements Service {
 	}
 
 	@Override
-	public LoginVO service(Object obj) throws Exception {
-		// DB 처리는 DAO에서 처리 - MemberDAO.login()
+	public String service(Object obj) throws Exception {
+		// DB 처리는 DAO에서 처리 - MemberDAO.checkId()
 		// MemberController - (Execute)
-		// - [MemberLoginService] - MemberDAO.login()
-		return dao.login((LoginVO) obj);
+		// - [MemberCheckIdService] - MemberDAO.checkId()
+		return dao.checkId((String) obj);
 	}
 
 }

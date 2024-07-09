@@ -9,18 +9,16 @@ public class BoardUpdateService implements Service {
 
 	private BoardDAO dao;
 	
-	//dao setter 
+	// dao setter
 	public void setDAO(DAO dao) {
-		this.dao=(BoardDAO) dao;
+		this.dao = (BoardDAO) dao;
 	}
-	
+
 	@Override
 	public Integer service(Object obj) throws Exception {
 		// DB board에서 수정 쿼리 실행해서 데이터 처리
 		// BoardController - (Execute) - [BoardListService] - BoardDAO.update()
 		return dao.update((BoardVO)obj);
 	}
-
-	
 
 }

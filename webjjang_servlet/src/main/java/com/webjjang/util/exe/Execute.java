@@ -11,8 +11,8 @@ public class Execute {
 
 	// 서비스를 실행 시키고 로그를 출력하는 메서드 작성
 	public static Object execute(Service service, Object obj) throws Exception{
-		// 권한 처리
-		Authority.checkAuth(service);
+		// 권한 처리 - AuthorityFilter를 사용
+		// Authority.checkAuth(service);
 		
 		// 처리된 결과를 저장하는 변수 -> 리턴한다.
 		Object result = null;

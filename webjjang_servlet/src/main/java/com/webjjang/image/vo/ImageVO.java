@@ -9,7 +9,7 @@ public class ImageVO {
 	private String id;
 	private String name; // member table
 	private String writeDate;
-	private String fileName;
+	private String fileName; // 실제적으로 서버에 저장된 파일명 - 위치 정보 포함
 
 	// setter, getter
 	public Long getNo() {

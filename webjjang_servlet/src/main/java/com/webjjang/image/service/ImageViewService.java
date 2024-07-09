@@ -16,7 +16,7 @@ public class ImageViewService implements Service {
 
 	@Override
 	public ImageVO service(Object obj) throws Exception {
-		// DB 처리는 DAO에서 처리 - BoardDAO.view()
+		// DB 처리는 DAO에서 처리 - ImageDAO.view()
 		// ImageController - (Execute) - [ImageViewService] - ImageDAO.view()
 		return dao.view((Long) obj);
 	}

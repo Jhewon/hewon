@@ -27,11 +27,11 @@ public class BoardDAO extends DAO{
 			con = DB.getConnection();
 			// 3. sql - 아래 LIST - 콘솔 확인하고 여기에 쿼리에 해당되는 LIST 출력해 본다.
 			// 4. 실행 객체 & 데이터 세팅
-//			pstmt = con.prepareStatement(LIST);
+			// pstmt = con.prepareStatement(LIST);
 			pstmt = con.prepareStatement(getListSQL(pageObject));
-			// 검색에 대한 데이터 세팅 - List() 에서만 사용
-			int idx = 0; // pstmt 의 순서 번호. 먼저 1증가하고 사용한다.
-			idx = setSearchDate(pageObject, pstmt, idx);
+			// 검색에 대한 데이터 세팅 - list()만 사용
+			int idx = 0; // pstmt의 순서번호 사용. 먼저 1 증가하고 사용한다.
+			idx = setSearchData(pageObject, pstmt, idx);
 			pstmt.setLong(++idx, pageObject.getStartRow()); // 기본 값 = 1
 			pstmt.setLong(++idx, pageObject.getEndRow()); // 기본 값 = 10
 			// 5. 실행
@@ -78,7 +78,7 @@ public class BoardDAO extends DAO{
 			// 4. 실행 객체 & 데이터 세팅
 			pstmt = con.prepareStatement(TOTALROW + getSearch(pageObject));
 			int idx = 0;
-			idx = setSearchDate(pageObject, pstmt, idx);
+			idx = setSearchData(pageObject, pstmt, idx);
 			// 5. 실행
 			rs = pstmt.executeQuery();
 			// 6. 표시 또는 담기
@@ -160,7 +160,7 @@ public class BoardDAO extends DAO{
 			} // end of if
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new Exception("일반 게시판의 글보기 DB 처리중 오류 발생");
+			throw new Exception("예외 발생 : 일반 게시판 글보기 DB 처리 중 오류 발생");
 		} finally {
 			// 7. 닫기
 			DB.close(con, pstmt, rs);
@@ -293,48 +293,46 @@ public class BoardDAO extends DAO{
 			+ " from ( "
 				+ " select no, title, writer, "
 				+ " to_char(writeDate, 'yyyy-mm-dd') writeDate, hit "
-				+ " from board ";
+				+ " from board "
 				// 여기에 검색이 있어야 합니다.
-				
-	// 검색이 있는 경우 TOTALROW + getSearch()를 호출해서 처리한다.
+	;
+	// 검색이 있는 경우 TOTALROW + search문
 	final String TOTALROW = "select count(*) from board ";
 	
-	// LIST 에 검색을 처리해서 만들어지는 sql문 작성 메소드
+	// LIST에 검색을 처리해서 만들지는 sql문 작성 메서드
 	private String getListSQL(PageObject pageObject) {
-		String sql = LIST;
+		String sql = LIST; 
 		String word = pageObject.getWord();
 		if(word != null && !word.equals("")) sql += getSearch(pageObject);
 		sql += " order by no desc"
 				+ " ) "
 				+ " ) where rnum between ? and ? ";
-		
 		return sql;
 	}
-	private String getTotalRowSQL(PageObject pageObject) {
-		return null;
-	}
-
+	
 	// 리스트의 검색만 처리하는 쿼리 - where
 	private String getSearch(PageObject pageObject) {
 		String sql = "";
 		String key = pageObject.getKey();
 		String word = pageObject.getWord();
 		if(word != null && !word.equals("")) {
-			sql += "where 1=0 ";
-		// key 안에 t 가 있으면 title로 검색을 한다.
-		if(key.indexOf("t") >= 0) sql += " or title like ? ";
-		if(key.indexOf("c") >= 0) sql += " or content like ? ";
-		if(key.indexOf("w") >= 0) sql += " or writer like ? ";
+			sql += " where 1=0 ";
+		// key안에 t가 포함되어 있으면 title로 검색을 한다.
+			if(key.indexOf("t") >= 0) sql += " or title like ? ";
+			if(key.indexOf("c") >= 0) sql += " or content like ? ";
+			if(key.indexOf("w") >= 0) sql += " or writer like ? ";
 		}
 		return sql;
-	}
-	// 검색 쿼리 ? 데이터를 세팅하는 메소드
-	private int setSearchDate(PageObject pageObject, PreparedStatement pstmt, int idx) throws SQLException {
 		
+	}
+	
+	// 검색 쿼리의 ? 데이터를 세팅하는 메서드
+	private int setSearchData(PageObject pageObject, 
+			PreparedStatement pstmt, int idx) throws SQLException {
 		String key = pageObject.getKey();
 		String word = pageObject.getWord();
 		if(word != null && !word.equals("")) {
-		// key 안에 t 가 있으면 title로 검색을 한다.
+			// key안에 t가 포함되어 있으면 title로 검색을 한다.
 			if(key.indexOf("t") >= 0) pstmt.setString(++idx, "%" + word + "%");
 			if(key.indexOf("c") >= 0) pstmt.setString(++idx, "%" + word + "%");
 			if(key.indexOf("w") >= 0) pstmt.setString(++idx, "%" + word + "%");
@@ -356,6 +354,5 @@ public class BoardDAO extends DAO{
 			+ " where no = ? and pw = ?"; 
 	final String DELETE= "delete from board "
 			+ " where no = ? and pw = ?"; 
-	
 	
 }

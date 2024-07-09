@@ -1,6 +1,6 @@
 package com.webjjang.main.controller;
 
-
+import com.webjjang.board.controller.BoardController;
 import com.webjjang.member.controller.MemberController;
 import com.webjjang.member.vo.LoginVO;
 import com.webjjang.notice.controller.NoticeController;
@@ -65,14 +65,14 @@ public class Main {
 			case "3": 
 				System.out.println("3. 일반 게시판");
 				// 생성하고 호출한다. - 1번만 실행한다. : 변수 사용하지 않아도 된다. new하고 바로 실행
-				//new BoardController().execute();
+//				new BoardController().execute();
 				break;
 			case "4": 
 				System.out.println("4. 사진 게시판");
 				break;
 			case "5": 
 				System.out.println("5. 회원관리");
-//				new MemberController().execute();
+				// new MemberController().execute();
 				break;
 			case "0": 
 				System.out.println("0. 종료");
