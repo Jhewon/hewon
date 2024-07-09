@@ -104,6 +104,7 @@ public class AuthorityFilter extends HttpFilter implements Filter {
 		authMap.put("/image/delete.do", 1);
 		
 		authMap.put("/member/list.do", 9);
+		authMap.put("/member/changGrade.do", 9);
 
 		// 권한 세팅 - URI 따른
 	}

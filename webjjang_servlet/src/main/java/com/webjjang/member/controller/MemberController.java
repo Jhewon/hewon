@@ -63,6 +63,7 @@ public class MemberController {
 				System.out.println("a. 로그인 폼");
 				jsp="member/loginForm";
 				break;
+				
 			case "/member/login.do":
 				System.out.println("a-1. 로그인 처리");
 				
@@ -90,6 +91,7 @@ public class MemberController {
 				session.setAttribute("msg", "로그인 처리가 되었습니다.");
 				
 				break;
+				
 			case "/member/logout.do":
 				System.out.println("b. 로그아웃 처리");
 				// session의 로그인 내용 지우기 - 로그아웃 처리
@@ -99,12 +101,16 @@ public class MemberController {
 				
 				jsp = "redirect:/board/list.do";
 				break;
+				
 			case "/member/list.do":
 				// [BoardController] - (Execute) - BoardListService - BoardDAO.list()
 				System.out.println("1.일반게시판 리스트");
 				// 페이지 처리를 위한 객체
 				// getInstance - 기본 값이 있고 넘어오는 페이지와 검색 정보를 세팅 처리
 				PageObject pageObject = PageObject.getInstance(request);
+				
+				// id setting - 관리자 계쩡은 제외시키기 위해서 -> id - accepter
+				pageObject.setAccepter(id);
 				// DB에서 데이터 가져오기 - 가져온 데이터는 List<BoardVO>
 				result = Execute.execute(Init.get(uri), pageObject);
 				
@@ -115,8 +121,9 @@ public class MemberController {
 				// pageObject 담기
 				request.setAttribute("pageObject", pageObject);
 				// /WEB-INF/views/ + board/list + .jsp
-				jsp = "board/list";
+				jsp = "member/list";
 				break;
+				
 			case "/member/view.do":
 				System.out.println("2.일반게시판 글보기");
 				// 1. 조회수 1증가(글보기), 2. 일반게시판 글보기 데이터 가져오기 : 글보기, 글수정
@@ -142,11 +149,14 @@ public class MemberController {
 				request.setAttribute("replyPageObject", replyPageObject);
 				
 				jsp = "board/view";
+				
 				break;
+				
 			case "/member/writeForm.do":
 				System.out.println("3-1. 회원 가입");
 				jsp="member/writeForm";
 				break;
+				
 			case "/member/write.do":
 				System.out.println("3.회원 가입 처리");
 				
@@ -193,9 +203,8 @@ public class MemberController {
 				// jsp 정보 앞에 "redirect:"가 붙어 있어 redirect를
 				// 아니면 jsp로 forward로 시킨다. main 으로 자동이동 시킨다.
 				jsp = "redirect:/board/list.do";
-				
-				
 				break;
+				
 			case "/member/checkId.do":
 				System.out.println("3-3. 아이디 중복 체크 처리");
 				
@@ -212,6 +221,7 @@ public class MemberController {
 				jsp = "member/checkId";
 				
 				break;
+				
 			case "/member/updateForm.do":
 				System.out.println("4-1.일반게시판 글수정 폼");
 				
@@ -228,6 +238,7 @@ public class MemberController {
 				jsp = "board/updateForm";
 				
 				break;
+				
 			case "/member/update.do":
 				System.out.println("4-2.일반게시판 글수정 처리");
 				
@@ -248,6 +259,32 @@ public class MemberController {
 				jsp = "redirect:view.do?no=" + no + "&inc=0"
 						+ "&" + pageObject.getPageQuery();
 				break;
+				
+			case "/member/changeGrade.do":
+				System.out.println("4-2.일반게시판 글수정 처리");
+				
+				// 데이터 수집(사용자->서버 : form - input - name)
+				id = request.getParameter("id");
+				Integer gradeNo = Integer.parseInt( request.getParameter("gradeNo"));
+				
+				// 변수 - vo 저장하고 Service
+				vo = new MemberVO();
+				vo.setId(id);
+				vo.setGradeNo(gradeNo);
+				
+				// DB 적용하는 처리문 작성. BoardUpdateservice
+				Execute.execute(Init.get(uri), vo);
+				
+				// 페이지 정보 받기 & uri에 붙이기
+				pageObject = PageObject.getInstance(request);
+				// 메시지 처리 
+				session.setAttribute("msg","회원["+ id + "]님 등급 을 "+((gradeNo == 1)?"일반회원 으로 " : "관리자 로 ")+" 변경 되었습니다.");
+				
+				
+				// 글보기로 자동 이동 -> jsp 정보를 작성해서 넘긴다.
+				jsp = "redirect:list.do?" + pageObject.getPageQuery();
+				break;
+				
 			case "/member/delete.do":
 				System.out.println("5.일반게시판 글삭제");
 				// 데이터 수집 - DB에서 실행에 필요한 데이터 - 글번호, 비밀번호 - BoardVO
