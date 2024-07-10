@@ -31,7 +31,7 @@ public class DispatcherServlet extends HttpServlet {
 	private MemberController memberController = new MemberController();
 	private ImageController imageController = new ImageController();
 	private AjaxController ajaxController = new AjaxController();
-	
+	private MainController mainController = new MainController();
 	/**
 	 * @see Servlet#init(ServletConfig)
 	 */
@@ -62,6 +62,13 @@ public class DispatcherServlet extends HttpServlet {
 		
 		String uri = request.getRequestURI();
 		System.out.println("uri = " + uri);
+		
+		// main 처리 - localhost -> localhost/main.do -> /main/main.do
+		if(uri.equals("/") || uri.equals("/main.do")) {
+			response.sendRedirect("/main/main.do");
+			return;
+		}
+		
 		
 		// uri = /module/기능 -> /board/list.do
 		int pos = uri.indexOf("/", 1);
@@ -107,6 +114,11 @@ public class DispatcherServlet extends HttpServlet {
 		case "/ajax":
 			System.out.println("Ajax 처리");
 			jsp = ajaxController.execute(request);
+			break;
+			
+		case "/main":
+			System.out.println("main 처리");
+			jsp = mainController.execute(request);
 			break;
 			
 		default:
