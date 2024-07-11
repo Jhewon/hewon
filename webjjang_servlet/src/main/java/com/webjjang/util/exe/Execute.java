@@ -5,7 +5,6 @@ import java.util.Arrays;
 import com.webjjang.main.controller.Main;
 import com.webjjang.main.service.Service;
 import com.webjjang.member.service.MemberConUpdateService;
-import com.webjjang.util.auth.Authority;
 
 public class Execute {
 

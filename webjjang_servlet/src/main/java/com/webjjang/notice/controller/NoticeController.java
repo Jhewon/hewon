@@ -2,13 +2,12 @@ package com.webjjang.notice.controller;
 
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import com.webjjang.main.controller.Init;
-import com.webjjang.notice.service.NoticeDeleteService;
 import com.webjjang.notice.vo.NoticeVO;
 import com.webjjang.util.exe.Execute;
 import com.webjjang.util.page.PageObject;
-import com.webjjang.util.io.In;
 
 // Notice Module 에 맞는 메뉴 선택 , 데이터 수집(기능별), 예외 처리
 public class NoticeController {
@@ -18,7 +17,9 @@ public class NoticeController {
 			String jsp = null;
 			
 			String uri = request.getRequestURI();
-			// 메뉴 입력
+			
+			// 처리결과를 화면에 표시하기 위해서
+			HttpSession session = request.getSession();
 			
 			Object result = null;
 			
@@ -78,6 +79,8 @@ public class NoticeController {
 					
 					// jsp 정보 앞에 "redirect:"가 붙어 있어 redirect를
 					// 아니면 jsp로 forward로 시킨다.
+					session.setAttribute("msg", "공지사항 등록 완료");
+					
 					jsp = "redirect:list.do?perPageNum=" 
 							+ request.getParameter("perPageNum");
 					
@@ -109,6 +112,7 @@ public class NoticeController {
 					vo.setEndDate(endDate);
 					// [BoardController] - BoardWriteService - BoardDAO.write(vo)
 					Execute.execute(Init.get(uri), vo);
+					session.setAttribute("msg", "공지사항 수정 완료");
 					pageObject = PageObject.getInstance(request);
 					// jsp 정보 앞에 "redirect:"가 붙어 있어 redirect를
 					// 아니면 jsp로 forward로 시킨다.
@@ -121,27 +125,19 @@ public class NoticeController {
 					System.out.println("3-1. 공지사항 등록 폼");
 					no = Long.parseLong(request.getParameter("no"));
 					Execute.execute(Init.get(uri), no);
+					
+					session.setAttribute("msg", "공지사항 삭제 완료");
 					jsp="redirect:list.do";
 					break;
 					
 				default:
-					System.out.println("####################################");;
-					System.out.println("## 잘못된 메뉴를 선택하셨습니다.          ##");;
-					System.out.println("## [0~5, 0] 중에서 입력하셔야 합니다.    ##");;
-					System.out.println("####################################");;
+					jsp = "error/404";
 					break;
 				} // end of switch
 			} catch (Exception e) {
-				// e.printStackTrace();
-				System.out.println();
-				System.out.println("$%@$%@$%@$%@$%@$%@$%@$%@$%@$%@$%@$%@$%@$%@$%@");
-				System.out.println("$%@ << 오류 출력 >>                         $%@");
-				System.out.println("$%@$%@$%@$%@$%@$%@$%@$%@$%@$%@$%@$%@$%@$%@$%@");
-				System.out.println("$%@ 타입 : " + e.getClass().getSimpleName());
-				System.out.println("$%@ 내용 : " + e.getMessage());
-				System.out.println("$%@ 조치 : 데이터를 확인 후 다시 실행해 보세요.");
-				System.out.println("$%@     : 계속 오류가 나면 전산담당자에게 연락하세요.");
-				System.out.println("$%@$%@$%@$%@$%@$%@$%@$%@$%@$%@$%@$%@$%@$%@$%@");
+				e.printStackTrace();
+				request.setAttribute("e", e); // e(예외) 를 jsp 에 보내서 표시한다.
+				jsp = "error/500";
 			} // end of try~catch
 			return jsp;
 	} // end of main()

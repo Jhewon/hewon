@@ -314,7 +314,7 @@ public class ImageDAO extends DAO{
 	// LIST에 검색을 처리해서 만들지는 sql문 작성 메서드
 	private String getListSQL(PageObject pageObject) {
 		String sql = LIST; 
-		String word = pageObject.getWord();
+		//String word = pageObject.getWord();
 		// 검색 쿼리 추가 - where를 추가 안한다. : false
 		sql += getSearch(pageObject, false);
 		sql += " and (m.id = i.id) ";
