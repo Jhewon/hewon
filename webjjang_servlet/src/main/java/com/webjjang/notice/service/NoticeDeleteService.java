@@ -6,6 +6,12 @@ import com.webjjang.main.dao.DAO;
 import com.webjjang.main.service.Service;
 
 public class NoticeDeleteService implements Service {
+	NoticeDAO dao;
+	@Override
+	public void setDAO(DAO dao) {
+		// TODO Auto-generated method stub
+		this.dao=(NoticeDAO) dao;
+	}
 
 	@Override
 	public Integer service(Object obj) throws Exception {
@@ -14,10 +20,5 @@ public class NoticeDeleteService implements Service {
 		return new NoticeDAO().delete((Long)obj);
 	}
 
-	@Override
-	public void setDAO(DAO dao) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

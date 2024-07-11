@@ -3,7 +3,6 @@ package com.webjjang.main.controller;
 import java.io.IOException;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +12,7 @@ import com.webjjang.board.controller.BoardController;
 import com.webjjang.boardreply.controller.BoardReplyController;
 import com.webjjang.image.controller.ImageController;
 import com.webjjang.member.controller.MemberController;
+import com.webjjang.notice.controller.NoticeController;
 
 /**
  * Servlet implementation class DispatcherServlet
@@ -32,11 +32,11 @@ public class DispatcherServlet extends HttpServlet {
 	private ImageController imageController = new ImageController();
 	private AjaxController ajaxController = new AjaxController();
 	private MainController mainController = new MainController();
+	private NoticeController noticeController = new NoticeController();
 	/**
 	 * @see Servlet#init(ServletConfig)
 	 */
 	public void init(ServletConfig config) throws ServletException {
-		// TODO Auto-generated method stub
 		// 드라이버 확인 / 객체 생성 처리 - Class.forName(class명)
 		// 서버가 실행될 때 먼저 실행되어야만 한다.
 		System.out.println("DispatcherServlet.init() --- 초기화 진행 -------");
@@ -46,7 +46,6 @@ public class DispatcherServlet extends HttpServlet {
 			// -- 오라클 드라이버 확인 + 로딩
 			Class.forName("com.webjjang.util.db.DB");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -55,7 +54,6 @@ public class DispatcherServlet extends HttpServlet {
 	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		// 메뉴를 출력하고 선택(uri)하고 처리
 		// uri - /board가 앞에 붙어 있으면 BoardController로 가게 만든다.
 		System.out.println("DispatcherServlet.service()-----------------------");
@@ -119,6 +117,11 @@ public class DispatcherServlet extends HttpServlet {
 		case "/main":
 			System.out.println("main 처리");
 			jsp = mainController.execute(request);
+			break;
+			
+		case "/notice":
+			System.out.println("main 처리");
+			jsp = noticeController.execute(request);
 			break;
 			
 		default:
