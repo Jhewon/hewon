@@ -2,8 +2,10 @@ package com.webjjang.main.controller;
 
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import com.webjjang.util.page.PageObject;
+import com.webjjang.member.vo.LoginVO;
 import com.webjjang.util.exe.Execute;
 
 // Board Module 에 맞는 메뉴 선택 , 데이터 수집(기능별), 예외 처리
@@ -15,6 +17,13 @@ public class MainController {
 		String uri = request.getRequestURI();
 		
 		Object result = null;
+		int gradeNo = 0;
+		
+		HttpSession session = request.getSession();
+		LoginVO login = (LoginVO) session.getAttribute("login");
+		 if(login != null) {
+			 gradeNo = login.getGradeNo();
+		 }
 		
 		String jsp = null;
 		
@@ -29,13 +38,25 @@ public class MainController {
 				// 페이지 처리를 위한 객체
 				PageObject pageObject = new PageObject();
 				
-				// 메인에 표시할 데이터 - 일반 게시판 , 이미지 게시판,
+				if(gradeNo == 9) {
+					pageObject.setPeriod("all");
+				}else {
+					pageObject.setPeriod("pre");
+				}
+				
+				// 메인에 표시할 데이터 - 일반 게시판 , 이미지 게시판, 공지사항
 				// DB에서 데이터 가져오기 
 				// 일반 게시판
 				pageObject.setPerPageNum(6);
 				// [MainController] - (Execute) - BoardListService - BoardDAO.list()
 				result = Execute.execute(Init.get("/board/list.do"), pageObject);
 				request.setAttribute("boardList", result);
+				
+				// 공지사항
+				pageObject.setPerPageNum(6);
+				// [MainController] - (Execute) - NoticeListService - NoticeDAO.list()
+				result = Execute.execute(Init.get("/notice/list.do"), pageObject);
+				request.setAttribute("noticeList", result);
 				
 				// 이미지 게시판
 				pageObject.setPerPageNum(6);

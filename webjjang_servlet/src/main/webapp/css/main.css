@@ -19,3 +19,10 @@
 .module{
 	padding: 15px 7px;
 }
+.noticeLink:hover {
+	background: #eee;
+	cursor: pointer;
+}
+h4{
+	text-align: center;
+}

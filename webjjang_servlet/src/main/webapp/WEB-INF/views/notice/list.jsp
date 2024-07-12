@@ -19,6 +19,8 @@
 
 <script type="text/javascript">
 $(function(){
+		<!-- $("#${pageObject.period}").prop('checked',true); -->
+		$("[value='${pageObject.period}']").prop('checked',true);
 	// 이벤트 처리
 	$(".dataRow").click(function(){
 		// alert("click");
@@ -39,15 +41,59 @@ $(function(){
 	// 검색 데이터 세팅
 	$("#key").val("${(empty pageObject.key)?'t': pageObject.key }");
 	$("#perPageNum").val("${(empty pageObject.perPageNum)?'10': pageObject.perPageNum }");
+	
+	$(".noticeOption").change(function(){
+		//alert("클릭");		
+		if( this.optionList[0].checked){
+			//alert("현재공지");
+			location="/notice/list.do?period=pre";
+		}
+		else if( this.optionList[1].checked){
+			//alert("이전공지");
+			location="/notice/list.do?period=old";
+		}
+		else if( this.optionList[2].checked){
+			//alert("예정공지");
+			location="/notice/list.do?period=res";
+		}
+		else if( this.optionList[3].checked){
+			//alert("모두");
+			location="/notice/list.do?period=all";
+		}
+		
+	});
+	
 });
 </script>
 
 </head>
 <body>
 <div class="container">
-	<h1><i class="fa fa-bookmark"></i>공지사항 리스트</h1>
-  <form action="list.do" id="searchForm">
-  <input name="page" value="1" type="hidden">
+	<h1>공지사항 리스트</h1>
+	<c:if test="${!empty login && login.gradeNo == 9 }">
+		<form class="noticeOption">
+		  <div class="custom-control custom-radio custom-control-inline">
+		    <input type="radio" class="custom-control-input" id="pre" name="optionList" value="pre">
+		    <label class="custom-control-label" for="pre">현재공지</label>
+		  </div>
+		  <div class="custom-control custom-radio custom-control-inline">
+		    <input type="radio" class="custom-control-input" id="old" name="optionList" value="old">
+		    <label class="custom-control-label" for="old">이전공지</label>
+		  </div>
+		  <div class="custom-control custom-radio custom-control-inline">
+		    <input type="radio" class="custom-control-input" id="res" name="optionList" value="res">
+		    <label class="custom-control-label" for="res">예정공지</label>
+		  </div>
+		  <div class="custom-control custom-radio custom-control-inline">
+		    <input type="radio" class="custom-control-input" id="all" name="optionList" value="all">
+		    <label class="custom-control-label" for="all">모든공지</label>
+		  </div>
+		</form>
+	</c:if>
+	
+	<!-- 검색란의 시작 -->
+	  <form action="list.do" id="searchForm">
+  	<input name="page" value="1" type="hidden">
 	  <div class="row">
 	  	<div class="col-md-8">
 	  		<div class="input-group mb-3">
@@ -55,7 +101,8 @@ $(function(){
 			      <select name="key" id="key" class="form-control">
 			      	<option value="t">제목</option>
 			      	<option value="c">내용</option>
-			      	<option value="tc">모두</option>
+			      	<option value="tc">제목/내용</option>
+			      	<option value="tcw">모두</option>
 			      </select>
 			  </div>
 			  <input type="text" class="form-control" placeholder="검색"
@@ -67,7 +114,9 @@ $(function(){
 			  </div>
 			</div>
 	  	</div>
+	  	<!-- col-md-8의 끝 : 검색 -->
 	  	<div class="col-md-4">
+	  		<!-- 너비를 조정하기 위한 div 추가. float-right : 오른쪽 정렬 -->
 	  		<div style="width: 200px;" class="float-right">
 			  <div class="input-group mb-3">
 			    <div class="input-group-prepend">
@@ -82,9 +131,13 @@ $(function(){
 			  </div>
 		  </div>
 	  	</div>
+	  	<!-- col-md-4의 끝 : 한페이지당 표시 데이터 개수 -->
 	  </div>
   </form>
-	<table class="table">
+  
+ 	<table class="table">
+		<!-- tr : table row - 테이블 한줄 -->
+		<!-- 게시판 데이터의 제목 -->
 		<tr>
 			<th>번호</th>
 			<th>제목</th>
@@ -100,17 +153,19 @@ $(function(){
 				<!-- td : table data - 테이블 데이터 텍스트 -->
 				<td class="no">${vo.no}</td>
 				<td>${vo.title}</td>
-				<td>${vo.startDate}</td>
-				<td>${vo.endDate }</td>
+				<td>${vo.startDate }</td>
+				<td>${vo.endDate}</td>
 				<td>${vo.updateDate}</td>
 			</tr>
 		</c:forEach>
-		<tr>
-			<td colspan="5">
-				<!-- a tag : 데이터를 클릭하면 href의 정보를 가져와서 페이지 이동시킨다. -->
-				<a href="writeForm.do?perPageNum=${pageObject.perPageNum }" class="btn btn-secondary" >등록</a>
-			</td>
-		</tr>
+		<c:if test="${!empty login && login.gradeNo == 9 }">
+			<tr>
+				<td colspan="5">
+						<!-- a tag : 데이터를 클릭하면 href의 정보를 가져와서 페이지 이동시킨다. -->
+						<a href="writeForm.do?perPageNum=${pageObject.perPageNum }" class="btn btn-primary">등록</a>
+					</td>
+			</tr>
+		</c:if>
 	</table>
 	<div><pageNav:pageNav listURI="list.do" pageObject="${pageObject }"></pageNav:pageNav></div>
 </div>

@@ -28,6 +28,10 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 	<style type="text/css">
+	.container{
+		padding: 30px 10px;
+	}
+	
 	
 	pre {
 		background: white;
@@ -61,6 +65,7 @@
 	
 	article {
 		min-height: 795px;
+		margin-top: 35px;
 	}
 	
 	#welcome {
@@ -74,12 +79,18 @@
 </head>
 <body>
 	<header>
-	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	<nav class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top">
 	      <a class="nav-link" href="/">웹짱닷컴</a>
-		<!-- 주메뉴 부분 -->
+	      
+	      <!-- 보여주지는 너비가 작은 경우 나타나는 메뉴 3줄선  -->
+	        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+   			 <span class="navbar-toggler-icon"></span>
+ 			</button>
+			<!-- 주메뉴 부분 -->
 			<!-- 오른쪽 부분의 내용을 오른쪽 끝에 두기 위해서
 			 mr-* 오른쪽 마진 사용. auto : 데이터를 제외한 부분을 margin으로 사용 -->
-		  <ul class="navbar-nav mr-auto">
+		<div class="collapse navbar-collapse " id="collapsibleNavbar">
+		  <ul class="navbar-nav mr-auto" >
 		    <li class="nav-item ${(module == '/notice')?'active':'' }">
 		      <a class="nav-link" href="/notice/list.do">공지사항</a>
 		    </li>
@@ -99,6 +110,7 @@
 		    </li>
 		    </c:if>
 		  </ul>
+		
 		  <ul class="navbar-nav">
 		  	<c:if test="${ empty login }">
 			  	<!-- 로그인을 안했을 때 -->
@@ -145,6 +157,7 @@
 			    </li>
 		    </c:if>
 		  </ul>
+		  </div>
 		</nav>
 	
 	</header>

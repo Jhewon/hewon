@@ -8,14 +8,25 @@
 <title>Main</title>
 <link rel="stylesheet" href="/css/main.css">
 <script type="text/javascript" src="/js/main.js"></script>
+<style type="text/css">
+h2{
+	text-align: center;
+	margin-top: 10px;
+}
+</style>
 </head>
 <body>
 <div class="container">
-<h2>웹짱 닷컴</h2>
+<h2> <i class="fa fa-check"></i> 웹짱 닷컴</h2>
  <div class="row">
-	  <div class="col-md-12 module">
+ <!-- 한줄을 유지되는 것 정의 - col-해상도-6 : 해상도 md-  -->
+	  <div class="col-lg-6 module">
 	  <jsp:include page="boardList.jsp"/>
 	  </div>
+	  <div class="col-lg-6 module">
+	  <jsp:include page="noticeList.jsp"/>
+	  </div>
+
  </div>
  <div class="row">
 	  <div class="col-md-12 module">
