@@ -12,12 +12,15 @@ $(function(){
 	
 	// 회원 한줄을 클릭하면 회원 정보보기로 이동 시키는 처리
 	function dataRowClick(){
-		alert("dataRow click");
+// 		alert("dataRow click");
+
 	}
 	
 	// 이벤트처리
 	$(".dataRow").on("click", function(){
 		dataRowClick();
+		let id = $(this).find(".id").text();
+		location="view.do?id="+id;
 	});
 	
 	$(".grade, .status").parent()

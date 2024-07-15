@@ -103,6 +103,9 @@
 		    <li class="nav-item ${(module == '/board')?'active':'' }">
 		      <a class="nav-link" href="/board/list.do">일반게시판</a>
 		    </li>
+		    <li class="nav-item ${(module == '/qna')?'active':'' }">
+		      <a class="nav-link" href="/qna/list.do">Q&A</a>
+		    </li>
 		    <!-- 관리자 메뉴 -->
 		    <c:if test="${!empty login && login.gradeNo == 9 }">
 		    <li class="nav-item ${(module == '/member')?'active':'' }">
