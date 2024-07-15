@@ -76,6 +76,16 @@
 
 	<!-- 개발자가 작성한 소스의 head 태그를 여기에 넣게 된다. title은 제외 -->
 	<decorator:head/>
+	<script type="text/javascript">
+	$(function(){
+		
+		$(".cancelBtn").click(function(){
+			history.back();
+		});
+	});
+	
+	
+	</script>
 </head>
 <body>
 	<header>

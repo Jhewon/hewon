@@ -38,7 +38,9 @@
 	
 	</c:forEach>
 	</table>
-	
+	<c:if test="${ !empty login }">
+		<a href="questionForm.do?perPageNum=${pageObject.perPageNum }" class="btn btn-dark">질문</a>
+	</c:if>
 	
 </div>
 </body>

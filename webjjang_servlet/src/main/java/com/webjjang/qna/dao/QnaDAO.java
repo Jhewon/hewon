@@ -98,10 +98,10 @@ public class QnaDAO extends DAO{
 		// 결과 데이터를 리턴해 준다.
 		return totalRow;
 	} // end of getTotalRow()
-	
+
 	// 2-1. 글보기 조회수 1증가 처리
 	// BoardController - (Execute) - BoardViewService - [BoardDAO.increase()]
-	public int increase(Long no) throws Exception{
+	public int increaseOrdNo(QnaVO vo) throws Exception{
 		// 결과를 저장할 수 있는 변수 선언.
 		int result = 0;
 		
@@ -111,20 +111,21 @@ public class QnaDAO extends DAO{
 			con = DB.getConnection();
 			// 3. sql - 아래 LIST
 			// 4. 실행 객체 & 데이터 세팅
-			pstmt = con.prepareStatement(INCREASE);
-			pstmt.setLong(1, no);
+			pstmt = con.prepareStatement(INCREASEORDNO);
+			pstmt.setLong(1, vo.getRefNo());
+			pstmt.setLong(2, vo.getOrdNo());
 			// 5. 실행 - update : executeUpdate() -> int 결과가 나옴.
 			result = pstmt.executeUpdate();
 			// 6. 표시 또는 담기
 			if(result == 0) { // 글번호가 존재하지 않는다. -> 예외로 처리한다.
-				throw new Exception("예외 발생 : 글번호가 존재하지 않습니다. 글번호를 확인해 주세요.");
+				throw new Exception("예외 발생 : 질문답변 글번호가 존재하지 않습니다. 글번호를 확인해 주세요.");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			// 특별한 예외는 그냥 전달한다.
 			if(e.getMessage().indexOf("예외 발생") >= 0) throw e;
 			// 그외 처리 중 나타나는 오류에 대해서 사용자가 볼수 있는 예외로 만들어 전달한다.
-			else throw new Exception("예외 발생 : 게시판 글보기 조회수 DB 처리 중 예외가 발생했습니다.");
+			else throw new Exception("예외 발생 : 질문답변 순선번호 증가 DB 처리 중 예외가 발생했습니다.");
 		} finally {
 			// 7. 닫기
 			DB.close(con, pstmt);
@@ -172,9 +173,40 @@ public class QnaDAO extends DAO{
 		return vo;
 	} // end of view()
 	
-	// 3. 글등록 처리
-	// BoardController - (Execute) - BoardViewService - [BoardDAO.increase()]
-	public int write(BoardVO vo) throws Exception{
+	
+	// 3-1. 질문답변 글번호 가져오기
+	// QnaController - (Execute) -QnaWriteService - [QnaDAO.getNo()]
+	public Long getNo() throws Exception{
+			// 결과를 저장할 수 있는 변수 선언.
+			Long no = null;
+			try {
+				// 1. 드라이버 확인 - DB
+				// 2. 연결
+				con = DB.getConnection();
+				// 3. sql - 아래 LIST
+				// 4. 실행 객체 & 데이터 세팅
+				pstmt = con.prepareStatement(NO);
+				// 5. 실행
+				rs = pstmt.executeQuery();
+				// 6. 표시 또는 담기
+				if(rs != null && rs.next()) {
+					no = rs.getLong(1);
+				} // end of if
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw e;
+			} finally {
+				// 7. 닫기
+				DB.close(con, pstmt, rs);
+			} // end of try ~ catch ~ finally
+
+			// 결과 데이터를 리턴해 준다.
+			return no;
+		} // end of getTotalRow()
+	
+	// 3-2. 질문 처리
+	//QnaController - (Execute) -QnaWriteService - [QnaDAO.write()]
+	public int write(QnaVO vo) throws Exception{
 		// 결과를 저장할 수 있는 변수 선언.
 		int result = 0;
 		
@@ -184,20 +216,31 @@ public class QnaDAO extends DAO{
 			con = DB.getConnection();
 			// 3. sql - 아래 LIST
 			// 4. 실행 객체 & 데이터 세팅
-			pstmt = con.prepareStatement(WRITE);
-			pstmt.setString(1, vo.getTitle());
-			pstmt.setString(2, vo.getContent());
-			pstmt.setString(3, vo.getWriter());
-			pstmt.setString(4, vo.getPw());
+			// no, title, content, id,refNo,ordNo,levNo,parentNo
+			if(vo.isQuestion())
+				pstmt = con.prepareStatement(QUESTION);
+			else
+				pstmt = con.prepareStatement(ANSWER);
+			pstmt.setLong(1, vo.getNo());
+			pstmt.setString(2, vo.getTitle());
+			pstmt.setString(3, vo.getContent());
+			pstmt.setString(4, vo.getId());
+			pstmt.setLong(5, vo.getRefNo());
+			pstmt.setLong(6, vo.getOrdNo());
+			pstmt.setLong(7, vo.getLevNo());
+			// 답변인 경우만 부모글이 존재한다.
+			if(!vo.isQuestion()) {
+				pstmt.setLong(8, vo.getParentNo());
+			}
 			// 5. 실행 - update : executeUpdate() -> int 결과가 나옴.
 			result = pstmt.executeUpdate();
 			// 6. 표시 또는 담기
 			System.out.println();
-			System.out.println("*** 글등록이 완료 되었습니다.");
+			System.out.println("*** "+((vo.isQuestion())?"질문":"답변")+" 등록 이 완료 되었습니다. ***");
 		} catch (Exception e) {
 			e.printStackTrace();
 			// 그외 처리 중 나타나는 오류에 대해서 사용자가 볼수 있는 예외로 만들어 전달한다.
-			throw new Exception("예외 발생 : 게시판 글등록 DB 처리 중 예외가 발생했습니다.");
+			throw new Exception("예외 발생 :"+((vo.isQuestion())?"질문":"답변")+" 등록 DB 처리 중 예외가 발생했습니다.");
 		} finally {
 			// 7. 닫기
 			DB.close(con, pstmt);
@@ -344,15 +387,19 @@ public class QnaDAO extends DAO{
 		return idx;
 	}
 	
-	final String INCREASE = "update board set hit = hit + 1 "
-			+ " where no = ?"; 
+	final String INCREASEORDNO = "update qna set ordNo = ordNo + 1 where refNo = ? and ordNo >= ? "; 
 	final String VIEW= "select no, title, content, writer, "
 			+ " to_char(writeDate, 'yyyy-mm-dd') writeDate, hit "
 			+ " from board "
 			+ " where no = ?";
-	final String WRITE = "insert into board "
-			+ " (no, title, content, writer, pw) "
-			+ " values(board_seq.nextval, ?, ?, ?, ?)"; 
+	final String QUESTION = "insert into qna "
+			+ " (no, title, content, id,refNo,ordNo,levNo) "
+			+ " values(?, ?, ?, ?, ?, ?, ?)"; 
+	final String ANSWER = "insert into qna "
+			+ " (no, title, content, id,refNo,ordNo,levNo,parentNo) "
+			+ " values(?, ?, ?, ?, ?, ?, ?, ?)"; 
+	// 등록한 글번호를 받아오는 쿼리
+	final String NO = " select qna_seq.nextval from dual ";
 	final String UPDATE= "update board "
 			+ " set title = ?, content = ?, writer = ? "
 			+ " where no = ? and pw = ?"; 
