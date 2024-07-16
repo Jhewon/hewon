@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,12 +20,22 @@
 		<input type="hidden" name="parentNo" value="${vo.no }">
 		<div class="form-group">
 			<label for="title">제목</label>
-			<input class="form-control" name="title" id="title" required="required">
+			<input class="form-control" name="title" id="title" required="required" value="${(empty vo)?'':'[답변]' += vo.title }">
 		</div>
 		<div class="form-group">
 			<label for="content">내용</label>
-			<textarea rows="5"  class="form-control" name="content" id="content" required="required">
-			</textarea>
+			<c:if test="${empty vo }">
+				<textarea rows="5"  class="form-control" name="content" id="content" required="required">
+				</textarea>
+			</c:if>
+			<c:if test="${!empty vo }">
+				<textarea rows="5"  class="form-control" name="content" id="content" required="required">
+
+
+----------------------[질문원본]----------------------	
+${vo.content }
+				</textarea>
+			</c:if>
 		</div>
 		<button class="btn btn-dark">등록</button>
 		<button type="reset" class="btn btn-danger">다시입력</button>
