@@ -3,6 +3,7 @@ package com.webjjang.main.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.opensymphony.sitemesh.webapp.SiteMeshWebAppContext;
 import com.webjjang.board.dao.BoardDAO;
 import com.webjjang.board.service.BoardDeleteService;
 import com.webjjang.board.service.BoardListService;
@@ -31,6 +32,9 @@ import com.webjjang.member.service.MemberConUpdateService;
 import com.webjjang.member.service.MemberListService;
 import com.webjjang.member.service.MemberLoginService;
 import com.webjjang.member.service.MemberWriteService;
+import com.webjjang.message.dao.MessageDAO;
+import com.webjjang.message.service.MessageListService;
+import com.webjjang.message.service.MessageWriteService;
 import com.webjjang.notice.dao.NoticeDAO;
 import com.webjjang.notice.service.NoticeDeleteService;
 import com.webjjang.notice.service.NoticeListService;
@@ -149,6 +153,27 @@ public class Init {
 		serviceMap.get("/qna/write.do").setDAO(daoMap.get("qnaDAO"));
 		serviceMap.get("/notice/update.do").setDAO(daoMap.get("noticeDAO"));
 		serviceMap.get("/notice/delete.do").setDAO(daoMap.get("noticeDAO"));
+		
+		// -------------------[Message 객체 생성 조립]------------------
+		// dao 생성
+		daoMap.put("messageDAO", new MessageDAO());
+		// service 생성
+		serviceMap.put("/message/list.do", new MessageListService());
+		serviceMap.put("/qna/view.do", new QnaViewService());
+		serviceMap.put("/message/write.do", new MessageWriteService());
+		serviceMap.put("/notice/update.do", new NoticeUpdateService());
+		serviceMap.put("/notice/delete.do", new NoticeDeleteService());
+		// 조립 dao->service
+		serviceMap.get("/message/list.do").setDAO(daoMap.get("messageDAO"));
+		serviceMap.get("/qna/view.do").setDAO(daoMap.get("qnaDAO"));
+		serviceMap.get("/message/write.do").setDAO(daoMap.get("messageDAO"));
+		serviceMap.get("/notice/update.do").setDAO(daoMap.get("noticeDAO"));
+		serviceMap.get("/notice/delete.do").setDAO(daoMap.get("noticeDAO"));
+		
+		
+		
+		
+		
 		
 		System.out.println("Init.static 초기화 블록 ----- 객체 생성과 로딩 ------");
 	}
