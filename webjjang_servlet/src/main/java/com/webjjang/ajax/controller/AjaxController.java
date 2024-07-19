@@ -2,8 +2,10 @@ package com.webjjang.ajax.controller;
 
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import com.webjjang.main.controller.Init;
+import com.webjjang.member.vo.LoginVO;
 import com.webjjang.util.exe.Execute;
 
 // Member Module 에 맞는 메뉴 선택 , 데이터 수집(기능별), 예외 처리
@@ -14,7 +16,15 @@ public class AjaxController {
 		
 		// login된 정보 중에서 id를 많이 사용한다.
 		String id = null;
-
+		
+		
+		// session 꺼내기 
+		HttpSession session = request.getSession();
+		
+		// 로그인 정보 꺼내기 
+		LoginVO login = (LoginVO) session.getAttribute("login");
+		
+		if(login != null ) id = login.getId();
 		// uri
 		String uri = request.getRequestURI();
 		
@@ -40,7 +50,22 @@ public class AjaxController {
 				jsp = "member/checkId";
 				
 				break;
-
+				
+			case "/ajax/getNewMsgCnt.do":
+				System.out.println("1. 아이디 중복 체크 처리");
+				
+				
+				// [AjaxController] 
+				// - MemberNewMsgCntService - MemberDAO.getNewMsgCnt(id)
+				Long result = (Long) Execute.execute(Init.get(uri), id);
+				
+				request.setAttribute("newMsgCnt", result);
+				
+				// jsp 정보 
+				jsp = "member/newMsgCnt";
+				
+				break;
+				
 			default:
 				jsp="error/noModule_404";
 				break;

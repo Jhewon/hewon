@@ -3,7 +3,6 @@ package com.webjjang.main.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.opensymphony.sitemesh.webapp.SiteMeshWebAppContext;
 import com.webjjang.board.dao.BoardDAO;
 import com.webjjang.board.service.BoardDeleteService;
 import com.webjjang.board.service.BoardListService;
@@ -31,9 +30,11 @@ import com.webjjang.member.service.MemberCheckIdService;
 import com.webjjang.member.service.MemberConUpdateService;
 import com.webjjang.member.service.MemberListService;
 import com.webjjang.member.service.MemberLoginService;
+import com.webjjang.member.service.MemberNewMsgCntService;
 import com.webjjang.member.service.MemberWriteService;
 import com.webjjang.message.dao.MessageDAO;
 import com.webjjang.message.service.MessageListService;
+import com.webjjang.message.service.MessageViewService;
 import com.webjjang.message.service.MessageWriteService;
 import com.webjjang.notice.dao.NoticeDAO;
 import com.webjjang.notice.service.NoticeDeleteService;
@@ -95,6 +96,7 @@ public class Init {
 		// membercontroller 에서 들어 오지 않는다. - UpdateConDate filter 에서 들어온다.
 		serviceMap.put("/member/updateConDate.do", new MemberConUpdateService());
 		serviceMap.put("/ajax/checkId.do", new MemberCheckIdService());
+		serviceMap.put("/ajax/getNewMsgCnt.do", new MemberNewMsgCntService());
 
 		serviceMap.get("/member/login.do").setDAO(daoMap.get("memberDAO"));
 		serviceMap.get("/member/write.do").setDAO(daoMap.get("memberDAO"));
@@ -103,6 +105,7 @@ public class Init {
 		serviceMap.get("/member/changeStatus.do").setDAO(daoMap.get("memberDAO"));
 		serviceMap.get("/member/updateConDate.do").setDAO(daoMap.get("memberDAO"));
 		serviceMap.get("/ajax/checkId.do").setDAO(daoMap.get("memberDAO"));
+		serviceMap.get("/ajax/getNewMsgCnt.do").setDAO(daoMap.get("memberDAO"));
 
 		// ---- [이미지 게시판 객체 생성과 조립 ] -----------------------
 		// dao 생성
@@ -159,21 +162,14 @@ public class Init {
 		daoMap.put("messageDAO", new MessageDAO());
 		// service 생성
 		serviceMap.put("/message/list.do", new MessageListService());
-		serviceMap.put("/qna/view.do", new QnaViewService());
+		serviceMap.put("/message/view.do", new MessageViewService());
 		serviceMap.put("/message/write.do", new MessageWriteService());
-		serviceMap.put("/notice/update.do", new NoticeUpdateService());
 		serviceMap.put("/notice/delete.do", new NoticeDeleteService());
 		// 조립 dao->service
 		serviceMap.get("/message/list.do").setDAO(daoMap.get("messageDAO"));
-		serviceMap.get("/qna/view.do").setDAO(daoMap.get("qnaDAO"));
+		serviceMap.get("/message/view.do").setDAO(daoMap.get("messageDAO"));
 		serviceMap.get("/message/write.do").setDAO(daoMap.get("messageDAO"));
-		serviceMap.get("/notice/update.do").setDAO(daoMap.get("noticeDAO"));
 		serviceMap.get("/notice/delete.do").setDAO(daoMap.get("noticeDAO"));
-		
-		
-		
-		
-		
 		
 		System.out.println("Init.static 초기화 블록 ----- 객체 생성과 로딩 ------");
 	}
