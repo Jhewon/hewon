@@ -93,8 +93,8 @@ public class Init {
 		serviceMap.put("/member/list.do", new MemberListService());
 		serviceMap.put("/member/changeGrade.do", new MemberChangeGradeService());
 		serviceMap.put("/member/changeStatus.do", new MemberChangeStatusService());
-		// membercontroller 에서 들어 오지 않는다. - UpdateConDate filter 에서 들어온다.
 		serviceMap.put("/member/updateConDate.do", new MemberConUpdateService());
+		// membercontroller 에서 들어 오지 않는다. - UpdateConDate filter 에서 들어온다.
 		serviceMap.put("/ajax/checkId.do", new MemberCheckIdService());
 		serviceMap.put("/ajax/getNewMsgCnt.do", new MemberNewMsgCntService());
 
