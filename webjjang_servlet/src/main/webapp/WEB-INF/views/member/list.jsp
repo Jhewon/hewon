@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>회원 리스트</title>
 <script type="text/javascript">
-$(function(){
+$(function() {
 	
 	// 회원 한줄을 클릭하면 회원 정보보기로 이동 시키는 처리
 	function dataRowClick(){
@@ -48,10 +48,7 @@ $(function(){
 			$(this).next().find("button").prop("disabled", false);
 	});
 	
-	
 	let status = $("#status").val();
-	
-	
 	$(".gradeS").click(function(){
 		let grade = $(this).closest(".dataRow").find(".grade").val();
 		let status = $(this).closest(".dataRow").find(".status").data("data");

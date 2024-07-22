@@ -442,10 +442,6 @@ public class MemberDAO extends DAO{
 	} // end of getNewMsgCnt()
 		
 	
-	
-	
-	
-	
 	// 실행할 쿼리를 정의해 놓은 변수 선언.
 	final String LIST ="" 
 			+ " select id, name, birth, gender, tel, gradeNo, gradeName, status, photo "
