@@ -73,7 +73,9 @@ public class ImageController {
 				jsp = "image/list";
 				break;
 			case "/image/view.do":
+				
 				System.out.println("2.이미지 보기");
+				
 				String strNo = request.getParameter("no");
 				no = Long.parseLong(strNo);
 				// 전달 데이터 - 글번호
@@ -83,6 +85,7 @@ public class ImageController {
 				
 				jsp = "image/view";
 				break;
+				
 			case "/image/writeForm.do":
 				System.out.println("3-1.이미지게시판 등록 폼");
 				jsp="image/writeForm";
