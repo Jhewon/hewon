@@ -72,4 +72,12 @@ public class BoardController {
 		service.write(vo);
 		return "redirect:list.do";
 	}
+	
+	 //Model 사용
+	@GetMapping("/view.do")
+	public String view(Model model , Long no , Long inc) {
+		log.info("view()");
+		model.addAttribute("vo", service.view(no,inc));		
+		return "board/view";
+	}
 }

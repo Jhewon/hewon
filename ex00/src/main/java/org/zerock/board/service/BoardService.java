@@ -34,4 +34,10 @@ public class BoardService {
 		return boardMapper.write(vo);		
 	}
 	
+	public BoardVO view(Long no, Long inc) {
+		log.info("view()");
+		if(inc == 1)
+			boardMapper.inc(no);
+		return boardMapper.view(no);
+	}
 }
