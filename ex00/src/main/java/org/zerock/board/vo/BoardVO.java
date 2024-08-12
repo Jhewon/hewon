@@ -10,5 +10,5 @@ import lombok.Data;
 public class BoardVO {
 	private long no,hit;
 	private String title,content,writer,pw;
-	private	Date writeDate; // slq - java.sql.Date : casting - spring에서는 자동 캐스팅
+	private	Date writeDate; // sql - java.sql.Date : casting - spring에서는 자동 캐스팅
 }

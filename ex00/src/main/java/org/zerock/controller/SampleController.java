@@ -1,9 +1,14 @@
 package org.zerock.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.zerock.domain.SampleDTO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -33,4 +38,34 @@ public class SampleController {
 	public void basicGet2() {
 		log.info("gasic Only Get  -------------------------------------------");
 	}
+	
+	// get 방식 매핑
+	@GetMapping("/ex01")
+	// property(VO = DTO) 로 넘어오는 데이터 받기 ( setter 이름과 name 이 같으면 자동으로 받는다.)
+	public String ex01(SampleDTO dto) {
+		log.info("ex01 dto - " + dto);
+		// /WEB-INF/views/ + ex01 + .jsp
+		return "ex01";
+	}
+	// get 방식 매핑
+	@GetMapping("/ex02")
+	// parameter 변수로 받기 - 변수명과 name이 같아야 한다. age가 없으면 오류가 난다.
+	// age가 안들어오면 기본값을 세팅 - 0 
+	public String ex02(@RequestParam("name") String name , 
+			@RequestParam(defaultValue = "0", name = "age") int age) {
+		log.info("ex02().name=" + name + ", age = " + age);
+		return "ex02";
+	}
+	
+	// get 방식 매핑
+	@GetMapping("/ex02List")
+	// parameter 변수로 받기 - 아이디 여러개 를 받어서 처리 - List / 배열
+	public String ex02List(
+			// List로 여러개의 데이터를 받을때 @RequestParam 꼭 필요. 없으면 안 받는다.
+			// 배열로 여러개의 데이터를 받을때 @RequestParam 필요없다.
+		     @RequestParam ArrayList<String> ids , String[] names) {
+		log.info("ex02List().ids" + ids + " , names[] = " + Arrays.toString(names));
+		return "ex02List";
+	}
+	
 }
