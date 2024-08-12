@@ -13,8 +13,41 @@
 </head>
 <body>
 <div class="container">
-	<h1>일반게시판 글 쓰기 폼</h1>
+	<h1>일반게시판 글쓰기 폼</h1>
 	<form action="write.do" method="post">
+		<table>
+			<tr>
+				<th>제목</th>
+				<td>
+				  <input name="title">
+				</td>
+			</tr>
+			<tr>
+				<th>내용</th>
+				<td>
+				  <textarea rows="3" name="content"></textarea>
+				</td>
+			</tr>
+			<tr>
+				<th>작성자</th>
+				<td>
+				 <input name="writer">
+				</td>
+			</tr>
+			<tr>
+				<th>비밀번호</th>
+				<td>
+				 <input name="pw" type="password">
+				</td>
+			</tr>
+			<tr>
+				<th>비밀번호 확인</th>
+				<td>
+				 <input name="pw2" type="password">
+				</td>
+			</tr>
+
+		</table>					
 		<button class="btn btn-dark">등록</button>
 		<a href="#" class="btn btn-dark" onclick="history.back();">취소</a>
 	</form>
