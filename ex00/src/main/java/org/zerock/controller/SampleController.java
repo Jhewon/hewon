@@ -3,12 +3,14 @@ package org.zerock.controller;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.zerock.domain.SampleDTO;
+import org.zerock.domain.todoDTO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -66,6 +68,13 @@ public class SampleController {
 		     @RequestParam ArrayList<String> ids , String[] names) {
 		log.info("ex02List().ids" + ids + " , names[] = " + Arrays.toString(names));
 		return "ex02List";
+	}
+	// get 방식 매핑
+	@GetMapping("/ex03")
+	// parameter 변수로 받기 - DTO에 @DateTimeFormat(pattern = "yyyy-MM-dd")
+	public String ex03(todoDTO dto) {
+		log.info("ex03().dto = " + dto);
+		return "ex03";
 	}
 	
 }
