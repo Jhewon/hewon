@@ -7,4 +7,9 @@
   <select id="list" resultType="org.zerock.board.vo.BoardVO">
     SELECT no,title,writer,writeDate,hit FROM board order by no desc
   </select>
+  
+  <insert id="write">
+  	insert into board(no,title,content,writer,pw)
+  	values(board_seq.nextval,#{title},#{content},#{writer},#{pw})
+  </insert>
 </mapper>

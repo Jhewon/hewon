@@ -9,5 +9,6 @@ import org.zerock.board.vo.BoardVO;
 public interface BoardMapper {
 	
 	public List<BoardVO> list();
+	public Integer write(BoardVO vo);
 	
 }

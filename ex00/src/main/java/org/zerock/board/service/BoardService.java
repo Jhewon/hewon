@@ -29,4 +29,9 @@ public class BoardService {
 		return boardMapper.list();		
 	}
 	
+	public Integer write(BoardVO vo) {
+		log.info("vo = " + vo);
+		return boardMapper.write(vo);		
+	}
+	
 }

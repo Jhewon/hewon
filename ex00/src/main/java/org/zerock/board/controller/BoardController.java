@@ -44,6 +44,7 @@ public class BoardController {
 	public String write(BoardVO vo) {
 		log.info("write.do()");
 		log.info(vo);
+		service.write(vo);
 		return "redirect:list.do";
 	}
 }
