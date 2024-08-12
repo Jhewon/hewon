@@ -5,7 +5,13 @@
 <mapper namespace="org.zerock.board.mapper.BoardMapper">
   
   <select id="list" resultType="org.zerock.board.vo.BoardVO">
-    SELECT no,title,writer,writeDate,hit FROM board order by no desc
+  select no,title,writer,writeDate,hit
+	 from(
+	  select rownum rnum,no,title,writer,writeDate,hit
+		  from(
+		    SELECT no,title,writer,writeDate,hit FROM board order by no desc
+		    )
+	    ) where rnum between 1 and 10
   </select>
   
   <insert id="write">

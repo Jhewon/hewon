@@ -6,36 +6,33 @@
 <head>
 <meta charset="UTF-8">
 <title>일반 게시판</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<jsp:include page="../jsp/weblib.jsp"></jsp:include>
 </head>
 <body>
 <div class="container">
-	<h1>일반 게시판 리스트</h1>
-	<table class="table">
-		<tr>
-			<th>글번호</th>
-			<th>제목</th>
-			<th>작성자</th>
-			<th>작성일</th>
-			<th>조회수</th>
-		</tr>
-		<c:forEach items="${list }" var="vo">
-			<tr>
-				<th>${vo.no }</th>
-				<th>${vo.title }</th>
-				<th>${vo.writer }</th>
-				<th>${vo.writeDate }</th>
-				<th>${vo.hit }</th>
-			</tr>
-		</c:forEach>
-	</table>
-	
-	<a href="view.do" class="btn btn-dark">게시판 상세보기</a>
-	<a href="writeForm.do" class="btn btn-dark">게시판 글 등록</a>
+		<div class="card">
+		  <div class="card-header"><h2>일반 게시판 리스트</h2></div>
+		  <div class="card-body">
+			<c:forEach items="${list }" var="vo">
+				<div class="card dataRow" data-no="${vo,no }">
+				  <div class="card-header">
+					<span class="float-right">조회수 : ${vo.hit }</span>
+					글번호 : ${vo.no }
+				  </div>
+				  <div class="card-body">
+						<pre>${vo.title }</pre>
+				  </div>
+				  <div class="card-footer">
+					<span class="float-right">${vo.writeDate }</span>
+					${vo.writer }
+				  </div>
+				</div>
+			</c:forEach>	
+		  </div>
+		  <div class="card-footer">
+			<a href="writeForm.do" class="btn btn-dark">게시판 글 등록</a>
+		  </div>
+		</div>
 </div>
 </body>
 </html>
