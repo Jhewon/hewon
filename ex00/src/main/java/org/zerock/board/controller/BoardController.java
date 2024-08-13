@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.board.service.BoardService;
 import org.zerock.board.vo.BoardVO;
 
@@ -82,10 +83,14 @@ public class BoardController {
 	
 	// 일반 게시판 글등록 처리
 	@PostMapping("/write.do")
-	public String write(BoardVO vo) {
+	public String write(BoardVO vo, RedirectAttributes rttr) {
 		log.info("write.do()");
 		log.info(vo);
 		service.write(vo);
+		
+		// 처리 결과에 대한 메시지 처리
+		rttr.addFlashAttribute("msg", "일반 게시판 글등록 완료");
+		
 		return "redirect:list.do";
 	}
 	

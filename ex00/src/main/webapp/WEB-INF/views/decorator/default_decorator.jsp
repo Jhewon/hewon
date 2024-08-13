@@ -249,5 +249,3 @@
 	</c:if>
 </body>
 </html>
-
-<% session.removeAttribute("msg"); %>
