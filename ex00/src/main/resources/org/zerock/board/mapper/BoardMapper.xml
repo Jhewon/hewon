@@ -13,15 +13,17 @@
 		    )
 	    ) where rnum between 1 and 10
   </select>
-  
+  <!-- 일반게시판 상세보기 -->
+  <select id="view" resultType="org.zerock.board.vo.BoardVO">
+  	select no,title,content,writer,writeDate,hit from board where no = #{no}
+  </select>
+  <!-- 일반게시판 조회수 증가 -->
+  <update id="inc">
+	update board set hit = hit + 1 where no = #{no}
+  </update>
+  <!-- 일반게시판 글등록 -->
   <insert id="write">
   	insert into board(no,title,content,writer,pw)
   	values(board_seq.nextval,#{title},#{content},#{writer},#{pw})
   </insert>
-  <select id="view" resultType="org.zerock.board.vo.BoardVO">
-  	select no,title,content,writer,writeDate,hit from board where no = #{no}
-  </select>
-<update id="inc">
-	update board set hit = hit + 1 where no = #{no}
-</update>
 </mapper>

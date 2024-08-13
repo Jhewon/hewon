@@ -1,6 +1,5 @@
 package org.zerock.board.controller;
 
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -47,7 +46,7 @@ public class BoardController {
 //		return "board/list";
 //	}
 	
-	
+	// 일반 게시판 리스트
 	// ModelAndView 사용
 	@GetMapping("/list.do")
 	public ModelAndView list(Model model) {
@@ -58,13 +57,22 @@ public class BoardController {
 		mav.setViewName("board/list");
 		return mav;
 	}
-	
+	// 일반 게시판 상세 보기
+	 //Model 사용
+	@GetMapping("/view.do")
+	public String view(Model model , Long no , Long inc) {
+		log.info("view()");
+		model.addAttribute("vo", service.view(no,inc));		
+		return "board/view";
+	}
+	// 일반 게시판 글등록 폼
 	@GetMapping("/writeForm.do")
 	public String writeForm() {
 		log.info("writeForm.do()");
 		return "board/writeForm";
 	}
 	
+	// 일반 게시판 글등록 처리
 	@PostMapping("/write.do")
 	public String write(BoardVO vo) {
 		log.info("write.do()");
@@ -73,11 +81,4 @@ public class BoardController {
 		return "redirect:list.do";
 	}
 	
-	 //Model 사용
-	@GetMapping("/view.do")
-	public String view(Model model , Long no , Long inc) {
-		log.info("view()");
-		model.addAttribute("vo", service.view(no,inc));		
-		return "board/view";
-	}
 }
