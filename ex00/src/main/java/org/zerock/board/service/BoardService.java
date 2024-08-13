@@ -29,6 +29,8 @@ public class BoardService {
 	
 	public List<BoardVO> list(PageObject pageObject) {
 		log.info("list() 실행");
+		// 전체 데이터 개수 구하기
+		pageObject.setTotalRow(boardMapper.getTotalRow(pageObject));
 		return boardMapper.list(pageObject);		
 	}
 	
