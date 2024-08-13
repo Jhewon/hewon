@@ -1,6 +1,8 @@
 package org.zerock.board.controller;
 
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.zerock.board.service.BoardService;
 import org.zerock.board.vo.BoardVO;
+
+import com.webjjang.util.page.PageObject;
+import com.webjjang.util.page.ReplyPageObject;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -49,11 +54,14 @@ public class BoardController {
 	// 일반 게시판 리스트
 	// ModelAndView 사용
 	@GetMapping("/list.do")
-	public ModelAndView list(Model model) {
+	public ModelAndView list(Model model , HttpServletRequest request) throws Exception {
 		log.info("list()");
+		// 페이지 처리를 위한 페이지 객체 생성
+		PageObject pageObject = PageObject.getInstance(request);
 		// ModelAndView 사용
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("list", service.list());
+		mav.addObject("list", service.list(pageObject));
+		mav.addObject("pageObject", pageObject);
 		mav.setViewName("board/list");
 		return mav;
 	}

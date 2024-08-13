@@ -11,7 +11,7 @@
 		  from(
 		    SELECT no,title,writer,writeDate,hit FROM board order by no desc
 		    )
-	    ) where rnum between 1 and 10
+	    ) where rnum between #{startRow} and #{endRow}
   </select>
   <!-- 일반게시판 상세보기 -->
   <select id="view" resultType="org.zerock.board.vo.BoardVO">
