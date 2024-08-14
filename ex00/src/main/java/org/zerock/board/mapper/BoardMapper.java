@@ -22,6 +22,6 @@ public interface BoardMapper {
 	public Integer write(BoardVO vo);
 	// 게시판 글 수정
 	public Integer update(BoardVO vo);
-	// 게시판 글 삭ㅈ[ㅔ
+	// 게시판 글 삭제
 	public Integer delete(BoardVO vo);
 }

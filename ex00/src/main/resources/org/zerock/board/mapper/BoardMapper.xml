@@ -49,6 +49,6 @@
   
   <!-- 글 삭제 -->
   <delete id="delete">
-  	delete from board where no=#{no} and pw = #{pw}
+  	delete from board where no = #{no} and pw = #{pw}
   </delete>
 </mapper>

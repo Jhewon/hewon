@@ -106,13 +106,28 @@ public class BoardController {
 	public String update(BoardVO vo, RedirectAttributes rttr) {
 		log.info("update.do()");
 		log.info(vo);
-		service.update(vo);
 		if(service.update(vo) == 1)
 		// 처리 결과에 대한 메시지 처리
 			rttr.addFlashAttribute("msg", "일반 게시판 글수정 완료");
 		else
 			rttr.addFlashAttribute("msg", "일반 게시판 글수정 불발 글번호나 비밀번호 확인 바람");
 		return "redirect:view.do?no=" + vo.getNo()+"&inc=0";
+	}
+	
+	// 일반 게시판 삭제 처리
+	@PostMapping("/delete.do")
+	public String delete(BoardVO vo, RedirectAttributes rttr) {
+		log.info("delete.do()");
+		log.info(vo);
+		// 처리 결과에 대한 메시지 처리
+		if(service.delete(vo) == 1) {
+			rttr.addFlashAttribute("msg", "일반 게시판 삭제 완료");
+			return "redirect:list.do";
+		}
+		else {
+			rttr.addFlashAttribute("msg", "일반 게시판 삭제 불발 글번호나 비밀번호 확인 바람");
+		return "redirect:view.do?no="+vo.getNo()+"&inc=0";
+		}
 	}
 	
 }
