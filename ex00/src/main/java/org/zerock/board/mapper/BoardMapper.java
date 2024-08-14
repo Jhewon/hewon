@@ -20,6 +20,8 @@ public interface BoardMapper {
 	public BoardVO view(Long no);
 	// 게시판 글등록
 	public Integer write(BoardVO vo);
-	
+	// 게시판 글 수정
 	public Integer update(BoardVO vo);
+	// 게시판 글 삭ㅈ[ㅔ
+	public Integer delete(BoardVO vo);
 }

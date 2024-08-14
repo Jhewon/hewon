@@ -42,7 +42,13 @@
   	insert into board(no,title,content,writer,pw)
   	values(#{no},#{title},#{content},#{writer},#{pw})
   </insert>
+  <!-- 일반  글수정  -->
   <update id="update" >
   	update board set title = #{title} , content = #{content} , writer = #{writer} where no = #{no} and pw = #{pw}
   </update>
+  
+  <!-- 글 삭제 -->
+  <delete id="delete">
+  	delete from board where no=#{no} and pw = #{pw}
+  </delete>
 </mapper>

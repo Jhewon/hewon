@@ -27,7 +27,7 @@
 	<a href="updateForm.do?no=${vo.no }" class="btn btn-dark">글 수정</a>
 	<a href="list.do" class="btn btn-dark">글 목록</a>
 	<a href="list.do" class="btn btn-dark">취소</a>
-	<form action="#" method="post">
+	<form action="delete.do" method="post">
 		<button class="btn btn-dark float-right">삭제</button>		
 	</form>
 </div>
