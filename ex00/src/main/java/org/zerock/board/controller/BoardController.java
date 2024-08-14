@@ -107,12 +107,10 @@ public class BoardController {
 	public String update(BoardVO vo, RedirectAttributes rttr) {
 		log.info("update.do()");
 		log.info(vo);
-		service.write(vo);
-		
+		service.update(vo);
 		// 처리 결과에 대한 메시지 처리
-		rttr.addFlashAttribute("msg", "일반 게시판 글등록 완료");
-		
-		return "redirect:view.do?=" + vo.getNo();
+		rttr.addFlashAttribute("msg", "일반 게시판 글수정 완료");
+		return "redirect:view.do?no=" + vo.getNo()+"&inc=0";
 	}
 	
 }

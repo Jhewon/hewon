@@ -21,5 +21,5 @@ public interface BoardMapper {
 	// 게시판 글등록
 	public Integer write(BoardVO vo);
 	
-	public BoardVO update(BoardVO vo);
+	public Integer update(BoardVO vo);
 }

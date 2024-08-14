@@ -42,7 +42,7 @@
   	insert into board(no,title,content,writer,pw)
   	values(#{no},#{title},#{content},#{writer},#{pw})
   </insert>
-  <update id="update">
+  <update id="update" >
   	update board set title = #{title} , content = #{content} , writer = #{writer} where no = #{no} and pw = #{pw}
   </update>
 </mapper>

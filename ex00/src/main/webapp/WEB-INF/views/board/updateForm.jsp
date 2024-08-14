@@ -15,7 +15,7 @@
 <div class="container">
 	<h1>일반게시판 글쓰기 폼</h1>
 	<form action="update.do" method="post">
-	<input value="${vo.no }" type="hidden">
+	<input value="${vo.no }" type="hidden" name="no">
 		<div class="form-group">
 			<label for="title">제목</label>
 			<input class="form-control" name="title" id="title" required value="${vo.title }" >
