@@ -1,5 +1,7 @@
 package org.zerock.controller;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+
 import java.security.spec.RSAOtherPrimeInfo;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,10 +11,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.zerock.domain.SampleDTO;
 import org.zerock.domain.todoDTO;
 
@@ -103,6 +107,29 @@ public class SampleController {
 		headers.add("content-Type", "application/json;charset=utf-8");
 		
 		return new ResponseEntity<String>(msg,headers,HttpStatus.OK);
+	}
+	
+	// get 방식 매핑 - 파일 올리기 폼 이동
+	@GetMapping("/exUpload")
+	public void exUpload() {
+		log.info("/exUpload----------");
+	}
+	
+	// post 방식 매핑 - 파일 올리기 처리(저장 제외)
+	@PostMapping("/exUploadPost")
+	public void exUploadPost(@RequestParam ArrayList<MultipartFile> files) {
+		
+		for(MultipartFile file : files) {
+			log.info("--------------------");
+			log.info("name : " + file.getOriginalFilename());
+			log.info("silze : " + file.getSize());
+		}
+		
+		files.forEach(file -> {
+			log.info("------------------------------");
+			log.info("name : " + file.getOriginalFilename());
+			log.info("size : " + file.getSize());
+		});
 	}
 	
 	
