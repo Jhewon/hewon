@@ -45,4 +45,9 @@ public class BoardService {
 			boardMapper.inc(no);
 		return boardMapper.view(no);
 	}
+	
+	public BoardVO update(BoardVO vo) {
+		log.info("update()");
+		return boardMapper.update(vo);
+	}
 }

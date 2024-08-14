@@ -94,4 +94,25 @@ public class BoardController {
 		return "redirect:list.do";
 	}
 	
+	// 일반 게시판 글수정 폼
+	@GetMapping("/updateForm.do")
+	public String updateForm(Long no , Model model) {
+		log.info("updateForm.do()");
+		model.addAttribute("vo", service.view(no,0L));		
+		return "board/updateForm";
+	}
+	
+	// 일반 게시판 글수정 처리
+	@PostMapping("/update.do")
+	public String update(BoardVO vo, RedirectAttributes rttr) {
+		log.info("update.do()");
+		log.info(vo);
+		service.write(vo);
+		
+		// 처리 결과에 대한 메시지 처리
+		rttr.addFlashAttribute("msg", "일반 게시판 글등록 완료");
+		
+		return "redirect:view.do?=" + vo.getNo();
+	}
+	
 }
