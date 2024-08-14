@@ -26,6 +26,7 @@ public class CommonExceptionAdvice {
 		
 	}
 	
+	// jsp 가 없는경우 처리 안함 - web.xml 에서 처리
 	// 404 error  대한 처리
 	@ExceptionHandler(NoHandlerFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)

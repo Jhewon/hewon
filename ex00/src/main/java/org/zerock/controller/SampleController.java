@@ -64,7 +64,7 @@ public class SampleController {
 	public String ex02(@RequestParam("name") String name , 
 			@RequestParam(defaultValue = "0", name = "age") int age) {
 		log.info("ex02().name=" + name + ", age = " + age);
-		return "ex002";
+		return "ex02";
 	}
 	
 	// get 방식 매핑
