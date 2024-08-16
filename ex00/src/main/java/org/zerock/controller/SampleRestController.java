@@ -7,6 +7,9 @@ import java.util.Map;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.zerock.domain.SampleDTO;
@@ -22,6 +25,8 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/sampleRest")
 @Log4j
 public class SampleRestController {
+
+	// ----------------------------------- Response 처리(서버 -> 클라이언트) -----------------------------------------------------------
 
 	@GetMapping(value =  "/getText" , produces = "text/plain; charset=UTF-8")
 	public String getText() {
@@ -65,5 +70,25 @@ public class SampleRestController {
 		 map.put("pageObject", new PageObject());
 		return map;
 	}
+	
+	// --------------------------------------Request 처리(클라이언트 -> 서버)----------------------------------------------------------------
+	
+	// URI 안에 데이터 포함시켜서 전달하기
+	@GetMapping("/product/{cat}/{pid}")
+	public String[] getPath(@PathVariable("cat") String cat , @PathVariable("pid") Integer pid) {
+		
+		return new String[] {"category : " + cat," product Id : " + pid} ;
+	}
+	
+	
+	// JS 의 JSON 데이터를 만들어서 문자열로 보내면 받을수 있다. 
+	@PostMapping("/sample")
+	public SampleDTO convert(@RequestBody SampleDTO dto) {
+		
+		log.info(dto);
+		
+		return dto;
+	}
+	
 	
 }
