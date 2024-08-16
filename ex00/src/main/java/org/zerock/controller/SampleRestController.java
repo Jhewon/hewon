@@ -41,7 +41,8 @@ public class SampleRestController {
 	public SampleDTO getSample() {
 		
 		return new SampleDTO("홍길동", 10);
-	}
+	}	
+	
 	
 	// List 객체를 제공
 	@GetMapping(value =  "/getList")
@@ -77,7 +78,7 @@ public class SampleRestController {
 	@GetMapping("/product/{cat}/{pid}")
 	public String[] getPath(@PathVariable("cat") String cat , @PathVariable("pid") Integer pid) {
 		
-		return new String[] {"category : " + cat," product Id : " + pid} ;
+		return new String[] {"category : " + cat," product Id : " + pid};
 	}
 	
 	

@@ -8,8 +8,9 @@ import lombok.NoArgsConstructor;
 // 생성자를 이용해서 parameter 로 값을 전달해서 저장 시킨다.
 @AllArgsConstructor
 @NoArgsConstructor
-public class SampleDTO {
-
+public class SampleDTO {	
+	
+	
 	private String name;
 	private int age;
 	

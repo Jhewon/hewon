@@ -30,11 +30,24 @@ $(function(){
 		location = "view.do?no=" + no+"&inc=1";		
 	});
 	
+	const jsonString = "{'name':'aaa','age':0}".replace(/'/g, '"');
+	const jsonObject = JSON.parse(jsonString);
+	
+	console.log(typeof jsonObject);
+	$("#ajaxBtn").click(function() {
+		$("#print").load("/sampleRest/sample", jsonObject,function(data) {
+			console.log(data);
+			
+		});	
+	});
+	
 });
 </script>
 </head>
 <body>
 <div class="container">
+	<button id="ajaxBtn">통신</button>
+	<div id="print"></div>
 		<div class="card">
 		  <div class="card-header"><h2>일반 게시판 리스트</h2></div>
 		  <div class="card-body">
