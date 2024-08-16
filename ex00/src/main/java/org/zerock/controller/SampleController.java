@@ -90,9 +90,10 @@ public class SampleController {
 	// parameter 변수로 받기 - DTO에 @DateTimeFormat(pattern = "yyyy-MM-dd")
 	public @ResponseBody SampleDTO ex06() {
 		log.info("ex06()");
-		SampleDTO dto = new SampleDTO();
-		dto.setName("홍길동");
-		dto.setAge(20);
+		// @DTO에 @AllAgu 가 
+		SampleDTO dto = new SampleDTO("홍길동",10);
+//		dto.setName("홍길동");
+//		dto.setAge(20);
 		return dto;
 	}
 	
