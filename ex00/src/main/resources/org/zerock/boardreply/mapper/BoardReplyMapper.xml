@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.boardreply.mapper.BoardReplyMapper">
+  
+  <!--  일반게시판 댓글 리스트  -->
+  <select id="list" resultType="org.zerock.boardreply.vo.BoardReplyVO">
+  select rno,no,content,id,writeDate,name
+	 from(
+	  select rownum rnum,rno,no,content,id,writeDate,name
+		  from(
+		    SELECT r.rno,r.no,r.content,m.id,r.writeDate,m.name FROM boardId_reply r , member m
+		     where (no = #{no}) and (r.id=m.id)
+		     order by rno desc
+		    )
+	    ) where rnum between #{pageObject.startRow} and #{pageObject.endRow}
+  </select>
+  
+  	<!-- 일반 게시판 댓글 리스트 페이지 처리를 위한 전체 데이터 개수 가져오기 -->
+	<select id="getTotalRow" resultType="Long">
+		select count(*)
+		from boardId_reply
+	</select>
+  
+  <!-- 일반게시판 글등록 -->
+  <insert id="write">
+  <!-- 먼저 boardVO의 no에 setter 를 이용해서 시퀀스 에서 받아온 번호를 새팅해 준다. -->
+  <selectKey keyProperty="no" resultType="Long" order="BEFORE">
+  	select boardId_reply_seq.nextval from dual
+  </selectKey>
+  	insert into boardId_reply(rno,no,content,id)
+  	values(#{rno},#{no},#{content},#{id})
+  </insert>
+  
+  <!-- 일반 댓글 글수정 : 본인 댓글만 수정 -->
+  <update id="update" >
+  	update boardId_replt set  content = #{content} where rno = #{rno} and id = #{id}
+  </update>
+  
+  <!-- 글 삭제 : 본인 댓글만 삭제 가능 -->
+  <delete id="delete">
+  	delete from boardId_reply where rno = #{rno} and id = #{id}
+  </delete>
+</mapper>
