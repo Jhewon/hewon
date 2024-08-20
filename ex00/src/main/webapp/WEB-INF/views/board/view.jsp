@@ -9,6 +9,7 @@
 <title>일반 게시판 글보기</title>
 <style type="text/css">
 </style>
+<script type="text/javascript" src="/js/dateTime.js"></script>
 
 <script type="text/javascript">
 	// 보고 있는 일반 게시판의 글번호를 전역 변수로 지정해 보자.
@@ -19,8 +20,10 @@
 <script type="text/javascript" src="/js/reply.js"></script>
 
 <script type="text/javascript">
-	replyService.list();
+	//replyService.list();
 </script>
+
+<script type="text/javascript" src="/js/replyProcess.js"></script>
 
 <script type="text/javascript">
 $(function(){
@@ -79,7 +82,7 @@ $(function(){
 	</div>
 	<!-- 글보기 card 끝 -->
 	<div>
-	<jsp:include page="boardreply.jsp"></jsp:include>
+	<jsp:include page="boardreply.jsp"/>
 	
 	</div>
 </div>
