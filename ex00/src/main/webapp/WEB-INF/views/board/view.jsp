@@ -77,6 +77,11 @@ $(function(){
 	  	<button class="btn btn-warning" >취소</button>
 	  </div>
 	</div>
+	<!-- 글보기 card 끝 -->
+	<div>
+	<jsp:include page="boardreply.jsp"></jsp:include>
+	
+	</div>
 </div>
 
   <!-- The Modal -->
