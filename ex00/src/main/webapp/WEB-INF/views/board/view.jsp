@@ -7,8 +7,6 @@
 <head>
 <meta charset="UTF-8">
 <title>일반 게시판 글보기</title>
-<jsp:include page="../jsp/weblib.jsp"/>
-
 <style type="text/css">
 </style>
 

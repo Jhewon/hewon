@@ -8,8 +8,6 @@
 <head>
 <meta charset="UTF-8">
 <title>일반 게시판 리스트</title>
-<jsp:include page="../jsp/weblib.jsp"/>
-
 <style type="text/css">
 .dataRow>.card-header{
 	background: #e0e0e0
