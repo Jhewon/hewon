@@ -12,26 +12,27 @@ import com.webjjang.util.page.PageObject;
 
 import lombok.Setter;
 
-// 자동 생성
+// 자동 생성 - @Controller, @RestController, @Service, @Repository, @Component, @~Advice
 @Service
-@Qualifier("BoardReplyImpl")
+@Qualifier("boardReplyServiceImpl")
 public class BoardReplyServiceImpl implements BoardReplyService {
-
+	
 	// 자동 DI
-	@Setter(onMethod_ =  @Autowired)
+	@Setter(onMethod_ = @Autowired)
 	private BoardReplyMapper mapper;
-	
-	
+
 	@Override
 	public List<BoardReplyVO> list(PageObject pageObject, Long no) {
 		// TODO Auto-generated method stub
+		// 전체 데이터 세팅
+		pageObject.setTotalRow(mapper.getTotalRow(pageObject, no)); // 페이지 처리를 위해서
 		return mapper.list(pageObject, no);
 	}
 
 	@Override
 	public Integer write(BoardReplyVO vo) {
 		// TODO Auto-generated method stub
-		return mapper.update(vo);
+		return mapper.write(vo);
 	}
 
 	@Override

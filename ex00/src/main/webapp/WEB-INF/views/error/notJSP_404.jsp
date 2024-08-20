@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>NotFound404</title>
+<title>Not Fount JSP</title>
 </head>
 <body>
-<h1>JSP 파일이 존재 하지 않습니다!!!!!!!!!!!!!</h1>
+<h2>JSP 파일이 존재하지 않습니다.</h2>
 </body>
 </html>

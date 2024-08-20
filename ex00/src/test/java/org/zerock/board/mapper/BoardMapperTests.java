@@ -11,28 +11,26 @@ import com.webjjang.util.page.PageObject;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
-
-//Mapper 메소드 동작 테스트(단위테스트)
+// Mapper 메서드 동작 테스트(단위테스트)
 //test에 사용되는 클래스
 @RunWith(SpringJUnit4ClassRunner.class)
-//설정 파일 지정 -> 서버와 상관이 없음. : root-context.xml으로 직접 지정
+//설정 파일 지정 -> 서버와 상관이 없음. : root-context.xml
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
-//로그 객체 생성 -> lombok : log 이름으로 처리
+//log 객체 생성 -> lombok : log 이름으로  처리
 @Log4j
 public class BoardMapperTests {
-	
-	// lombok setter 를 이용해서 Spring 의 @Autowired 를 자동 DI 적용
+
+	// lombok의 setter를 이용해서 Spring의 Autowired를 이용한 자동 DI 적용.
 	@Setter(onMethod_ = @Autowired)
 	private BoardMapper mapper;
-	
 	
 	// list() test
 	@Test
 	public void testList() {
 		
-		log.info("--------------------------[Board.List() testing]--------------------------");
+		log.info("[일반 게시판 리스트(list()) Test]------------------------------------");
 		
-		// 필요한 데이터(파라메터로 넘겨지는 데이터)는 하드코딩 한다.
+		// 필요한 데이터(파라메터로 넘겨지는 데이터)는 하드 코딩한다.
 		// pageObject 생성
 		PageObject pageObject = new PageObject();
 		log.info(mapper.list(pageObject));
@@ -40,34 +38,39 @@ public class BoardMapperTests {
 	
 	// getTotalRow() test
 	@Test
-	public void testTotalRow() {
+	public void testGetTotalRow() {
 		
-		log.info("--------------------------[Board.TotalRow() testing]--------------------------");
+		log.info("[일반 게시판 리스트 글의 개수(getTotalRow()) Test]------------------------------------");
 		
-		// 필요한 데이터(파라메터로 넘겨지는 데이터)는 하드코딩 한다.
+		// 필요한 데이터(파라메터로 넘겨지는 데이터)는 하드 코딩한다.
 		// pageObject 생성
 		PageObject pageObject = new PageObject();
 		log.info(mapper.getTotalRow(pageObject));
 	}
-	// inc() test
+	
+	
+	// increase() test
 	@Test
-	public void testinc() {
+	public void testIncrease() {
 		
-		log.info("--------------------------[Board.inc() testing]--------------------------");
+		log.info("[일반 게시판 글보기 조회수 1 증가(increase()) Test]------------------------------------");
 		
-		// 필요한 데이터(파라메터로 넘겨지는 데이터)는 하드코딩 한다.
-		Long no = 81L;
-		log.info(mapper.inc(no));
+		// 필요한 데이터(파라메터로 넘겨지는 데이터)는 하드 코딩한다.
+		// no 생성
+		Long no = 175L;
+		log.info(mapper.increase(no));
 	}
+	
 	// view() test
 	@Test
-	public void testview() {
+	public void testView() {
 		
-		log.info("--------------------------[Board.view() testing]--------------------------");
+		log.info("[일반 게시판 글보기 (view()) Test]------------------------------------");
 		
-		// 필요한 데이터(파라메터로 넘겨지는 데이터)는 하드코딩 한다.
-		Long no = 81L;
-		log.info(mapper.inc(no));
+		// 필요한 데이터(파라메터로 넘겨지는 데이터)는 하드 코딩한다.
+		// no 생성
+		Long no = 175L;
+		log.info(mapper.view(no));
 	}
 	
 }

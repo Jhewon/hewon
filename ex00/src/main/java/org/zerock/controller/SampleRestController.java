@@ -18,71 +18,72 @@ import com.webjjang.util.page.PageObject;
 
 import lombok.extern.log4j.Log4j;
 
-
-// @Controller , @RestController  - uri 와 관련. 
-// @RestController 에는 기본이 @ResponseBody이므로 생략 한다. - 전달되는 데이터가 순수한 데이터 이다.
+// @Controller, @RestController - uri와 관련.
+// @RestController에는 기본이 @ResponseBody이므로 생략한다. 전달되는 데이터가 순수한 데이터이다.
 @RestController
 @RequestMapping("/sampleRest")
 @Log4j
 public class SampleRestController {
 
-	// ----------------------------------- Response 처리(서버 -> 클라이언트) -----------------------------------------------------------
-
-	@GetMapping(value =  "/getText" , produces = "text/plain; charset=UTF-8")
+	//------------------ response 처리(서버 -> 클라이언트) --------------------------
+	
+	@GetMapping(value = "/getTest", produces = "text/plain; charset=UTF-8")
 	public String getText() {
-		
-		log.info("MINE TYPE : " + MediaType.TEXT_PLAIN_VALUE);
 		
 		return "안녕하세요";
 	}
 	
-	// DTO 객체를  json 과 xml 데이터로 처리 (제공)
-	@GetMapping(value = "/getSample" , produces = {MediaType.APPLICATION_JSON_UTF8_VALUE , MediaType.APPLICATION_XML_VALUE})
+	// DTO 객체를 json과 xml 데이터로 처리(제공)
+	@GetMapping(value = "/getSample",
+			produces = {
+					MediaType.APPLICATION_JSON_UTF8_VALUE,
+					MediaType.APPLICATION_XML_VALUE
+			})
 	public SampleDTO getSample() {
-		
 		return new SampleDTO("홍길동", 10);
-	}	
+	}
 	
-	
-	// List 객체를 제공
-	@GetMapping(value =  "/getList")
+	// List 객체를 xml과 json 데이터 제공
+	@GetMapping("/getList")
 	public List<SampleDTO> getList(){
+		
 		List<SampleDTO> list = new ArrayList<>();
-		list.add(new SampleDTO("홍길동", 12));
-		list.add(new SampleDTO("홍길", 12));
+		list.add(new SampleDTO("홍길동", 10));
+		list.add(new SampleDTO("손흥민", 33));
 		
 		return list;
 	}
 	
-	//Map 객체를 xml , json 데이터 제공
-	@GetMapping(value =  "/getMap")
-	public Map<String , Object> getMap(){
+	// Map 객체를 xml, json 데이터 제공
+	@GetMapping("/getMap")
+	public Map<String, Object> getMap(){
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		List<SampleDTO> list = new ArrayList<>();
-		list.add(new SampleDTO("홍길동", 12));
-		list.add(new SampleDTO("홍길", 12));
+		list.add(new SampleDTO("홍길동", 10));
+		list.add(new SampleDTO("손흥민", 33));
 		
-		// map.put("dto", new SampleDTO("홍길동", 12));
+		// map.put("dto", new SampleDTO("홍길동", 10));
+
+		// 특성이 서로 틀린 여러개의 데이터를 담아서 넘길 때
+		map.put("list", list);
+		map.put("pageObject", new PageObject());
 		
-		// 특성이 서로 툴란 여러개의 데이터를 담아서 넘길때
-		 map.put("list",list);
-		 map.put("pageObject", new PageObject());
 		return map;
 	}
 	
-	// --------------------------------------Request 처리(클라이언트 -> 서버)----------------------------------------------------------------
+	//------------------ request 처리(클라이언트 -> 서버) --------------------------
 	
 	// URI 안에 데이터 포함시켜서 전달하기
-	@GetMapping("/product/{cat}/{pid}")
-	public String[] getPath(@PathVariable("cat") String cat , @PathVariable("pid") Integer pid) {
+	@GetMapping("/prodect/{cat}/{pid}")
+	public String[] getPath(@PathVariable("cat") String cat,
+			@PathVariable("pid") Integer pid) {
 		
-		return new String[] {"category : " + cat," product Id : " + pid};
+		return new String[] {"category : " + cat,"prodectid : " + pid};
 	}
 	
-	
-	// JS 의 JSON 데이터를 만들어서 문자열로 보내면 받을수 있다. 
+	// JS의 JSON 데이터를 만들어서 문자열로 보내면 받을 수 있다.
 	@PostMapping("/sample")
 	public SampleDTO convert(@RequestBody SampleDTO dto) {
 		
@@ -90,6 +91,5 @@ public class SampleRestController {
 		
 		return dto;
 	}
-	
 	
 }

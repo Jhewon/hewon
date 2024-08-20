@@ -13,9 +13,8 @@
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 		<!-- 현재 진행하고 있는 프로젝트의 절대 위치로 변경해서 사용하셔야만 합니다. -->
-		<project.basedir>C:\jhw\workspace\spring\ex00</project.basedir>
+		<project.basedir>D:\leeyh\2404\workspace\spring\ex00</project.basedir>
 	</properties>
-	
 	<dependencies>
 		<!-- Spring -->
 		<dependency>
@@ -36,63 +35,19 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 		
-		<!-- test -->
+		<!-- test -->		
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-		
-		<!-- lombok -->
+				
 		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.18.0</version>
-<!-- 			<scope>provided</scope> -->
-		</dependency>    
-		
-		<!-- jdbc -->   
-		<dependency>
-  			<groupId>com.oracle.database.jdbc</groupId>
-  			<artifactId>ojdbc6</artifactId>
-  			<version>11.2.0.4</version>
-		</dependency>	
-		
-		<!-- HikariCP -->
-		<dependency>
-  			<groupId>com.zaxxer</groupId>
-  			<artifactId>HikariCP</artifactId>
-  			<version>2.7.8</version>
+		  <groupId>org.projectlombok</groupId>
+		  <artifactId>lombok</artifactId>
+		  <version>1.18.0</version>
 		</dependency>
-		
-		<!-- mybatis -->
-		<dependency>
-  			<groupId>org.mybatis</groupId>
-  			<artifactId>mybatis</artifactId>
-  			<version>3.4.6</version>
-		</dependency>
-		<dependency>
-  			<groupId>org.mybatis</groupId>
-  			<artifactId>mybatis-spring</artifactId>
-  			<version>1.3.2</version>
-		</dependency>
-		<dependency>
-  			<groupId>org.springframework</groupId>
-  			<artifactId>spring-tx</artifactId>
-  			<version>${org.springframework-version}</version>
-		</dependency>
-		<dependency>
-  			<groupId>org.springframework</groupId>
-  			<artifactId>spring-jdbc</artifactId>
-  			<version>${org.springframework-version}</version>
-		</dependency>
-		<!-- DB 로그 출력 라이브러리 -->
-		<dependency>
-  			<groupId>org.bgee.log4jdbc-log4j2</groupId>
-  			<artifactId>log4jdbc-log4j2-jdbc4</artifactId>
-  			<version>1.16</version>
-		</dependency>
-		
+				
 		<!-- AspectJ -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
@@ -158,13 +113,11 @@
 			<version>2.5</version>
 			<scope>provided</scope>
 		</dependency>
-		 -->
-		<!-- Servlet -->
+		-->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
@@ -184,53 +137,97 @@
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
 			<scope>test</scope>
+		</dependency>        
+
+		<!-- DB 관련 라이브러리 -->
+		<dependency>
+		  <groupId>com.oracle.database.jdbc</groupId>
+		  <artifactId>ojdbc6</artifactId>
+		  <version>11.2.0.4</version>
 		</dependency>
-	 		<!-- 페이지 처리 --> 
-<!-- 		<dependency> -->
+
+		<dependency>
+		  <groupId>com.zaxxer</groupId>
+		  <artifactId>HikariCP</artifactId>
+		  <version>2.7.8</version>
+		</dependency>
+
+		<dependency>
+		  <groupId>org.mybatis</groupId>
+		  <artifactId>mybatis</artifactId>
+		  <version>3.4.6</version>
+		</dependency>
+		
+		<dependency>
+		  <groupId>org.mybatis</groupId>
+		  <artifactId>mybatis-spring</artifactId>
+		  <version>1.3.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+				
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+				
+	<!-- DB 로그 출력 라이브러리 -->
+	<dependency>
+	  <groupId>org.bgee.log4jdbc-log4j2</groupId>
+	  <artifactId>log4jdbc-log4j2-jdbc4</artifactId>
+	  <version>1.16</version>
+	</dependency>
+
+	<!-- 페이지 처리 -->
+<!-- 	<dependency> -->
 <!-- 		<groupId>com.webjjang</groupId> -->
 <!-- 		<artifactId>util.PageObject</artifactId> -->
 <!-- 		<version>2.1</version> -->
 <!-- 		<scope>system</scope> -->
-	 		<!-- lombok lib를 설치하면 project.basedir 프로퍼티가 사라져서 오류가 난다. 해결 : 프로퍼트 등록 해준다. --> 
+<!-- lombok lib를 설치하면 project.basedir 프로퍼티가 사라져서 오류가 난다. -->
+<!-- 		 해결 : 프로퍼트 등록 해준다. -->
 <!-- 		<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/pageObject2.1.jar</systemPath> -->
-<!-- 		</dependency> -->
+<!-- 	</dependency> -->
 
-		<!-- https://mvnrepository.com/artifact/opensymphony/sitemesh -->
 		<dependency>
-		    <groupId>opensymphony</groupId>
-		    <artifactId>sitemesh</artifactId>
-		    <version>2.4.2</version>
+		  <groupId>opensymphony</groupId>
+		  <artifactId>sitemesh</artifactId>
+		  <version>2.4.2</version>
 		</dependency>
-		<!-- VO 객체를 JSON 데이터 문자열로 만들어 주는 라이브러리 -->
+
+		<!-- VO 객체를 JSON 데이터 문자열로 만들어 주는 라이브러리 - *.json -->
 		<dependency>
-		    <groupId>com.fasterxml.jackson.core</groupId>
-		    <artifactId>jackson-databind</artifactId>
-		    <version>2.9.6</version>
-		</dependency>	
-		<!-- VO 객체를 JSON 데이터 문자열로 만들어 주는 라이브러리 : 기본 - ~ .xml -->
-		<dependency>
-		    <groupId>com.fasterxml.jackson.dataformat</groupId>
-		    <artifactId>jackson-dataformat-xml</artifactId>
-		    <version>2.9.6</version>
-		</dependency>	
+		  <groupId>com.fasterxml.jackson.core</groupId>
+		  <artifactId>jackson-databind</artifactId>
+		  <version>2.9.6</version>
+		</dependency>
 		
+		<!-- VO 객체를 XML 데이터 문자열로 만들어 주는 라이브러리 : 기본 - *.xml -->
+		<dependency>
+		  <groupId>com.fasterxml.jackson.dataformat</groupId>
+		  <artifactId>jackson-dataformat-xml</artifactId>
+		  <version>2.9.6</version>
+		</dependency>
+		
+		<!-- fileupload 관련 -->
+		<dependency>
+		  <groupId>commons-fileupload</groupId>
+		  <artifactId>commons-fileupload</artifactId>
+		  <version>1.3.3</version>
+		</dependency>
 		
 		<dependency>
 		  <groupId>com.google.code.gson</groupId>
 		  <artifactId>gson</artifactId>
 		  <version>2.8.2</version>
 		</dependency>
-			
-	
-		<!-- 파일 업로드 관련 라이브러리 -->
-		<dependency>
-		    <groupId>commons-fileupload</groupId>
-		    <artifactId>commons-fileupload</artifactId>
-		    <version>1.3.3</version>
-		</dependency>
-	
+		
 	</dependencies>
-	
     <build>
         <plugins>
             <plugin>

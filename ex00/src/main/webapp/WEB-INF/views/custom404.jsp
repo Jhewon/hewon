@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>404</title>
+<title>Not Fount Page</title>
 </head>
 <body>
-<h1>해당 URL	은 존재 하지 않습니다!!</h1>
+<h3>해당 URL은 존재하지 않습니다.</h3>
 </body>
 </html>

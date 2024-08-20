@@ -11,11 +11,17 @@ import com.webjjang.util.page.PageObject;
 @Repository
 public interface BoardReplyMapper {
 
-	// 1-2.  전체 데이터 갯수
-	public Long getTotalRow(PageObject pageObject);
+	// 1-1. 전체 데이터 개수
+	public Long getTotalRow(
+			@Param("pageObject") PageObject pageObject,
+			@Param("no") Long no);
+
 	// 1-2. list
-	// 메소드에 처리 되는 데이터는 기본이 1개이다. 2개 이상일 경우 @Param 을 사용. map 으로 만들어서 1개를 넘긴다.
-	public List<BoardReplyVO> list(@Param("pageObject") PageObject pageObject , @Param("no") Long no);
+	// 메서드에 처리되는 데이터는 기본이 1개이다.
+	// 2개 이상인 경우 @Param 을 사용. map으로 만들어서 1개를 넘긴다.
+	public List<BoardReplyVO> list(
+			@Param("pageObject") PageObject pageObject,
+			@Param("no") Long no);
 	// 2. write
 	public Integer write(BoardReplyVO vo);
 	// 3. update

@@ -182,7 +182,8 @@
 			  	<!-- 새로운 메시지 처리 -->
 			    <li class="nav-item">
 			      <span class="nav-link">
-			      	<span class="badge badge-pill badge-danger" id="newMsgCnt">
+			      	<span class="badge badge-pill badge-danger"
+			      	 id="newMsgCnt">
 			      		${login.newMsgCnt}
 			      	</span>
 			      </span>
@@ -249,3 +250,4 @@
 	</c:if>
 </body>
 </html>
+

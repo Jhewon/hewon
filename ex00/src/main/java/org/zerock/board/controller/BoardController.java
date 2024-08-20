@@ -1,6 +1,5 @@
 package org.zerock.board.controller;
 
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,123 +9,127 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+// import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.board.service.BoardService;
 import org.zerock.board.vo.BoardVO;
 
 import com.webjjang.util.page.PageObject;
 
+import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
-
-//자동 생성을 위한 어노테이션
-//-@Controller - url : HTML, @Service - 처리 ,@Repository - 데이터 저장,
-//@Component - 구성체 ,@RestController - url : data : ajax, @~Advice - 예외 처리
 @Controller
 @RequestMapping("/board")
 @Log4j
 public class BoardController {
-	
-	//자동 DI
-//	@Setter(onMethod_ = @Autowired)
+
+	// 자동 DI
+	// @Setter(onMethod_ = @Autowired)
+	// Type이 같으면 식별할 수 있는 문자열 지정 - id를 지정
 	@Autowired
 	@Qualifier("boardServiceImpl")
 	private BoardService service;
 	
-	// request 사용
-//	@GetMapping("/list.do")
-//	public String list(HttpServletRequest request) {
-//		log.info("list()");
-//		request.setAttribute("list", service.list());		
-//		return "board/list";
-//	}
-	
-	// Model 사용
-//	@GetMapping("/list.do")
-//	public String list(Model model) {
-//		log.info("list()");
-//		// model 에 담으면 request에 자동으로 담기게 된다. - 처리된 데이터를  model 에 저장
-//		model.addAttribute("list", service.list());		
-//		return "board/list";
-//	}
-	
-	// 일반 게시판 리스트
-	// ModelAndView 사용
+	//--- 일반 게시판 리스트 ------------------------------------
 	@GetMapping("/list.do")
-	public ModelAndView list(Model model , HttpServletRequest request) throws Exception {
-		log.info("list()");
-		// 페이지 처리를 위한 페이지 객체 생성
+	// public ModelAndView list(Model model) {
+	public String list(Model model, HttpServletRequest request)
+			throws Exception {
+	//	public String list(HttpServletRequest request) {
+		log.info("list.do");
+		// request.setAttribute("list", service.list());
+		
+		// 페이지 처리를 위한 객체 생겅
 		PageObject pageObject = PageObject.getInstance(request);
-		// ModelAndView 사용
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("list", service.list(pageObject));
-		mav.addObject("pageObject", pageObject);
-		mav.setViewName("board/list");
-		return mav;
+		
+		// model에 담으로 request에 자동을 담기게 된다. - 처리된 데이터를 Model에 저장
+		model.addAttribute("list", service.list(pageObject));
+		log.info(pageObject);
+		model.addAttribute("pageObject", pageObject);
+		return "board/list";
+		
+		// ModelAndView
+//		ModelAndView mav = new ModelAndView();
+//		mav.addObject("list", service.list());
+//		mav.setViewName("board/list");
+//		
+//		return mav;
+		
 	}
-	// 일반 게시판 상세 보기
-	 //Model 사용
+	
+	//--- 일반 게시판 글보기 ------------------------------------
 	@GetMapping("/view.do")
-	public String view(Model model , Long no , Long inc) {
-		log.info("view()");
-		model.addAttribute("vo", service.view(no,inc));		
+	public String view(Model model, Long no, int inc) {
+		log.info("view.do");
+		
+		model.addAttribute("vo", service.view(no, inc));
+		
 		return "board/view";
 	}
-	// 일반 게시판 글등록 폼
+	
+	//--- 일반 게시판 글등록 폼 ------------------------------------
 	@GetMapping("/writeForm.do")
 	public String writeForm() {
-		log.info("writeForm.do()");
+		log.info("writeForm.do");
 		return "board/writeForm";
 	}
 	
-	// 일반 게시판 글등록 처리
+	//--- 일반 게시판 글등록 처리 ------------------------------------
 	@PostMapping("/write.do")
 	public String write(BoardVO vo, RedirectAttributes rttr) {
-		log.info("write.do()");
+		log.info("write.do");
 		log.info(vo);
 		service.write(vo);
 		
 		// 처리 결과에 대한 메시지 처리
-		rttr.addFlashAttribute("msg", "일반 게시판 글등록 완료");
+		rttr.addFlashAttribute("msg", "일반 게시판 글등록이 되었습니다.");
 		
 		return "redirect:list.do";
 	}
 	
-	// 일반 게시판 글수정 폼
+	//--- 일반 게시판 글수정 폼 ------------------------------------
 	@GetMapping("/updateForm.do")
-	public String updateForm(Long no , Model model) {
-		log.info("updateForm.do()");
-		model.addAttribute("vo", service.view(no,0L));		
+	public String updateForm(Long no, Model model) {
+		log.info("updateForm.do");
+		
+		model.addAttribute("vo", service.view(no, 0));
+		
 		return "board/updateForm";
 	}
 	
-	// 일반 게시판 글수정 처리
+	//--- 일반 게시판 글수정 처리 ------------------------------------
 	@PostMapping("/update.do")
 	public String update(BoardVO vo, RedirectAttributes rttr) {
-		log.info("update.do()");
+		log.info("update.do");
 		log.info(vo);
 		if(service.update(vo) == 1)
-		// 처리 결과에 대한 메시지 처리
-			rttr.addFlashAttribute("msg", "일반 게시판 글수정 완료");
+			// 처리 결과에 대한 메시지 처리
+			rttr.addFlashAttribute("msg", "일반 게시판 글수정이 되었습니다.");
 		else
-			rttr.addFlashAttribute("msg", "일반 게시판 글수정 불발 글번호나 비밀번호 확인 바람");
-		return "redirect:view.do?no=" + vo.getNo()+"&inc=0";
+			rttr.addFlashAttribute("msg",
+					"일반 게시판 글수정이 되지 않았습니다. "
+					+ "글번호나 비밀번호가 맞지 않습니다. 다시 확인하고 시도해 주세요.");
+		
+		return "redirect:view.do?no=" + vo.getNo() + "&inc=0";
 	}
 	
-	// 일반 게시판 삭제 처리
+	
+	//--- 일반 게시판 글삭제 처리 ------------------------------------
 	@PostMapping("/delete.do")
 	public String delete(BoardVO vo, RedirectAttributes rttr) {
-		log.info("delete.do()");
+		log.info("delete.do");
 		log.info(vo);
 		// 처리 결과에 대한 메시지 처리
 		if(service.delete(vo) == 1) {
-			rttr.addFlashAttribute("msg", "일반 게시판 삭제 완료");
+			rttr.addFlashAttribute("msg", "일반 게시판 글삭제가 되었습니다.");
 			return "redirect:list.do";
 		}
 		else {
-			rttr.addFlashAttribute("msg", "일반 게시판 삭제 불발 글번호나 비밀번호 확인 바람");
-		return "redirect:view.do?no="+vo.getNo()+"&inc=0";
+			rttr.addFlashAttribute("msg",
+					"일반 게시판 글삭제가 되지 않았습니다. "
+							+ "글번호나 비밀번호가 맞지 않습니다. 다시 확인하고 시도해 주세요.");
+			return "redirect:view.do?no=" + vo.getNo() + "&inc=0";
 		}
 	}
 	
