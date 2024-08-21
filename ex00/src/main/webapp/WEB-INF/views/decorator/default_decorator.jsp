@@ -214,7 +214,7 @@
 		<p>이 홈페이지의 저작권은 이영환에게 있습니다.</p>
 	</footer>
 	
-	<c:if test="${ !empty msg }">
+	
 		<!-- msg를 표시할 모달 창 -->
 		<!-- The Modal -->
 		<div class="modal" id="msgModal">
@@ -242,6 +242,7 @@
 		</div>
 
 		<!-- 모달을 보이게하는 javascript -->
+		<c:if test="${ !empty msg }">
 		<script type="text/javascript">
 			$(function(){
 				$("#msgModal").modal("show");

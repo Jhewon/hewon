@@ -39,6 +39,7 @@ let replyService = {
 	// 2. 일반 게시판 댓글 등록 처리 함수 - replyService.write(댓글객체, 성공함수, 실패함수);
 	"write" : function(reply, callback, error){
 		console.log("댓글 등록 ----------------------");
+		
 		$.ajax({
 			type : "post", // 데이터 전송 방식  
 			url : "/boardreply/write.do",
@@ -49,12 +50,32 @@ let replyService = {
 				if(callback) callback(result);
 				else alert(result);
 			}
-		});
+		});// end Ajax
 	},
 
 	// 3. 일반 게시판 댓글 수정 처리 함수 - replyService.update(댓글객체, 성공함수, 실패함수);
 	"update" : function(reply, callback, error){
 		console.log("댓글 수정 ----------------------");
+		
+		$.ajax({
+			type : "post", // 데이터 전송 방식  
+			url : "/boardreply/update.do",
+			data : JSON.stringify(reply), // 서버에 전송되는 데이터 - body : rno , content
+			contentType : "application/json; charset=utf-8", // 서버에 전송되는 데이터 타입과 encoding
+			// 성공했을때 함수.
+			success : function(result , status, xhr){
+				if(callback) callback(result);
+				else alert(result);
+			},
+			// 실패했을때 함수
+			error : function(xhr,status,er){
+				console.log("xhr : " + xhr);
+				console.log("status : " + status);
+				console.log("er : " + er);
+				if(error) error(re);
+				else alert("댓글수정에 실패함");
+			} // end error
+		}); // end Ajax
 	},
 
 	// 일반 게시판 댓글 리스트 처리 함수 - replyService.delete(rno, 성공함수, 실패함수);

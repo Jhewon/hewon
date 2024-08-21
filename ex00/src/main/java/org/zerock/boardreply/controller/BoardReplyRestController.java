@@ -71,9 +71,18 @@ public class BoardReplyRestController {
 	}
 	
 	// 3. update - post
-	@PostMapping("/update.do")
-	public Integer update(BoardReplyVO vo) {
-		return 0;
+	@PostMapping(value =  "/update.do" , consumes = "application/json" , produces = "text/plain; charset=UTF-8")
+	public ResponseEntity<String> update(@RequestBody BoardReplyVO vo , HttpSession session) {
+		// 로그인이 되어 있어야 사용 가능
+		vo.setId(getId(session));
+		
+		// 수정 처리 
+		Integer result =  service.update(vo);
+		if(result == 1)
+			return new ResponseEntity<String>("댓글 수정이 되었습니다!",HttpStatus.OK);
+		else 
+			return new ResponseEntity<String>("댓글 수정이 되지않음 --- 확인좀 잘해라",HttpStatus.BAD_REQUEST);
+			
 	}
 	
 	// 4. delete - get

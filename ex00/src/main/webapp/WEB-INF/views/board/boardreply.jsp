@@ -6,7 +6,8 @@
 		  <div class="card-header" style="background: #e0e0e0">
 			<i class="fa fa-comments fa-fw"></i> reply
 			<!-- Button to Open the Modal -->
-				<button type="button" class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#replyModal">
+				<button type="button" class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#replyModal"
+				id="newReplyBtn">
 				  New Reply
 				</button>
 		  </div>
@@ -29,8 +30,9 @@
 </div>
 
 <!-- The Modal -->
-<div class="modal" id="replyModal">
-  <div class="modal-dialog  modal-dialog-centered">
+	<div class="modal" id="replyModal">
+	<input type="hidden" id="replyRno">
+  	<div class="modal-dialog  modal-dialog-centered">
     <div class="modal-content">
 
       <!-- Modal Header -->
@@ -47,6 +49,7 @@
       <!-- Modal footer -->
       <div class="modal-footer">
       <button class="btn btn-dark" id="replyWriteBtn">등록</button>
+      <button class="btn btn-dark" id="replyUpdateBtn">수정</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
       </div>
 

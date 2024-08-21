@@ -13,7 +13,9 @@
   	let mm = dateObj.getMonth() + 1; // 월은 0부터 시작해서 11까지 사용
   	let dd = dateObj.getDate();
   	
-  	return yy + separChar + ((mm > 9 ? "" : "0") + mm) + separChar + ((dd > 9 ? "" : "0") + dd) ;
+  	let dateStr =  yy + separChar + ((mm > 9 ? "" : "0") + mm) + separChar + ((dd > 9 ? "" : "0") + dd) ;
+  	
+  	return dateStr;
   	
   }
  
@@ -27,10 +29,13 @@
 	 	let mi = dateObj.getMinutes();
 	 	let ss = dateObj.getSeconds();
   		
-  		return 
-  		((hh > 9 ? '' : '0') + hh) + ":" 
-  		((mi > 9 ? '' : '0') + mi) + ":" 
+  		// 변수에 저장후 리턴 하면 시간만 나오는게 나온다.
+  		let timeStr = 
+  		((hh > 9 ? '' : '0') + hh) + ":" +
+  		((mi > 9 ? '' : '0') + mi) + ":" +
   		((ss > 9 ? '' : '0') + ss);
+  		
+  		return timeStr;
   }
   
   // 날짜와 시간 표시하는 처리
