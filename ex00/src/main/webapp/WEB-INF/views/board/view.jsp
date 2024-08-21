@@ -14,6 +14,7 @@
 <script type="text/javascript">
 	// 보고 있는 일반 게시판의 글번호를 전역 변수로 지정해 보자.
 	let no = ${vo.no};
+	let replyPage = 1;
 	console.log("전역 변수 no : " + no);
 </script>
 

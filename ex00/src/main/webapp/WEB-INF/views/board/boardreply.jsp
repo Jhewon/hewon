@@ -5,6 +5,10 @@
 		<div class="card">
 		  <div class="card-header" style="background: #e0e0e0">
 			<i class="fa fa-comments fa-fw"></i> reply
+			<!-- Button to Open the Modal -->
+				<button type="button" class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#replyModal">
+				  New Reply
+				</button>
 		  </div>
 		  <div class="card-body"  >
 			<ul class="chat">
@@ -22,4 +26,30 @@
 		  </div>
 		</div>
 	</div>
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="replyModal">
+  <div class="modal-dialog  modal-dialog-centered">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">댓글 등록</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+		<textarea rows="3" class="form-control" id="replyContent" name="replyContent" ></textarea>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+      <button class="btn btn-dark" id="replyWriteBtn">등록</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+      </div>
+
+    </div>
+  </div>
 </div>

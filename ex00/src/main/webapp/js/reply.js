@@ -39,6 +39,17 @@ let replyService = {
 	// 2. 일반 게시판 댓글 등록 처리 함수 - replyService.write(댓글객체, 성공함수, 실패함수);
 	"write" : function(reply, callback, error){
 		console.log("댓글 등록 ----------------------");
+		$.ajax({
+			type : "post", // 데이터 전송 방식  
+			url : "/boardreply/write.do",
+			data : JSON.stringify(reply), // 서버에 전송되는 데이터 - body
+			contentType : "application/json; charset=utf-8", // 서버에 전송되는 데이터 타입과 encoding
+			// 성공했을때 함수.
+			success : function(result , status, xhr){
+				if(callback) callback(result);
+				else alert(result);
+			}
+		});
 	},
 
 	// 3. 일반 게시판 댓글 수정 처리 함수 - replyService.update(댓글객체, 성공함수, 실패함수);
