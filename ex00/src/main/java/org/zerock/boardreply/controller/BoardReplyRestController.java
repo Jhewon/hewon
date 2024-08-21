@@ -75,7 +75,6 @@ public class BoardReplyRestController {
 	public ResponseEntity<String> update(@RequestBody BoardReplyVO vo , HttpSession session) {
 		// 로그인이 되어 있어야 사용 가능
 		vo.setId(getId(session));
-		
 		// 수정 처리 
 		Integer result =  service.update(vo);
 		if(result == 1)
@@ -86,9 +85,16 @@ public class BoardReplyRestController {
 	}
 	
 	// 4. delete - get
-	@GetMapping("/delete.do")
-	public Integer delete(BoardReplyVO vo) {
-		return 0;
+	@GetMapping(value =  "/delete.do", produces = "text/plain; charset=UTF-8")
+	public ResponseEntity<String> delete(BoardReplyVO vo , HttpSession session) {
+		
+		// 로그인이 되어 있어야 사용 가능
+		vo.setId(getId(session));
+		Integer result = service.delete(vo);
+		if(result == 1)
+			return new ResponseEntity<String>("댓글 삭제 되었습니다!",HttpStatus.OK);
+		else 
+			return new ResponseEntity<String>("댓글 삭제가 되지않음 --- 확인좀 잘해라",HttpStatus.BAD_REQUEST);
 	}
 	
 	private String getId(HttpSession session) {

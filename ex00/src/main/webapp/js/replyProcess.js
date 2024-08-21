@@ -28,10 +28,9 @@
 				str += 	"<p><pre class=\"replyContent\">" + list[i].content + "</pre></p>";
 				
 				if(id == list[i].id){
-				str += "<div>";
+				str += "<div class=\"float-right\">";
 				str += "<button class=\"replyUpdateBtn   btn btn-dark btn-sm\">";
 				str += "수정</button>";
-				
 				str += "<button class=\"replyDeleteBtn   btn btn-danger btn-sm\">";
 				str += "삭제</button>";
 				str += "</div>";
@@ -95,9 +94,41 @@
  		 
  	}); // 댓글 수정 끝
  	
- 	// 댓글 삭제 버튼
+ 	// 댓글 수정 이벤트 처리
+ 	$("#replyUpdateBtn").click(function(){
+ 		// 데이터 수집 -> JSON 데이터로 만든다. - rno, content
+ 		let reply = {"rno":$("#replyRno").val() , "content":$("#replyContent").val()};
+ 		
+ 		// 처리 - replyService
+ 		replyService.update(reply, // 서버에 전달되는 데이터
+ 		 function(result){ // 성공 함수
+ 			$("#replyModal").modal("hide");
+ 			//alert(result);
+ 			$("#msgModal .modal-body").text(result);
+ 			$("#msgModal").modal("show");
+ 			// 댓글 리스트 데이터가 변경 되었으므로 리스트를 다시 불러온다.
+ 			showList(replyPage);
+ 			}
+ 		);
+ 	});
+ 	
+ 	
+ 	// 댓글 삭제 버튼 - 처리
  	$(".chat").on("click",".replyDeleteBtn",function(){
- 		alert("삭제 버튼 클릭");
+ 		if(!confirm("정말 삭제 하실런지요...")) return;
+ 		
+ 		// rno 수집
+ 	let rno = $(this).closest("li").data("rno");
+ 		
+ 		// 삭제 처리
+ 		replyService.delete(rno, function(result){ // 성공 함수
+ 			//alert(result);
+ 			$("#msgModal .modal-body").text(result);
+ 			$("#msgModal").modal("show");
+ 			// 댓글 리스트 데이터가 변경 되었으므로 리스트를 다시 불러온다.
+ 			showList(1);
+ 			}
+ 		);
  	}); // 댓글 삭제 끝
  });
  

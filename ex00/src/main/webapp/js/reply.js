@@ -81,6 +81,25 @@ let replyService = {
 	// 일반 게시판 댓글 리스트 처리 함수 - replyService.delete(rno, 성공함수, 실패함수);
 	"delete" : function(rno, callback, error){
 		console.log("댓글 삭제 ----------------------");
+		
+		$.ajax({
+			type : "get", // 데이터 전송 방식  
+			url : "/boardreply/delete.do?rno=" + rno,
+			// 성공했을때 함수.
+			success : function(result , status, xhr){
+				if(callback) callback(result);
+				else alert(result);
+			},
+			// 실패했을때 함수
+			error : function(xhr,status,er){
+				console.log("xhr : " + xhr);
+				console.log("status : " + status);
+				console.log("er : " + er);
+				if(error) error(re);
+				else alert("댓글삭제 에 실패함");
+			} // end error
+		}); // end Ajax
+		
 	}
 
 };
