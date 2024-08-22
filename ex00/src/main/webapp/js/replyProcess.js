@@ -126,15 +126,34 @@
  	let rno = $(this).closest("li").data("rno");
  		
  		// 삭제 처리
- 		replyService.delete(rno, function(result){ // 성공 함수
- 			//alert(result);
- 			$("#msgModal .modal-body").text(result);
- 			$("#msgModal").modal("show");
- 			// 댓글 리스트 데이터가 변경 되었으므로 리스트를 다시 불러온다.
- 			showList(1);
- 			}
- 		);
+	replyService.delete(rno, function(result){ // 성공 함수
+		//alert(result);
+		$("#msgModal .modal-body").text(result);
+		$("#msgModal").modal("show");
+		// 댓글 리스트 데이터가 변경 되었으므로 리스트를 다시 불러온다.
+		showList(1);
+		}
+	);
  	}); // 댓글 삭제 끝
+ 	
+	 // 댓글 페이지 네이션 이벤트 처리
+	 $(".pagination").on("click", "a" , function(){
+	 	 // alert("페이지가 클릭");	
+		 let page = $(this).parent().data("page");
+		 
+		 //if(page == replyPage)
+		 	//alert("이동 페이지(이동안함) : " + page);
+		 //else
+		 	//alert("이동 페이지(이동함) : " + page);
+	 	
+		 if(page != replyPage){ 
+		 	//alert("이동 페이지(이동함) : " + page);
+		 	replyPage = page;
+		 	showList(replyPage);
+		 }
+	 	return false;
+	 });
  });
+
  
  

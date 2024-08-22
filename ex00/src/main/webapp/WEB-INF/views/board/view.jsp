@@ -35,13 +35,6 @@
 $(function(){
 	
 	// 이벤트 처리
-	// 글보기 이동 처리
-	$(".dataRow").click(function(){
-		let no = $(this).data("no");
-		// alert(no);
-		location = "view.do?no=" + no + "&inc=1";
-	});
-	
 	// 글수정 버튼
 	$("#updateBtn").click(function(){
 		location = "updateForm.do?no=${vo.no}";
@@ -51,7 +44,10 @@ $(function(){
 	$("#deleteBtn").click(function(){
 		$("#pw").val("");
 	});
-	
+	// 리스트 버튼 처리
+	$("#listBtn").click(function(){
+		location = "list.do?page=${param.page}&perPageNum=${param.perPageNum}" + "&key=${param.key}&word=${param.word}";
+	});
 });
 </script>
 
@@ -60,8 +56,8 @@ $(function(){
 <div class="container">
 	<div class="card">
 	  <div class="card-header"><h2>일반 게시판 글보기</h2></div>
-	  <div class="card-body">
-			<div class="card dataRow" data-no="${vo.no }">
+	  <div class="card-body" >
+			<div class="card dataRow" data-no="${vo.no }" >
 			  <div class="card-header">
 			  	<span class="float-right">조회수 : ${vo.hit }</span>
 			  	${vo.no }. ${vo.title }
@@ -83,7 +79,7 @@ $(function(){
 		<!-- 모달창은 열어서 비밀번호를 입력 받고 삭제하여 가는 처리 -->
 	  	<button class="btn btn-danger" id="deleteBtn"
 	  	  data-toggle="modal" data-target="#deleteModal">삭제</button>
-	  	<button class="btn btn-warning" >취소</button>
+	  	<button class="btn btn-warning" id="listBtn">리스트</button>
 	  </div>
 	</div>
 	<!-- 글보기 card 끝 -->

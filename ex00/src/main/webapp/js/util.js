@@ -12,21 +12,21 @@
 	// 이전 페이지 처리 :  disabled 추가 여부 - 이전 페이지가 없으면 disabled 붙인다.
 	if(pageObject.startPage == 1) str += " disabled ";
 	
-	str += "\"> <a class=\"page-link\" href=\"#\">Previous</a></li>";
+	str += "\"  data-page=\""+ (pageObject.startPage - 1) +" \"> <a class=\"page-link\" href=\"#\">Previous</a></li>";
 	
 	// startPage 부터 endPage 까지 반복 처리 한다 페이지 만들어 내기
 	for(i = pageObject.startPage; i <= pageObject.endPage; i++){
 		str += "<li class=\"page-item";
-		if(i == pageObject.page) str += " active  ";
-		str += "\"><a class=\"page-link\" href=\"#\">" + i + "</a></li>";
+		if(i == pageObject.page) str += " active ";
+		str += "\" data-page=\""+i+"\"><a class=\"page-link\" href=\"#\">" + i + "</a></li>";
 	} 
 	
 	// 다음 페이지 - endPage 가 10 이면 11로 보내는 처리
 	
 	str += "<li class=\"page-item";
 	if(pageObject.endPage >= pageObject.totalPage) str += " disabled ";
-	
-	str +="\"><a class=\"page-link\" href=\"#\">Next</a></li>";
+		
+	str +="\" data-page=\""+(pageObject.endPage + 1)+"\"><a class=\"page-link\" href=\"#\">Next</a></li>";
 	
 	return str;
  

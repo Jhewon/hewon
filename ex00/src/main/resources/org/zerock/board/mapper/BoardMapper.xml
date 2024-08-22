@@ -14,6 +14,8 @@
 					no, title, writer, writeDate, hit
 				from
 					board
+					<!-- 검색을 달아야 한다. -->
+					<include refid="search"/>
 				order by no desc
 			)
 		)
@@ -24,7 +26,29 @@
 	<select id="getTotalRow" resultType="Long">
 		select count(*)
 		from board
+		<!-- 검색을 달아야 한다. -->
+		<include refid="search"/>
 	</select>
+
+	<!-- 검색 처리 일반 게시판 리스트  -->
+	<sql id="search">
+		where 	
+		<trim prefixOverrides="or">
+		<!-- 'test' : 문자열 , 't' : 문자)(char) -> 문자열 - toString()사용 -->
+			<if test="key.indexOf('t') >= 0">
+				or title like '%' || #{word} || '%'			
+			</if>
+			<if test="key.indexOf('c') >= 0">
+				or content like '%' || #{word} || '%'			
+			</if>
+			<if test="key.indexOf('w') >= 0">
+				or writer like '%' || #{word} || '%'			
+			</if>
+		</trim>
+		
+	
+	</sql>
+
 
 	<!-- 일반 게시판 글보기 조회수 1 증가 -->
 	<!-- # {obj} 1. 변수의 이름, 2. vo의 getter 이름, 3. Map의 key -->
