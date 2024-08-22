@@ -32,7 +32,9 @@
 
 	<!-- 검색 처리 일반 게시판 리스트  -->
 	<sql id="search">
+	<if test="word != null and word != '.toString()'">
 		where 	
+		<!-- prefixOverrides="or" - 맨앞에 있는 or 는 제거한다. -->
 		<trim prefixOverrides="or">
 		<!-- 'test' : 문자열 , 't' : 문자)(char) -> 문자열 - toString()사용 -->
 			<if test="key.indexOf('t') >= 0">
@@ -45,7 +47,7 @@
 				or writer like '%' || #{word} || '%'			
 			</if>
 		</trim>
-		
+		</if>
 	
 	</sql>
 
