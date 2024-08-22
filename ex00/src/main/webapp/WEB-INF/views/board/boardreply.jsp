@@ -11,7 +11,7 @@
 				  New Reply
 				</button>
 		  </div>
-		  <div class="card-body"  >
+		  <div class="card-body">
 			<ul class="chat">
 			<!-- 데이터 한개 당 li 태그가 생긴다. foreach -->
 				<li class="left clearfix"  data-rno="12">
@@ -24,7 +24,16 @@
 				 </div>
 				</li>
 			</ul>
-		  </div>
+		  </div><!-- end body -->
+		  <div class="card-footer">
+		  	<ul class="pagination pagination">
+			  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+			  <li class="page-item"><a class="page-link" href="#">1</a></li>
+			  <li class="page-item active"><a class="page-link" href="#">2</a></li>
+			  <li class="page-item"><a class="page-link" href="#">3</a></li>
+			  <li class="page-item"><a class="page-link" href="#">Next</a></li>
+			</ul>
+		  </div> <!-- end footer -->
 		</div>
 	</div>
 </div>

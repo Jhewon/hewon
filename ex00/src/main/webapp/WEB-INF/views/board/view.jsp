@@ -17,6 +17,8 @@
 	let replyPage = 1;
 	console.log("전역 변수 no : " + no);
 </script>
+<!-- util.js ㅠㅗ함 -->
+<script type="text/javascript" src="/js/util.js"></script>
 <!-- 2. 날짜 처리 함수 선언 -->
 <script type="text/javascript" src="/js/dateTime.js"></script>
 <!-- 3. 댓글 객체 (replyServuce)를 선언 : Ajax 처리 포함 -->

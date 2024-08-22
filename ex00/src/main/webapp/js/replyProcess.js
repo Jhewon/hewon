@@ -13,6 +13,7 @@
  		//  데이터가 없는 경우의 처리
  		if(list == null || list.length == 0){
  			$(".chat").html("<li>데이터가 존재 하지 않습니다!");
+ 			$(".pagination").html(""); // 댓글의 페이지는 만들지 않는다.
  			return;
  		}
  		
@@ -38,7 +39,11 @@
 				str += "</div>";
 				str += "</li>";
  		}// end for
+ 		
  		$(".chat").html(str);
+ 		
+ 		// 페이지에 대한 출력
+ 		$(".pagination").html(replyPagination(data.pageObject));
  	}
  	);
  };
