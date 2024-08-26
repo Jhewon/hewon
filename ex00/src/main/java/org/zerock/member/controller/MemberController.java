@@ -5,11 +5,15 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 // import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.member.service.MemberService;
@@ -174,5 +178,26 @@ public class MemberController {
 		return "redirect:/main/main.do";
 		
 	}
+	
+	// 카카오 로그인 시작 
+    @Value("${kakao.client_id}")
+    private String client_id;
+
+    @Value("${kakao.redirect_uri}")
+    private String redirect_uri;
+
+    @GetMapping("/kakao")
+    public String kakaologin(Model model) {
+        String location = "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id="+client_id+"&redirect_uri="+redirect_uri;
+        model.addAttribute("location", location);
+
+        return "redirect:/main/main.do";
+    }// end kakao login
+    
+    @GetMapping("/callback")
+    public ResponseEntity<?> callback(@RequestParam("code") String code) {
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 	
 }
