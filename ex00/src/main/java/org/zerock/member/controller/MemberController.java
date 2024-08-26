@@ -146,7 +146,7 @@ public class MemberController {
 	//--- 회원관리 로그인 처리 ------------------------------------
 	@PostMapping("/login.do")
 	public String login(LoginVO vo , HttpSession session , RedirectAttributes rttr) {
-		log.info("login.do");
+		log.info("login.do ==============================");
 		
 		// 데이터가 없으면 null이 넘어온다.
 		LoginVO loginVO =  service.login(vo);
@@ -156,9 +156,22 @@ public class MemberController {
 			return "redirect:/member/loginForm.do";
 		}
 		session.setAttribute("login", loginVO);
+		
 		rttr.addFlashAttribute("msg",loginVO.getName() + " 님 로그인 완료되었습니다. ");
 		return "redirect:/";
 	}
 	
+	@GetMapping("/logout.do")
+	public String logout(LoginVO vo , HttpSession session , RedirectAttributes rttr) {
+	
+		log.info("logout.do ====================== ");
+		
+		session.removeAttribute("login");
+		
+		rttr.addFlashAttribute("msg"," 로그아웃 완료되었습니다. ");
+		
+		return "redirect:/main/main.do";
+		
+	}
 	
 }
