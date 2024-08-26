@@ -23,7 +23,7 @@ public class LogAdvice {
 		
 		// 시작 시간
 		long start = System.currentTimeMillis();
-		log.info("================================ [AOP 프로그램 실행] ====================================");
+		log.info("================================ [AOP 실행] ====================================");
 		// 실행 되는 객체 실행
 		log.info(" + 실행 객체 : " + pjp.getTarget());
 		log.info(" + 실행 매소드 : " + pjp.getSignature());
