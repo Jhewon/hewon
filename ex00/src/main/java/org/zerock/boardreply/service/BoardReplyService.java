@@ -2,6 +2,7 @@ package org.zerock.boardreply.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.zerock.boardreply.vo.BoardReplyVO;
 
 import com.webjjang.util.page.PageObject;

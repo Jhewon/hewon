@@ -8,8 +8,8 @@ console.log("Board Reply Module .........................");
 // 일반 게시판 댓글을 처리하는 객체 선언 - jquery의 ajax 사용 : ajax(), getJSON(), get(), post()
 let replyService = {
 	
-	// 1. 일반 게시판 댓글 리스트 처리 함수 - replyService.list(page, 성공함수 , 실패함수);
-	"list" : function(page,callback,error){
+	// 1. 일반 게시판 댓글 리스트 처리 함수 - replyService.list(page, 성공함수, 실패함수);
+	"list" : function(page, callback, error){
 		console.log("댓글 리스트 ----------------------");
 		// page가 없으면 1로 세팅한다.
 		if(!page) page = 1;
@@ -18,21 +18,22 @@ let replyService = {
 		// ajax 형태를 만들어 처리한다. - getJSON()
 		$.getJSON(
 			"/boardreply/list.do?page=" + page + "&no=" + no,
-			// 데이터 가져오기를 성고하면 실행되는 함수. data가 서버에서 넘겨주는 JSON 데이터
+			// 데이터 가져오기를 성공하면 실행되는 함수. data가 서버에서 넘겨주는 JSON 데이터
 			function(data){
 				console.log(data);
 				console.log(JSON.stringify(data));
-				// callback 이 있으면 실행하자
+				// callback이 있으면 실행 -> html tag를 만들어 표시하는 함수 실행
 				if(callback) callback(data);
 			}
-		).fail(function(xhr , status ,err){
-			console.log("데이터 가져오기 오류----------------------------------------");
+			
+		).fail(function(xhr, status, err){
+			console.log("댓글 리스트 데이터 가져오기 오류 ***********************");
 			console.log("xhr" + xhr);
 			console.log("status" + status);
 			console.log("err" + err);
-			// callback 이 있으면 실행 -> html 테그를 만들어서 표시하는 함수 실행
+			// error이 있으면 실행
 			if(error) error();
-			 else alert("댓글 데이터 를 가져 오는중 오류 발생");
+			else alert("댓글 데이터를 가져 오는 중 오류 발생");
 		});
 	},
 
@@ -41,16 +42,24 @@ let replyService = {
 		console.log("댓글 등록 ----------------------");
 		
 		$.ajax({
-			type : "post", // 데이터 전송 방식  
+			type : "post", // 데이터 전송 방식
 			url : "/boardreply/write.do",
 			data : JSON.stringify(reply), // 서버에 전송되는 데이터 - body
-			contentType : "application/json; charset=utf-8", // 서버에 전송되는 데이터 타입과 encoding
-			// 성공했을때 함수.
-			success : function(result , status, xhr){
+			contentType : "application/json; charset=utf-8", // 서버에 전송되는 데이터 타입과 엔코딩
+			// 성공했을 때의 함수.
+			success : function(result, status, xhr){
 				if(callback) callback(result);
 				else alert(result);
+			},
+			// 실해했을 때의 함수.
+			error : function(xhr, status, er){
+				console.log("xhr : " + xhr);
+				console.log("status : " + status);
+				console.log("er : " + er);
+				if(error) error(er);
+				else alert("댓글 수정에 실패했습니다.");
 			}
-		});// end Ajax
+		});
 	},
 
 	// 3. 일반 게시판 댓글 수정 처리 함수 - replyService.update(댓글객체, 성공함수, 실패함수);
@@ -58,48 +67,45 @@ let replyService = {
 		console.log("댓글 수정 ----------------------");
 		
 		$.ajax({
-			type : "post", // 데이터 전송 방식  
+			type : "post", // 데이터 전송 방식
 			url : "/boardreply/update.do",
-			data : JSON.stringify(reply), // 서버에 전송되는 데이터 - body : rno , content
-			contentType : "application/json; charset=utf-8", // 서버에 전송되는 데이터 타입과 encoding
-			// 성공했을때 함수.
-			success : function(result , status, xhr){
+			data : JSON.stringify(reply), // 서버에 전송되는 데이터 - body : rno, content
+			contentType : "application/json; charset=utf-8", // 서버에 전송되는 데이터 타입과 엔코딩
+			// 성공했을 때의 함수.
+			success : function(result, status, xhr){
 				if(callback) callback(result);
 				else alert(result);
 			},
-			// 실패했을때 함수
-			error : function(xhr,status,er){
+			error : function(xhr, status, er){
 				console.log("xhr : " + xhr);
 				console.log("status : " + status);
 				console.log("er : " + er);
-				if(error) error(re);
-				else alert("댓글수정에 실패함");
-			} // end error
-		}); // end Ajax
+				if(error) error(er);
+				else alert("댓글 수정에 실패했습니다.");
+			}
+		});
+		
 	},
 
 	// 일반 게시판 댓글 리스트 처리 함수 - replyService.delete(rno, 성공함수, 실패함수);
 	"delete" : function(rno, callback, error){
 		console.log("댓글 삭제 ----------------------");
-		
 		$.ajax({
-			type : "get", // 데이터 전송 방식  
+			type : "get", // 데이터 전송 방식
 			url : "/boardreply/delete.do?rno=" + rno,
-			// 성공했을때 함수.
-			success : function(result , status, xhr){
+			// 성공했을 때의 함수.
+			success : function(result, status, xhr){
 				if(callback) callback(result);
 				else alert(result);
 			},
-			// 실패했을때 함수
-			error : function(xhr,status,er){
+			error : function(xhr, status, er){
 				console.log("xhr : " + xhr);
 				console.log("status : " + status);
 				console.log("er : " + er);
-				if(error) error(re);
-				else alert("댓글삭제 에 실패함");
-			} // end error
-		}); // end Ajax
-		
+				if(error) error(er);
+				else alert("댓글 삭제에 실패했습니다.");
+			}
+		});
 	}
 
 };

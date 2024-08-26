@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.zerock.board.mapper.BoardMapper;
 import org.zerock.board.vo.BoardVO;
 
@@ -44,10 +45,15 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	// 일반 게시판 글등록
+	// @Transactional - insert 2번이 성공을 해야 commit 한다. 한개라도 오류가 나면 rollback.
+	// @Transactional
 	@Override
 	public Integer write(BoardVO vo) {
-		log.info(vo);
-		return mapper.write(vo);
+		Integer result = mapper.write(vo); // 글번호를 시퀀스에서 새로운 번호 사용
+		// log.info(vo);
+		// vo.setNo(10000L);
+		// mapper.writeTx(vo); // 위에서 사용한 글번호 재사용 - PK 예외 발생
+		return result;
 	}
 	
 	// 일반 게시판 글수정

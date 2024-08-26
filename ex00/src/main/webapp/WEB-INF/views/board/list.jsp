@@ -8,6 +8,8 @@
 <head>
 <meta charset="UTF-8">
 <title>일반 게시판 리스트</title>
+<jsp:include page="../jsp/webLib.jsp"/>
+
 <style type="text/css">
 .dataRow>.card-header{
 	background: #e0e0e0
@@ -26,7 +28,8 @@ $(function(){
 	$(".dataRow").click(function(){
 		let no = $(this).data("no");
 		// alert(no);
-		location = "view.do?no=" + no + "&inc=1" + "&${pageObject.pageQuery}";
+		location = "view.do?no=" + no + "&inc=1"
+				+ "&${pageObject.pageQuery}";
 	});
 	
 	// perPageNum 처리
@@ -37,9 +40,11 @@ $(function(){
 	});
 	
 	// 검색 데이터 세팅
-	$("#key").val("${(empty pageObject.key)?'t':pageObject.key}");
+	$("#key").val('${(empty pageObject.key)?"t":pageObject.key}');
+	// perPageNum 세팅
 	$("#perPageNum")
-	.val("${(empty pageObject.perPageNum)?'10':pageObject.perPageNum}");
+	.val('${(empty pageObject.perPageNum)?"10":pageObject.perPageNum}');
+	
 });
 </script>
 
@@ -47,60 +52,59 @@ $(function(){
 <body>
 <div class="container">
 	<div class="card">
-	  <div class="card-header" ><h2>일반 게시판 리스트</h2></div>
+	  <div class="card-header"><h2>일반 게시판 리스트</h2></div>
 	  <div class="card-body">
-	  <div id="searchDiv">
-	  	<form action="list.do" id="searchForm">
-	  		<input name="page" value="1" type="hidden">
-		  	<div class="row">
-		  	<div class="col-md-8">
-		  		<div class="input-group mb-3">
-				  <div class="input-group-prepend">
-				      <select name="key" id="key" class="form-control">
-				      	<option value="t">제목</option>
-				      	<option value="c">내용</option>
-				      	<option value="w">작성자</option>
-				      	<option value="tc">제목/내용</option>
-				      	<option value="tw">제목/작성자</option>
-				      	<option value="cw">내용/작성자</option>
-				      	<option value="tcw">모두</option>
-				      </select>
+	  	<div id="searchDiv">
+	  	  <form action="list.do" id="searchForm">
+		  	<input name="page" value="1" type="hidden">
+			  <div class="row">
+			  	<div class="col-md-8">
+			  		<div class="input-group mb-3">
+					  <div class="input-group-prepend">
+					      <select name="key" id="key" class="form-control">
+					      	<option value="t">제목</option>
+					      	<option value="c">내용</option>
+					      	<option value="w">작성자</option>
+					      	<option value="tc">제목/내용</option>
+					      	<option value="tw">제목/작성자</option>
+					      	<option value="cw">내용/작성자</option>
+					      	<option value="tcw">모두</option>
+					      </select>
+					  </div>
+					  <input type="text" class="form-control" placeholder="검색"
+					   id="word" name="word" value="${pageObject.word }">
+					  <div class="input-group-append">
+					      <button class="btn btn-outline-primary">
+					      	<i class="fa fa-search"></i>
+					      </button>
+					  </div>
+					</div>
+			  	</div>
+			  	<!-- col-md-8의 끝 : 검색 -->
+			  	<div class="col-md-4">
+			  		<!-- 너비를 조정하기 위한 div 추가. float-right : 오른쪽 정렬 -->
+			  		<div style="width: 200px;" class="float-right">
+					  <div class="input-group mb-3">
+					    <div class="input-group-prepend">
+					      <span class="input-group-text">Rows/Page</span>
+					    </div>
+					    <select id="perPageNum" name="perPageNum" class="form-control">
+					    	<option>10</option>
+					    	<option>15</option>
+					    	<option>20</option>
+					    	<option>25</option>
+					    </select>
+					  </div>
 				  </div>
-				  <input type="text" class="form-control" placeholder="검색"
-				   id="word" name="word" value="${pageObject.word }">
-				  <div class="input-group-append">
-				      <button class="btn btn-outline-primary">
-				      	<i class="fa fa-search"></i>
-				      </button>
-				  </div>
-				</div>
-		  	</div>
-		  	<!-- col-md-8의 끝 : 검색 -->
-		  	<div class="col-md-4">
-		  		<!-- 너비를 조정하기 위한 div 추가. float-right : 오른쪽 정렬 -->
-		  		<div style="width: 200px;" class="float-right">
-				  <div class="input-group mb-3">
-				    <div class="input-group-prepend">
-				      <span class="input-group-text">Rows/Page</span>
-				    </div>
-				    <select id="perPageNum" name="perPageNum" class="form-control">
-				    	<option>10</option>
-				    	<option>15</option>
-				    	<option>20</option>
-				    	<option>25</option>
-				    </select>
-				  </div>
+			  	</div>
+			  	<!-- col-md-4의 끝 : 한페이지당 표시 데이터 개수 -->
 			  </div>
-		  	</div>
-		  	<!-- col-md-4의 끝 : 한페이지당 표시 데이터 개수 -->
-		  </div>
-  	</form>
-	  </div>
-	  
-	  
+		  </form>
+	  	
+	  	</div>
 	  	<c:forEach items="${list }" var="vo">
-			<div class="card dataRow" data-no="${vo.no }" style="margin-top: 5px;">
-			  <div class="card-header" >
+			<div class="card dataRow" data-no="${vo.no }">
+			  <div class="card-header">
 			  	<span class="float-right">조회수 : ${vo.hit }</span>
 			  	글번호 : ${vo.no }
 			  </div>

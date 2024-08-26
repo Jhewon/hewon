@@ -7,7 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import lombok.Data;
 
 @Data
-public class todoDTO {
+public class TodoDTO {
 
 	// yyyy-mm-dd -> 사용자 입력 날짜를 java로 가져 올때 패턴 지정을 안하면 오류
 	// pattern -> java SimpleDateForm 참조

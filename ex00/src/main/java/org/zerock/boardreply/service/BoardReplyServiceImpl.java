@@ -14,7 +14,7 @@ import lombok.Setter;
 
 // 자동 생성 - @Controller, @RestController, @Service, @Repository, @Component, @~Advice
 @Service
-@Qualifier("BoardReplyServiceImpl")
+@Qualifier("boardReplyServiceImpl")
 public class BoardReplyServiceImpl implements BoardReplyService {
 	
 	// 자동 DI

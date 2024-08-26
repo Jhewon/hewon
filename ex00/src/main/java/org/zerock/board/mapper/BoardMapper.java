@@ -24,6 +24,8 @@ public interface BoardMapper {
 
 	// 글등록
 	public Integer write(BoardVO vo);
+	// 글등록 트랜젝션 처리 테스트
+	// public Integer writeTx(BoardVO vo);
 	
 	// 글수정
 	public Integer update(BoardVO vo);

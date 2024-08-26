@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.zerock.domain.SampleDTO;
-import org.zerock.domain.todoDTO;
+import org.zerock.domain.TodoDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -82,7 +82,7 @@ public class SampleContoller {
 	// get 방식 매핑
 	@GetMapping("/ex03")
 	// parameter 변수로 날짜 데이터 받기. DTO에 @DateTimeFormat(pattern = "yyyy-MM-dd")
-	public String ex03(todoDTO dto) {
+	public String ex03(TodoDTO dto) {
 		log.info("ex03().dto=" +  dto);
 		return "ex03";
 	}
@@ -124,6 +124,23 @@ public class SampleContoller {
 	// post 방식 매핑 - 파일 올리기 처리(저장 제외)
 	@PostMapping("/exUploadPost")
 	public void exUploadPost(@RequestParam ArrayList<MultipartFile> files) {
+		log.info("exUploadPost()");
+		for(MultipartFile file : files) {
+			log.info("---------------------------------------------------");
+			log.info("name : " +file.getOriginalFilename());
+			log.info("size : " +file.getSize());
+		}
+	}
+	
+	// get 방식 매핑 - 파일 올리기 폼
+	@GetMapping("/exUpload2")
+	public void exUpload2() {
+		log.info("exUpload2()");
+	}
+	
+	// post 방식 매핑 - 파일 올리기 처리(저장 제외)
+	@PostMapping("/exUploadPost2")
+	public void exUploadPost2(@RequestParam ArrayList<MultipartFile> files) {
 		log.info("exUploadPost()");
 		for(MultipartFile file : files) {
 			log.info("---------------------------------------------------");
