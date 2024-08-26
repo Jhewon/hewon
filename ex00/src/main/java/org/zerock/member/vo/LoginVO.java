@@ -6,5 +6,5 @@ import lombok.Data;
 public class LoginVO {
 
 	public String id,pw,name,photo,gradeName;
-	public Integer gradeNo;
+	public Integer gradeNo , newMsgCnt;
 }

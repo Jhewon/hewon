@@ -2,6 +2,7 @@ package org.zerock.member.service;
 
 import java.util.List;
 
+import org.zerock.member.vo.LoginVO;
 import org.zerock.member.vo.MemberVO;
 import com.webjjang.util.page.PageObject;
 
@@ -21,5 +22,7 @@ public interface MemberService {
 	
 	// 회원관리 글삭제
 	public Integer delete(MemberVO vo);
+	
+	public LoginVO login(LoginVO vo);
 	
 }

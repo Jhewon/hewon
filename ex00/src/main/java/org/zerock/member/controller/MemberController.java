@@ -1,6 +1,7 @@
 package org.zerock.member.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 // import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.member.service.MemberService;
+import org.zerock.member.vo.LoginVO;
 import org.zerock.member.vo.MemberVO;
 
 import com.webjjang.util.page.PageObject;
@@ -131,5 +133,32 @@ public class MemberController {
 			return "redirect:view.do?id=" + vo.getId();
 		}
 	}
+	
+	
+	
+	//--- 회원관리 로그인 폼 ------------------------------------
+	@GetMapping("/loginForm.do")
+	public String loginForm() {
+		log.info("loginForm.do");
+		return "member/loginForm";
+	}
+	
+	//--- 회원관리 로그인 처리 ------------------------------------
+	@PostMapping("/login.do")
+	public String login(LoginVO vo , HttpSession session , RedirectAttributes rttr) {
+		log.info("login.do");
+		
+		// 데이터가 없으면 null이 넘어온다.
+		LoginVO loginVO =  service.login(vo);
+		// 로그인 실패시 오류 메세지 출력
+		if(loginVO == null){
+			rttr.addFlashAttribute("msg","정보가 틀립니다. 다시 확인해주세요");
+			return "redirect:/member/loginForm.do";
+		}
+		session.setAttribute("login", loginVO);
+		rttr.addFlashAttribute("msg",loginVO.getName() + " 님 로그인 완료되었습니다. ");
+		return "redirect:/";
+	}
+	
 	
 }

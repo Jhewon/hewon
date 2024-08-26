@@ -95,7 +95,7 @@
 				// console.log("3초마다 자동 실행");
 				// 새로운 메세지 표시하는 곳을 선택해서 데이터를 올린다.
 				$("#newMsgCnt").load("/ajax/getNewMsgCnt.do");
-			}, 3000);
+			}, 30000000000);
 		});
 		</script>
 	</c:if>

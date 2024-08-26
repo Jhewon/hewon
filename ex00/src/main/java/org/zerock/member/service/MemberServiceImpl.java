@@ -5,9 +5,10 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.zerock.member.mapper.MemberMapper;
+import org.zerock.member.vo.LoginVO;
 import org.zerock.member.vo.MemberVO;
 
 import com.webjjang.util.page.PageObject;
@@ -70,4 +71,12 @@ public class MemberServiceImpl implements MemberService{
 		return mapper.delete(vo);
 	}
 	
+	// 회원관리 글보기
+	@Override
+	public LoginVO login(LoginVO vo) {
+			log.info("로그인 실행=====================");
+			
+			return mapper.login(vo);
+	}
+		
 }

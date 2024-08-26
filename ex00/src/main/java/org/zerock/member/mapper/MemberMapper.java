@@ -3,6 +3,7 @@ package org.zerock.member.mapper;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
+import org.zerock.member.vo.LoginVO;
 import org.zerock.member.vo.MemberVO;
 
 import com.webjjang.util.page.PageObject;
@@ -22,7 +23,7 @@ public interface MemberMapper {
 	// 글보기
 	public MemberVO view(Long no);
 
-	// 글등록
+	// 회원 가입
 	public Integer write(MemberVO vo);
 	// 글등록 트랜젝션 처리 테스트
 	// public Integer writeTx(MemberVO vo);
@@ -32,5 +33,8 @@ public interface MemberMapper {
 	
 	// 글삭제
 	public Integer delete(MemberVO vo);
+	
+	// 회원 탈퇴
+	public LoginVO login(LoginVO vo);
 	
 }

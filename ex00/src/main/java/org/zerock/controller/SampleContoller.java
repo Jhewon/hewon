@@ -3,7 +3,6 @@ package org.zerock.controller;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.zerock.domain.SampleDTO;
 import org.zerock.domain.TodoDTO;
 
-import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 // 자동생성 어노테이션
