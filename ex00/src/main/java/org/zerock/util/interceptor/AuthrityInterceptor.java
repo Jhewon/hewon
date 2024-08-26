@@ -54,6 +54,15 @@ public class AuthrityInterceptor extends HandlerInterceptorAdapter  {
 			LoginVO loginVO = (LoginVO) session.getAttribute("login");
 			// 로그인이 필요한데 로그인을 안한 경우
 			if(loginVO == null) {
+				
+				// 권한 오류  jsp 로 이동 시킨다.
+				request.getRequestDispatcher("/WEB_INF/views/error/loginError.jsp").forward(request, response);
+				return false;
+			}
+			// 관리자 권한 확인
+			Integer userGradeNo = loginVO.getGradeNo();
+			if(pageGradeNo > userGradeNo) {
+				request.getRequestDispatcher("/WEB_INF/views/error/authError.jsp").forward(request, response);
 				return false;
 			}
 		}

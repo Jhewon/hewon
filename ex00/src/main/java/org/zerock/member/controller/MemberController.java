@@ -156,9 +156,10 @@ public class MemberController {
 			return "redirect:/member/loginForm.do";
 		}
 		session.setAttribute("login", loginVO);
+		rttr.addFlashAttribute("msg",
+				loginVO.getName() + "님은 " + loginVO.getGradeName() + "(으)로 로그인 되었습니다.");
 		
-		rttr.addFlashAttribute("msg",loginVO.getName() + " 님 로그인 완료되었습니다. ");
-		return "redirect:/";
+		return "redirect:/main/main.do";
 	}
 	
 	@GetMapping("/logout.do")
