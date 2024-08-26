@@ -31,6 +31,9 @@ public class AuthrityInterceptor extends HandlerInterceptorAdapter  {
 		authMap.put("/goods/update.do", 9);
 		authMap.put("/goods/delete.do", 9);
 		authMap.put("/goods/changeImage.do", 9);
+		authMap.put("/goods/addSize.do", 9);
+		authMap.put("/goods/addColor.do", 9);
+		authMap.put("/goods/changePrice.do", 9);
 		
 		// 회원 관리
 		authMap.put("/member/logout.do", 1);
