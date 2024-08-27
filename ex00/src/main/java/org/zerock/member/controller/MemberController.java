@@ -186,7 +186,7 @@ public class MemberController {
     @Value("${kakao.redirect_uri}")
     private String redirect_uri;
 
-    @GetMapping("/kakao")
+    @GetMapping("/kakao.do")
     public String kakaologin(Model model) {
         String location = "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id="+client_id+"&redirect_uri="+redirect_uri;
         model.addAttribute("location", location);
@@ -199,5 +199,8 @@ public class MemberController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    
+    
+    
 	
 }
