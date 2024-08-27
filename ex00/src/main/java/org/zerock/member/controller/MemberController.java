@@ -176,8 +176,12 @@ public class MemberController {
 		rttr.addFlashAttribute("msg"," 로그아웃 완료되었습니다. ");
 		
 		return "redirect:/main/main.do";
-		
 	}
 	
+	@GetMapping("/kakao.do")
+	public String kakao() {
+		log.info("loginForm.do");
+		return "member/kakao";
+	}
 	
 }
