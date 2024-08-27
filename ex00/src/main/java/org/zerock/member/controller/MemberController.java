@@ -179,25 +179,5 @@ public class MemberController {
 		
 	}
 	
-	// 카카오 로그인 시작 
-    @Value("${kakao.client_id}")
-    private String client_id;
-
-    @Value("${kakao.redirect_uri}")
-    private String redirect_uri;
-
-    @GetMapping("/kakao")
-    public String kakaologin(Model model) {
-        String location = "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id="+client_id+"&redirect_uri="+redirect_uri;
-        model.addAttribute("location", location);
-
-        return "redirect:/main/main.do";
-    }// end kakao login
-    
-    @GetMapping("/callback")
-    public ResponseEntity<?> callback(@RequestParam("code") String code) {
-
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 	
 }
