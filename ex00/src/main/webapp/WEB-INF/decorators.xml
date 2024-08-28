@@ -13,6 +13,8 @@
 		<pattern>/qna/*</pattern>
 		<pattern>/message/*</pattern>
 		<pattern>/member/*</pattern>
+		<pattern>/category/*</pattern>
+		<pattern>/goods/*</pattern>
 
 	</decorator>
 	
