@@ -176,9 +176,9 @@ public class MemberController {
 		rttr.addFlashAttribute("msg"," 로그아웃 완료되었습니다. ");
 		
 		return "redirect:/main/main.do";
-		
 	}
 	
+<<<<<<< HEAD
 	// 카카오 로그인 시작 
     @Value("${kakao.client_id}")
     private String client_id;
@@ -202,5 +202,12 @@ public class MemberController {
     
     
     
+=======
+	@GetMapping("/kakao.do")
+	public String kakao() {
+		log.info("loginForm.do");
+		return "member/kakao";
+	}
+>>>>>>> branch 'master' of https://github.com/Jhewon/hewon.git
 	
 }
