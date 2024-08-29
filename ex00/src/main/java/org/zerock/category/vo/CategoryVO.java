@@ -1,6 +1,5 @@
 package org.zerock.category.vo;
 
-import java.util.Date;
 
 import lombok.Data;
 

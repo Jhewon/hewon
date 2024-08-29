@@ -45,6 +45,11 @@ public class CategoryController {
 		// model에 담으로 request에 자동을 담기게 된다. - 처리된 데이터를 Model에 저장
 		model.addAttribute("bigList", bigList);
 		model.addAttribute("midList", midList);
+		
+		// 중분류 추가 할때 cate_code1 필요 
+		model.addAttribute("cate_code1", cate_code1);
+		
+		
 		return "category/list";
 	}
 
@@ -52,17 +57,15 @@ public class CategoryController {
 	//--- 카테고리 글등록 폼 ------------------------------------
 	// 글동록 항목이 분류면 뿐이다. 리스트에 포함 시킨다.
 	
-	//--- 카테고리 글등록 처리 ------------------------------------
+	//--- 카테고리 글등록 처리 : 대분류와 중분류를 같이 사용 ------------------------------------
 	@PostMapping("/write.do")
 	public String write(CategoryVO vo, RedirectAttributes rttr) {
-		log.info("write.do");
-		log.info(vo);
 		service.write(vo);
 		
 		// 처리 결과에 대한 메시지 처리
-		rttr.addFlashAttribute("msg", "카테고리 글등록이 되었습니다.");
+		rttr.addFlashAttribute("msg", "카테고리 등록이 되었습니다.");
 		
-		return "redirect:list.do";
+		return "redirect:list.do?cate_code1="+vo.getCate_code1();
 	}
 	
 	//--- 카테고리 글수정 폼 ------------------------------------
@@ -72,16 +75,14 @@ public class CategoryController {
 	@PostMapping("/update.do")
 	public String update(CategoryVO vo, RedirectAttributes rttr) {
 		log.info("update.do");
-		log.info(vo);
 		if(service.update(vo) == 1)
 			// 처리 결과에 대한 메시지 처리
-			rttr.addFlashAttribute("msg", "카테고리 글수정이 되었습니다.");
+			rttr.addFlashAttribute("msg", "카테고리 수정 되었습니다.");
 		else
 			rttr.addFlashAttribute("msg",
-					"카테고리 글수정이 되지 않았습니다. "
-					+ "글번호나 비밀번호가 맞지 않습니다. 다시 확인하고 시도해 주세요.");
+					"카테고리 글수정이 되지 않았습니다.");
 		
-		return "redirect:list.do";
+		return "redirect:list.do?cate_code1="+ vo.getCate_code1();
 	}
 	
 	
@@ -89,18 +90,14 @@ public class CategoryController {
 	@PostMapping("/delete.do")
 	public String delete(CategoryVO vo, RedirectAttributes rttr) {
 		log.info("delete.do");
-		log.info(vo);
 		// 처리 결과에 대한 메시지 처리
-		if(service.delete(vo) == 1) {
-			rttr.addFlashAttribute("msg", "카테고리 글삭제가 되었습니다.");
-			return "redirect:list.do";
+		if(service.delete(vo) >= 1) {
+			rttr.addFlashAttribute("msg", "카테고리가 삭제가 되었습니다.");
 		}
 		else {
-			rttr.addFlashAttribute("msg",
-					"카테고리 글삭제가 되지 않았습니다. "
-							+ "글번호나 비밀번호가 맞지 않습니다. 다시 확인하고 시도해 주세요.");
-			return "redirect:list.do";
+			rttr.addFlashAttribute("msg", "카테고리 글삭제가 되지 않았습니다.");
 		}
+		return "redirect:list.do"+ ((vo.getCate_code2() > 0)?"?cate_code1="+vo.getCate_code1():"");
 	}
 	
 }
