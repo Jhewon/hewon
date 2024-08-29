@@ -98,15 +98,6 @@ $(function(){
 			return false;
 		});
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	function categoryProcess(title, cate_code1, cate_code2,cate_name , url, btnName){
 		// 제목 변경
 		$("#categoryModal").find(".modal-title").text(title);
