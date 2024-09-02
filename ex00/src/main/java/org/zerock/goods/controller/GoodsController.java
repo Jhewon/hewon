@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 // import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.zerock.category.service.CategoryService;
 import org.zerock.goods.service.GoodsService;
 import org.zerock.goods.vo.GoodsVO;
 
@@ -30,6 +31,11 @@ public class GoodsController {
 	@Autowired
 	@Qualifier("goodsServiceImpl")
 	private GoodsService service;
+	
+	
+	@Autowired
+	@Qualifier("categoryServiceImpl")
+	private CategoryService CategoryService;
 	
 	//--- 상품 리스트 ------------------------------------
 	@GetMapping("/list.do")
@@ -65,10 +71,12 @@ public class GoodsController {
 		return "goods/view";
 	}
 	
-	//--- 상품 글등록 폼 ------------------------------------
+	//--- 상품 대분류등록 폼 ------------------------------------
 	@GetMapping("/writeForm.do")
-	public String writeForm() {
+	public String writeForm(Model model) {
 		log.info("writeForm.do");
+		// 대분류 를 가져와서 JSP 로 넘기기
+		model.addAttribute("bigList",CategoryService.list(0));
 		return "goods/writeForm";
 	}
 	

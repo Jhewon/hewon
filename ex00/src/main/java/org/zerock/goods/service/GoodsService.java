@@ -2,6 +2,7 @@ package org.zerock.goods.service;
 
 import java.util.List;
 
+import org.zerock.category.vo.CategoryVO;
 import org.zerock.goods.vo.GoodsVO;
 import com.webjjang.util.page.PageObject;
 

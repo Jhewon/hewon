@@ -2,7 +2,9 @@ package org.zerock.goods.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+import org.zerock.category.vo.CategoryVO;
 import org.zerock.goods.vo.GoodsVO;
 
 import com.webjjang.util.page.PageObject;
@@ -32,5 +34,6 @@ public interface GoodsMapper {
 	
 	// 삭제
 	public Integer delete(GoodsVO vo);
+
 	
 }
