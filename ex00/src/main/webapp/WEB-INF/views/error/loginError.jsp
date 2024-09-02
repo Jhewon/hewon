@@ -8,8 +8,8 @@
 </head>
 <body>
 <div class="container">
-	<h1> 페이지 권한 오류 - 로그인 오류 </h1>
-	<a href="/member/loginForm.do" class="btn btn-dark">로그인</a>
+	<h2>페이지 권한 오류 - 로그인</h2>
+	<a href="/member/loginForm.do" class="btn btn-primary">로그인</a>
 </div>
 </body>
 </html>

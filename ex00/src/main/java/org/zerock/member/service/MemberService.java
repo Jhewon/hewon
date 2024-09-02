@@ -23,6 +23,7 @@ public interface MemberService {
 	// 회원관리 글삭제
 	public Integer delete(MemberVO vo);
 	
+	// 로그인
 	public LoginVO login(LoginVO vo);
-	
+
 }

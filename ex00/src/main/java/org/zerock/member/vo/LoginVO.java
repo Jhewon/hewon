@@ -5,6 +5,12 @@ import lombok.Data;
 @Data
 public class LoginVO {
 
-	public String id,pw,name,photo,gradeName;
-	public Integer gradeNo , newMsgCnt;
+	private String id;
+	private String pw;
+	private String name;
+	private String photo;
+	private Long newMsgCnt;
+	private Integer gradeNo;
+	private String gradeName; //grade
+	
 }

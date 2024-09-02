@@ -20,7 +20,7 @@ public interface MemberMapper {
 	// 글보기 조회수 1 증가
 	public Integer increase(Long no);
 	
-	// 글보기
+	// 보기
 	public MemberVO view(Long no);
 
 	// 회원 가입
@@ -28,13 +28,13 @@ public interface MemberMapper {
 	// 글등록 트랜젝션 처리 테스트
 	// public Integer writeTx(MemberVO vo);
 	
-	// 글수정
+	// 수정
 	public Integer update(MemberVO vo);
 	
-	// 글삭제
+	// 탈퇴
 	public Integer delete(MemberVO vo);
-	
-	// 회원 탈퇴
+
+	// 로그인
 	public LoginVO login(LoginVO vo);
-	
+
 }

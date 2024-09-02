@@ -30,7 +30,6 @@ public class GoodsServiceImpl implements GoodsService{
 	// 상품 리스트
 	@Override
 	public List<GoodsVO> list(PageObject pageObject) {
-		log.info("list() 실행");
 		// 전체 데이터 개수 구하기
 		pageObject.setTotalRow(mapper.getTotalRow(pageObject));
 		return mapper.list(pageObject);
@@ -48,7 +47,7 @@ public class GoodsServiceImpl implements GoodsService{
 	// 상품 글등록
 	@Override
 	// @Transactional - insert 2번이 성공을 해야 commit 한다. 한개라도 오류가 나면 rollback.
-	// 상품 가격 이미지 사이즈컬러 옵션 -> 등록하다가 하나라도 오류가 나면 다 rollback 시킨다
+	// 상품, 가격, 이미지, 사이즈컬러, 옵션 -> 등록하다가 하나라고 오류가 나면 다 rollback 시킨다.
 	@Transactional
 	public Integer write(GoodsVO vo) {
 		Integer result = mapper.write(vo); // 글번호를 시퀀스에서 새로운 번호 사용
@@ -71,5 +70,7 @@ public class GoodsServiceImpl implements GoodsService{
 		log.info(vo);
 		return mapper.delete(vo);
 	}
+	
+	// 삭제할 제품에 대한 이미지를 전부 가져오기 : 상품 이미지 가져오기 -> DB 상품 삭제 -> 이미지 삭제 
 	
 }

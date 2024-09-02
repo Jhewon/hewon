@@ -11,27 +11,6 @@
 <style type="text/css">
 </style>
 
-<!-- 1. 필요한 전역 변수 : 직접 코딩 -->
-<script type="text/javascript">
-	// 보고 있는 일반 게시판의 글번호를 전역 변수로 지정해 보자.
-	let id = "test"; // 강제 로그인 - 내가 작성한 댓글에 대해서만 수정과 삭제가 가능하도록 만들기 위해서 
-	let no = ${vo.no};
-	let replyPage = 1;
-	console.log("전역 변수 no : " + no);
-</script>
-
-<!-- 2. util.jsp 포함 -->
-<script type="text/javascript" src="/js/util.js"></script>
-
-<!-- 2. 날짜 처리 함수 선언 -->
-<script type="text/javascript" src="/js/dateTime.js"></script>
-
-<!-- 3. 댓글 객체(replyService)를 선언 : Ajax 처리 포함 -->
-<script type="text/javascript" src="/js/reply.js"></script>
-
-<!-- 4. reply 호출 처리 함수 선언 + 이벤트 처리 -->
-<script type="text/javascript" src="/js/replyProcess.js"></script>
-
 <script type="text/javascript">
 $(function(){
 	
@@ -87,6 +66,7 @@ $(function(){
 	  </div>
 	</div>
 	<!-- 글보기 card 끝 -->
+	
 </div>
 
   <!-- The Modal -->

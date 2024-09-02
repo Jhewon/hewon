@@ -4,11 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Main</title>
+<title>Insert title here</title>
 </head>
 <body>
-<div class="container">
-	<h2>메인입니다.</h2>
-</div>
+
 </body>
 </html>

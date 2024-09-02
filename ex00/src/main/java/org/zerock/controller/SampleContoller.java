@@ -3,6 +3,9 @@ package org.zerock.controller;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +20,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.zerock.domain.SampleDTO;
 import org.zerock.domain.TodoDTO;
 
+import com.webjjang.util.file.FileUtil;
+
+import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 // 자동생성 어노테이션
@@ -138,12 +144,18 @@ public class SampleContoller {
 	
 	// post 방식 매핑 - 파일 올리기 처리(저장 제외)
 	@PostMapping("/exUploadPost2")
-	public void exUploadPost2(@RequestParam ArrayList<MultipartFile> files) {
+	public void exUploadPost2(@RequestParam ArrayList<MultipartFile> files,
+			HttpServletRequest request) throws Exception {
+		String path = "/upload/image";
 		log.info("exUploadPost()");
 		for(MultipartFile file : files) {
 			log.info("---------------------------------------------------");
 			log.info("name : " +file.getOriginalFilename());
 			log.info("size : " +file.getSize());
+			
+			// file upload
+			FileUtil.upload(path, file, request);
+			
 		}
 	}
 	

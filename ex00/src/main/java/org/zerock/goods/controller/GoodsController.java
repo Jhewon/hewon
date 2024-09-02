@@ -16,6 +16,7 @@ import org.zerock.goods.vo.GoodsVO;
 
 import com.webjjang.util.page.PageObject;
 
+import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @Controller
@@ -32,24 +33,26 @@ public class GoodsController {
 	
 	//--- 상품 리스트 ------------------------------------
 	@GetMapping("/list.do")
-	// 검색을 위한
+	// 검색을 위한 데이터를 따로 받아야 한다.
 	public String list(Model model, HttpServletRequest request)
 			throws Exception {
-		log.info("list.do");
+		
 		// 페이지 처리를 위한 객체 생겅
 		PageObject pageObject = PageObject.getInstance(request);
 		
-		// 한페이지당 보여주는 데이터의 개수가 없으면 기본은 9로 정한다.
-		String strPerPaageNum = request.getParameter("perPageNum");
-		if(strPerPaageNum == null || strPerPaageNum.equals(""))
+		// 한 페이지당 보여주는 데이터의 개수가 없으면 기본은 8로 정한다.
+		String strPerPageNum = request.getParameter("perPageNum");
+		if(strPerPageNum == null || strPerPageNum.equals(""))
 			pageObject.setPerPageNum(8);
 		
 		// model에 담으로 request에 자동을 담기게 된다. - 처리된 데이터를 Model에 저장
 		model.addAttribute("list", service.list(pageObject));
-		// pageObject에 데이터 가져 오기 전에는 시작 페이지, 끝 페이지, 전페 페이지가 정해지지 않는다.
+		// pageObject에 데이터 가져 오기 전에는 시작 페이지, 끝 페이지, 전체 페이지가 정해지지 않는다.
+		log.info(pageObject);
 		model.addAttribute("pageObject", pageObject);
-		// 검색에 대한 정보도 담는다.
+		// 검색에 대한 정보도 넘겨야 한다.
 		return "goods/list";
+		
 	}
 	
 	//--- 상품 글보기 ------------------------------------

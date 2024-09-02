@@ -7,8 +7,19 @@ import lombok.Data;
 @Data
 public class MemberVO {
 
-	public String id,pw,name,photo,gradeName,tel,gender,email,status;
-	public Date birth,regDate,conDate; // regDate 회원 가입일 , conDate 최근 접속일
-	public Integer gradeNo;
+	private String id;
+	private String pw;
+	private String name;
+	private String gender;
+	private Date birth;
+	private String tel;
+	private String email;
+	private Date regDate; // 회원 가입일
+	private Date conDate; // 최근 접속일
+	private String status;
+	private String photo;
+	private Long newMsgCnt;
+	private Integer gradeNo;
+	private String gradeName; //grade
 	
 }

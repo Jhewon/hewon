@@ -30,25 +30,24 @@ public class CategoryServiceImpl implements CategoryService{
 	// 카테고리 리스트
 	@Override
 	public List<CategoryVO> list(Integer cate_code1) {
-		// 전체 데이터 개수 구하기
 		return mapper.list(cate_code1);
 	}
 	
-	
-	// 카테고리 글등록 - cate_code1 이 있으면 중분류 등록 , 없으면 대분류 등록
+	// 카테고리 등록
 	@Override
 	public Integer write(CategoryVO vo) {
+		// 카테로리 등록 - cate_code1이 있으면 중분류 등록, 없으면 대분류 등록
 		if(vo.getCate_code1() == 0) return mapper.writeBig(vo);
 		return mapper.writeMid(vo);
 	}
 	
-	// 카테고리 글수정
+	// 카테고리 수정
 	@Override
 	public Integer update(CategoryVO vo) {
 		return mapper.update(vo);
 	}
 	
-	// 카테고리 글삭제
+	// 카테고리 삭제
 	@Override
 	public Integer delete(CategoryVO vo) {
 		return mapper.delete(vo);
