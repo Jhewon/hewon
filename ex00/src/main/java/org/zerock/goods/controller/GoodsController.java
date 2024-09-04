@@ -147,7 +147,7 @@ public class GoodsController {
 		if(size_nos != null && size_nos.size() > 0) {
 			for(Long sizeNo : size_nos) {
 				if(goodsSizeColorList ==  null) goodsSizeColorList = new ArrayList<>();
-				if(color_nos != null && color_nos.size() > 0) {
+				if(color_nos != null && color_nos.size() > 0) { // 컬러가 있는 경우 
 					for(Long colorNo : color_nos) {
 				GoodsSizeColorVO sizeColorVO = new GoodsSizeColorVO();
 				sizeColorVO.setSize_no(sizeNo);
@@ -160,6 +160,7 @@ public class GoodsController {
 					goodsSizeColorList.add(sizeColorVO);
 				}
 			}
+			log.info("goodsSizeColorList : " + goodsSizeColorList);
 		}
 		//service.write(vo);
 		
