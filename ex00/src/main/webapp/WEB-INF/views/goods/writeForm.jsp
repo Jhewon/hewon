@@ -85,7 +85,7 @@ $(function(){ // HTML 문서가 로딩이 다 되면 실행해 주세요.
 	
 	let appendOptionTag = "";
 	appendOptionTag += "<div class=\"input-group mb-3\" >";
-	appendOptionTag += "<input class=\"form-control option_name\" name=\"option_name\">";
+	appendOptionTag += "<input class=\"form-control option_name\" name=\"option_names\">";
 	appendOptionTag += "<div class=\"input-group-append\">";
 	appendOptionTag += "	<button type=\"button\" class=\"btn btn-danger removeOptionBtn\">";
 	appendOptionTag += "		<i class=\"fa fa-close\"></i>";
@@ -182,9 +182,10 @@ $(function(){ // HTML 문서가 로딩이 다 되면 실행해 주세요.
 		</div>
 		
 		<div class="form-group">
-			<label for="detail_image_name">상세 설명 이미지</label>
-			<input class="form-control" name="detail_image_name"
-			 id="detail_image_name" type="file">
+		<!-- VO 객체의 프로포티와 이름이 다르다. 파일 자제이므로  DB에는 이름만 저장 -->
+			<label for="detailImageFile">상세 설명 이미지</label>
+			<input class="form-control" name="detailImageFile"
+			 id="detailImageFile" type="file">
 		</div>
 		
 		<div class="form-group">
@@ -193,8 +194,8 @@ $(function(){ // HTML 문서가 로딩이 다 되면 실행해 주세요.
 				rows="7"></textarea>
 		</div>
 		<div class="form-group">
-			<label for="image_name">대표 이미지</label>
-			<input class="form-control" name="image_name" id="image_name" required
+			<label for="imageFile">대표 이미지</label>
+			<input class="form-control" name="imageFile" id="imageFile" required
 			 type="file">
 		</div>
 		<!-- 상품 기본 정보 입력 끝 -->
@@ -275,7 +276,7 @@ $(function(){ // HTML 문서가 로딩이 다 되면 실행해 주세요.
 		 	</legend>
 			<div  id="optionDiv">
 				<div class="input-group mb-3">
-					<input name="option_name" class="form-control" />
+					<input name="option_names" class="form-control" />
 				</div>
 			</div>
 		 </fieldset>

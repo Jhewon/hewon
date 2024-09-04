@@ -4,7 +4,7 @@
 <c:forEach items="${sizeList}" var="vo">
 	<div class="form-check mb-2 mr-sm-2">
 		<label>
-			<input type="checkbox" name="size_no" value="${vo.size_no }" 
+			<input type="checkbox" name="size_nos" value="${vo.size_no }" 
 			 class="form-control" /> 
 			${vo.size_name }
 		</label>

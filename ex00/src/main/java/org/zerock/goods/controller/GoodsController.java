@@ -1,5 +1,7 @@
 package org.zerock.goods.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 // import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.category.service.CategoryService;
@@ -17,7 +21,6 @@ import org.zerock.goods.vo.GoodsVO;
 
 import com.webjjang.util.page.PageObject;
 
-import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @Controller
@@ -81,27 +84,45 @@ public class GoodsController {
 	
 	//--- 상품 글등록 처리 ------------------------------------
 	@PostMapping("/write.do")
-	public String write(GoodsVO vo, RedirectAttributes rttr) {
-		log.info("write.do");
+	public String write(GoodsVO vo,
+			// 대표 이미지
+			MultipartFile imageFile,
+			// 상세보기 이미지
+			MultipartFile detailImageFile,
+			// 추가 이미지
+			ArrayList<MultipartFile> imageFiles ,
+			// 옵션들 받기 - 사이즈 컬러 옵션 - 데이터 한개의 단위인 경우 @RequestParam
+			// 붙여야 받을수 있다.
+			@RequestParam(name = "size_nos" , required = false) ArrayList<Long> size_nos ,
+			@RequestParam(name = "color_nos" , required = false ) ArrayList<String> color_nos ,
+			@RequestParam(name = "option_names" , required = false ) ArrayList<String> option_names ,
+			RedirectAttributes rttr) {
+		
+		log.info("write.do--------------------------------------------------------------");
 		log.info(vo);
-		service.write(vo);
+		log.info("대표 이미지 : " + imageFile.getOriginalFilename());
+		log.info("상세 설명 이미지 : " + detailImageFile.getOriginalFilename());
+		log.info("<< 첨부이미지들 >>");
+		for(MultipartFile file : imageFiles)
+			log.info(file.getOriginalFilename());
+		log.info("사이즈 : " + size_nos);
+		log.info("색상 : " + color_nos);
+		log.info("옵션 : " + option_names);
+		//service.write(vo);
 		
 		// 처리 결과에 대한 메시지 처리
 		rttr.addFlashAttribute("msg", "상품 글등록이 되었습니다.");
 		
-		return "redirect:list.do";
+		return null; //"redirect:list.do";
 	}
 	
 	//--- 상품 글수정 폼 ------------------------------------
 	@GetMapping("/updateForm.do")
 	public String updateForm(Long no, Model model) {
 		log.info("updateForm.do");
-		
 		model.addAttribute("vo", service.view(no, 0));
-		
 		return "goods/updateForm";
 	}
-	
 	//--- 상품 글수정 처리 ------------------------------------
 	@PostMapping("/update.do")
 	public String update(GoodsVO vo, RedirectAttributes rttr) {
@@ -114,11 +135,8 @@ public class GoodsController {
 			rttr.addFlashAttribute("msg",
 					"상품 글수정이 되지 않았습니다. "
 					+ "글번호나 비밀번호가 맞지 않습니다. 다시 확인하고 시도해 주세요.");
-		
 		return "redirect:view.do";
 	}
-	
-	
 	//--- 상품 글삭제 처리 ------------------------------------
 	@PostMapping("/delete.do")
 	public String delete(GoodsVO vo, RedirectAttributes rttr) {
@@ -136,5 +154,4 @@ public class GoodsController {
 			return "redirect:view.do";
 		}
 	}
-	
 }
