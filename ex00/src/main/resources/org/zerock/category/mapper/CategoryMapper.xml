@@ -13,7 +13,7 @@
 		<!-- 대분류만 가져오기 -->
 			cate_code2 = 0
 		</if>
-		<if test="cate_code1 != 0">
+		<if test="cate_code1 > 0">
 		<!-- 중분류만 가져오기 -->
 			cate_code1 = #{cate_code1} and cate_code2 != 0
 		</if>

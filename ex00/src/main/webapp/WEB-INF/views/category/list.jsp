@@ -142,7 +142,7 @@ $(function(){
 <body>
 <div class="container">
 	<div class="card">
-	  <div class="card-header"><h2>카테고리 관리</h2></div>
+	  <div class="card-header"><h2>카테로기 관리</h2></div>
 	  <div class="card-body">
 	  	<p>
 	  		대분류 탭을 수정하거나 삭제하려면 오른쪽 마우스 버튼은 클릭하세요.

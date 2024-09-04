@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.zerock.category.vo.CategoryVO;
 import org.zerock.goods.mapper.GoodsMapper;
+import org.zerock.goods.vo.ColorVO;
 import org.zerock.goods.vo.GoodsVO;
+import org.zerock.goods.vo.SizeVO;
 
 import com.webjjang.util.page.PageObject;
 
@@ -71,7 +73,19 @@ public class GoodsServiceImpl implements GoodsService{
 		log.info(vo);
 		return mapper.delete(vo);
 	}
-	
+
+	@Override
+	public List<SizeVO> getSize(Integer cate_code1) {
+		// TODO Auto-generated method stub
+		return mapper.getSize(cate_code1);
+	}
+
+	@Override
+	public List<ColorVO> getColor(Integer cate_code1) {
+		// TODO Auto-generated method stub
+		return mapper.getColor(cate_code1);
+	}
+
 	// 삭제할 제품에 대한 이미지를 전부 가져오기 : 상품 이미지 가져오기 -> DB 상품 삭제 -> 이미지 삭제 
 	
 }

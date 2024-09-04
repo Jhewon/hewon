@@ -77,8 +77,6 @@
 	}
 	</style>
 
-
-	
 	<script type="text/javascript">
 	$(function(){
 		// 취소 버튼 이벤트
@@ -87,13 +85,13 @@
 		});
 		
 		// datepicker 설정
-		   $(".datepicker").datepicker({
-			   changeMonth: true,
-			   changeYear: true,
-			   dateFormat: "yy-mm-dd",
-			   dayNamesMin: [ "일", "월", "화", "수", "목", "금", "토" ],
-			   monthNamesShort: [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" ],
-			});
+		$(".datepicker").datepicker({
+			changeMonth: true,
+			changeYear: true,
+			dateFormat: "yy-mm-dd",
+			dayNamesMin: [ "일", "월", "화", "수", "목", "금", "토" ],
+			monthNamesShort: [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" ],
+		});
 	});
 	</script>
 	
@@ -112,8 +110,10 @@
 		});
 		</script>
 	</c:if>
-<!-- 개발자가 작성한 소스의 head 태그를 여기에 넣게 된다. title은 제외 -->
-	<decorator:head/>	
+
+	<!-- 개발자가 작성한 소스의 head 태그를 여기에 넣게 된다. title은 제외 -->
+	<decorator:head/>
+	
 </head>
 <body>
 	<header>

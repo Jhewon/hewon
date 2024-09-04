@@ -25,7 +25,7 @@ public class AuthrityInterceptor extends HandlerInterceptorAdapter {
 		authMap.put("/boardreply/write.do", 1);
 		
 		// 상품관리 - 페이지 권한
-		//authMap.put("/goods/writeForm.do", 9);
+//		authMap.put("/goods/writeForm.do", 9);
 //		authMap.put("/goods/write.do", 9);
 //		authMap.put("/goods/updateForm.do", 9);
 //		authMap.put("/goods/update.do", 9);

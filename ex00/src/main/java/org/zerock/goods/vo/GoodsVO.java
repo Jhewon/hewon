@@ -16,7 +16,7 @@ public class GoodsVO {
 	private String detail_image_name; // 보기에 나타날 상세 설명 이미지
 	private String content; // 보기에 나타날 상세 설명 텍스트
 	private String company;
-	@DateTimeFormat(pattern =  "yyyy-mm-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date product_date;
 	private String image_name; // 리스트에 나타날 대표 이미지
 	private Long hit;

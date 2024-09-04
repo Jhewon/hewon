@@ -5,7 +5,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import org.zerock.category.vo.CategoryVO;
+import org.zerock.goods.vo.ColorVO;
 import org.zerock.goods.vo.GoodsVO;
+import org.zerock.goods.vo.SizeVO;
 
 import com.webjjang.util.page.PageObject;
 
@@ -35,5 +37,10 @@ public interface GoodsMapper {
 	// 삭제
 	public Integer delete(GoodsVO vo);
 
+	// 상품 사이즈 가져오기
+	public List<SizeVO> getSize(@Param("cate_code1") Integer cate_code1);
+	
+	// 상품 색상 가져오기
+	public List<ColorVO> getColor(@Param("cate_code1") Integer cate_code1);
 	
 }
