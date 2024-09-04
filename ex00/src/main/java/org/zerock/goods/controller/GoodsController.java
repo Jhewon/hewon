@@ -1,6 +1,7 @@
 package org.zerock.goods.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,8 +18,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.category.service.CategoryService;
 import org.zerock.goods.service.GoodsService;
+import org.zerock.goods.vo.GoodsImageVO;
+import org.zerock.goods.vo.GoodsSizeColorVO;
 import org.zerock.goods.vo.GoodsVO;
 
+import com.webjjang.util.file.FileUtil;
 import com.webjjang.util.page.PageObject;
 
 import lombok.extern.log4j.Log4j;
@@ -38,6 +42,9 @@ public class GoodsController {
 	@Autowired
 	@Qualifier("categoryServiceImpl")
 	private CategoryService categoryService;
+	
+	String path = "/upload/goods";
+	
 	
 	//--- 상품 리스트 ------------------------------------
 	@GetMapping("/list.do")
@@ -91,12 +98,13 @@ public class GoodsController {
 			MultipartFile detailImageFile,
 			// 추가 이미지
 			ArrayList<MultipartFile> imageFiles ,
-			// 옵션들 받기 - 사이즈 컬러 옵션 - 데이터 한개의 단위인 경우 @RequestParam
+			// 옵션들 받기 - 사이즈 컬러 옵션 - ArrayList로 받을때 null 인경우 오류 
+			// @RequestParam (required = false) 를 붙인다. 배열인 경우 오류 안남
 			// 붙여야 받을수 있다.
 			@RequestParam(name = "size_nos" , required = false) ArrayList<Long> size_nos ,
-			@RequestParam(name = "color_nos" , required = false ) ArrayList<String> color_nos ,
+			@RequestParam(name = "color_nos" , required = false ) ArrayList<Long> color_nos ,
 			@RequestParam(name = "option_names" , required = false ) ArrayList<String> option_names ,
-			RedirectAttributes rttr) {
+			RedirectAttributes rttr , HttpServletRequest request) throws Exception {
 		
 		log.info("write.do--------------------------------------------------------------");
 		log.info(vo);
@@ -108,6 +116,51 @@ public class GoodsController {
 		log.info("사이즈 : " + size_nos);
 		log.info("색상 : " + color_nos);
 		log.info("옵션 : " + option_names);
+		
+		// 이미지 올리기와 DB에 저장할 데이터 수집
+		log.info("<<===== 이미지 처리 후 ======>>");
+		// 대표 이미지 처리
+		vo.setImage_name(FileUtil.upload(path, imageFile, request));
+		
+		// 상품 상세 이미지
+		String fileName = detailImageFile.getOriginalFilename();
+			if(fileName != null && !fileName.equals(""))
+				vo.setDetail_image_name(FileUtil.upload(path, detailImageFile, request));
+		
+		// 첨부 이미지 - GoodsImageVO
+		List<GoodsImageVO> GoodsImageList = null;
+		if(imageFiles != null && imageFiles.size() > 0)
+		for(MultipartFile file : imageFiles) {
+			if(GoodsImageList ==  null) GoodsImageList = new ArrayList<>();
+			fileName = file.getOriginalFilename();
+			if(fileName != null && !fileName.equals("")) {
+				GoodsImageVO imageVO = new GoodsImageVO();
+				imageVO.setImage_name(FileUtil.upload(path, file, request));
+				GoodsImageList.add(imageVO);
+			}
+		}
+		log.info(vo);
+		log.info("GoodsImageList : " + GoodsImageList);
+		
+		// 사이즈 컬러 - 데이터 개수 : 사이즈 * 컬러 GoodsSizeColorVO
+		List<GoodsSizeColorVO> goodsSizeColorList = null;
+		if(size_nos != null && size_nos.size() > 0) {
+			for(Long sizeNo : size_nos) {
+				if(goodsSizeColorList ==  null) goodsSizeColorList = new ArrayList<>();
+				if(color_nos != null && color_nos.size() > 0) {
+					for(Long colorNo : color_nos) {
+				GoodsSizeColorVO sizeColorVO = new GoodsSizeColorVO();
+				sizeColorVO.setSize_no(sizeNo);
+				sizeColorVO.setColor_no(colorNo);
+				goodsSizeColorList.add(sizeColorVO);
+					}
+				}else { // 컬러가 없는 경우 
+					GoodsSizeColorVO sizeColorVO = new GoodsSizeColorVO();
+					sizeColorVO.setSize_no(sizeNo);
+					goodsSizeColorList.add(sizeColorVO);
+				}
+			}
+		}
 		//service.write(vo);
 		
 		// 처리 결과에 대한 메시지 처리
