@@ -206,7 +206,7 @@ $(function(){
 	
   </c:if>
   <!-- 리스트 데이터 표시의 끝 -->
-<%-- 	<c:if test="${ !empty login }"> --%>
+<%-- 	<c:if test="${ !empty login && login.gradeNo == 9}"> --%>
 		<!-- 로그인이 되어있으면 보이게 하자. -->
 		<a href="writeForm.do?perPageNum=${pageObject.perPageNum }" class="btn btn-primary">등록</a>
 <%-- 	</c:if> --%>
