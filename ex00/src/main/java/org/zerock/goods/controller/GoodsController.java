@@ -1,6 +1,7 @@
 package org.zerock.goods.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,12 +20,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.category.service.CategoryService;
 import org.zerock.goods.service.GoodsService;
 import org.zerock.goods.vo.GoodsImageVO;
+import org.zerock.goods.vo.GoodsOptionVO;
 import org.zerock.goods.vo.GoodsSizeColorVO;
 import org.zerock.goods.vo.GoodsVO;
 
 import com.webjjang.util.file.FileUtil;
 import com.webjjang.util.page.PageObject;
 
+import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @Controller
@@ -44,7 +47,6 @@ public class GoodsController {
 	private CategoryService categoryService;
 	
 	String path = "/upload/goods";
-	
 	
 	//--- 상품 리스트 ------------------------------------
 	@GetMapping("/list.do")
@@ -91,26 +93,25 @@ public class GoodsController {
 	
 	//--- 상품 글등록 처리 ------------------------------------
 	@PostMapping("/write.do")
-	public String write(GoodsVO vo,
-			// 대표 이미지
+	public String write(GoodsVO vo, 
+			// 대표이미지
 			MultipartFile imageFile,
-			// 상세보기 이미지
+			// 상세 설명 이미지
 			MultipartFile detailImageFile,
-			// 추가 이미지
-			ArrayList<MultipartFile> imageFiles ,
-			// 옵션들 받기 - 사이즈 컬러 옵션 - ArrayList로 받을때 null 인경우 오류 
-			// @RequestParam (required = false) 를 붙인다. 배열인 경우 오류 안남
-			// 붙여야 받을수 있다.
-			@RequestParam(name = "size_nos" , required = false) ArrayList<Long> size_nos ,
-			@RequestParam(name = "color_nos" , required = false ) ArrayList<Long> color_nos ,
-			@RequestParam(name = "option_names" , required = false ) ArrayList<String> option_names ,
-			RedirectAttributes rttr , HttpServletRequest request) throws Exception {
-		
-		log.info("write.do--------------------------------------------------------------");
+			// 추가 이미지들
+			ArrayList<MultipartFile> imageFiles,
+			// 옵션들 받기 - 사이즈, 컬러, 옵션 : ArrayList로 받으면 null인 경우 오류
+			// 	@RequestParam(required = false) 붙여야 받을 수 있다. 배열인 경우 오류 안남
+			@RequestParam(name = "size_nos", required = false) ArrayList<Long> size_nos,
+			@RequestParam(name = "color_nos", required = false ) ArrayList<Long> color_nos,
+			@RequestParam(name = "option_names", required = false) ArrayList<String> option_names,
+			HttpServletRequest request,
+			RedirectAttributes rttr) throws Exception {
+		log.info("write.do ------------------------------");
 		log.info(vo);
 		log.info("대표 이미지 : " + imageFile.getOriginalFilename());
 		log.info("상세 설명 이미지 : " + detailImageFile.getOriginalFilename());
-		log.info("<< 첨부이미지들 >>");
+		log.info("<< 첨부 이미지들>>");
 		for(MultipartFile file : imageFiles)
 			log.info(file.getOriginalFilename());
 		log.info("사이즈 : " + size_nos);
@@ -118,65 +119,85 @@ public class GoodsController {
 		log.info("옵션 : " + option_names);
 		
 		// 이미지 올리기와 DB에 저장할 데이터 수집
-		log.info("<<===== 이미지 처리 후 ======>>");
+		log.info("<<<----- 이미지 처리 ----------------->>");
 		// 대표 이미지 처리
 		vo.setImage_name(FileUtil.upload(path, imageFile, request));
 		
-		// 상품 상세 이미지
 		String fileName = detailImageFile.getOriginalFilename();
-			if(fileName != null && !fileName.equals(""))
-				vo.setDetail_image_name(FileUtil.upload(path, detailImageFile, request));
+		
+		// 상품 상세 이미지
+		if(fileName != null && !fileName.equals(""))
+			vo.setDetail_image_name(FileUtil.upload(path, detailImageFile, request));
 		
 		// 첨부 이미지 - GoodsImageVO
-		List<GoodsImageVO> GoodsImageList = null;
+		List<GoodsImageVO> goodsImageList = null;
 		if(imageFiles != null && imageFiles.size() > 0)
-		for(MultipartFile file : imageFiles) {
-			if(GoodsImageList ==  null) GoodsImageList = new ArrayList<>();
-			fileName = file.getOriginalFilename();
-			if(fileName != null && !fileName.equals("")) {
-				GoodsImageVO imageVO = new GoodsImageVO();
-				imageVO.setImage_name(FileUtil.upload(path, file, request));
-				GoodsImageList.add(imageVO);
+			for(MultipartFile file : imageFiles) {
+				if(goodsImageList == null) goodsImageList = new ArrayList<>();
+				fileName = file.getOriginalFilename();
+				if(fileName != null && !fileName.equals("")) {
+					GoodsImageVO imageVO = new GoodsImageVO();
+					imageVO.setImage_name(FileUtil.upload(path, file, request));
+					goodsImageList.add(imageVO);
+				}
 			}
-		}
 		log.info(vo);
-		log.info("GoodsImageList : " + GoodsImageList);
+		log.info("goodsImageList : " + goodsImageList);
 		
-		// 사이즈 컬러 - 데이터 개수 : 사이즈 * 컬러 GoodsSizeColorVO
+		// 사이즈와 컬러 - 데이터 개수 : 사이즈 * 컬러 - GoodsSizeColorVO
 		List<GoodsSizeColorVO> goodsSizeColorList = null;
 		if(size_nos != null && size_nos.size() > 0) {
-			for(Long sizeNo : size_nos) {
-				if(goodsSizeColorList ==  null) goodsSizeColorList = new ArrayList<>();
-				if(color_nos != null && color_nos.size() > 0) { // 컬러가 있는 경우 
-					for(Long colorNo : color_nos) {
-				GoodsSizeColorVO sizeColorVO = new GoodsSizeColorVO();
-				sizeColorVO.setSize_no(sizeNo);
-				sizeColorVO.setColor_no(colorNo);
-				goodsSizeColorList.add(sizeColorVO);
+			for (Long sizeNo : size_nos) {
+				if(goodsSizeColorList == null) goodsSizeColorList = new ArrayList<>();
+				if(color_nos != null && color_nos.size() > 0) { // 컬러가 있는 경우
+					for (Long colorNo : color_nos) {
+						GoodsSizeColorVO sizeColorVO = new GoodsSizeColorVO();
+						sizeColorVO.setSize_no(sizeNo);
+						sizeColorVO.setColor_no(colorNo);
+						goodsSizeColorList.add(sizeColorVO);
 					}
-				}else { // 컬러가 없는 경우 
+				} else { // 컬러가 없는 경우
 					GoodsSizeColorVO sizeColorVO = new GoodsSizeColorVO();
 					sizeColorVO.setSize_no(sizeNo);
 					goodsSizeColorList.add(sizeColorVO);
 				}
 			}
-			log.info("goodsSizeColorList : " + goodsSizeColorList);
 		}
-		//service.write(vo);
+		log.info("goodsSizeColorList : " + goodsSizeColorList);
+		
+		// 옵션 - GoodsOptionVO
+		List<GoodsOptionVO> goodsOptionList = null;
+		if(option_names != null && option_names.size() > 0) {
+			for(String option_name : option_names) {
+				if(goodsOptionList == null) goodsOptionList = new ArrayList<>();
+				GoodsOptionVO optionVO = new GoodsOptionVO();
+				optionVO.setOption_name(option_name);
+				goodsOptionList.add(optionVO);
+			}
+		}
+		log.info("goodsOptionList : " + goodsOptionList);
+		
+		// service.write()에 넘길 데이터
+		//  - vo, goodsImageList, goodsSizeColorList, goodsOptionList
+		// service.write(vo);
 		
 		// 처리 결과에 대한 메시지 처리
 		rttr.addFlashAttribute("msg", "상품 글등록이 되었습니다.");
 		
-		return null; //"redirect:list.do";
+		// return "redirect:list.do";
+		return null;
 	}
 	
 	//--- 상품 글수정 폼 ------------------------------------
 	@GetMapping("/updateForm.do")
 	public String updateForm(Long no, Model model) {
 		log.info("updateForm.do");
+		
 		model.addAttribute("vo", service.view(no, 0));
+		
 		return "goods/updateForm";
 	}
+	
 	//--- 상품 글수정 처리 ------------------------------------
 	@PostMapping("/update.do")
 	public String update(GoodsVO vo, RedirectAttributes rttr) {
@@ -189,8 +210,11 @@ public class GoodsController {
 			rttr.addFlashAttribute("msg",
 					"상품 글수정이 되지 않았습니다. "
 					+ "글번호나 비밀번호가 맞지 않습니다. 다시 확인하고 시도해 주세요.");
+		
 		return "redirect:view.do";
 	}
+	
+	
 	//--- 상품 글삭제 처리 ------------------------------------
 	@PostMapping("/delete.do")
 	public String delete(GoodsVO vo, RedirectAttributes rttr) {
@@ -208,4 +232,5 @@ public class GoodsController {
 			return "redirect:view.do";
 		}
 	}
+	
 }

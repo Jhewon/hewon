@@ -2,24 +2,24 @@ package org.zerock.notice.service;
 
 import java.util.List;
 
-import org.zerock.board.vo.BoardVO;
+import org.zerock.notice.vo.NoticeVO;
 import com.webjjang.util.page.PageObject;
 
 public interface NoticeService {
 
-	// 일반 게시판 리스트
-	public List<BoardVO> list(PageObject pageObject);
+	// 공지사항 리스트
+	public List<NoticeVO> list(PageObject pageObject);
 	
-	// 일반 게시판 글보기
-	public BoardVO view(Long no, int inc);
+	// 공지사항 글보기
+	public NoticeVO view(Long no, int inc);
 	
-	// 일반 게시판 글등록
-	public Integer write(BoardVO vo);
+	// 공지사항 글등록
+	public Integer write(NoticeVO vo);
 	
-	// 일반 게시판 글수정
-	public Integer update(BoardVO vo);
+	// 공지사항 글수정
+	public Integer update(NoticeVO vo);
 	
-	// 일반 게시판 글삭제
-	public Integer delete(BoardVO vo);
+	// 공지사항 글삭제
+	public Integer delete(NoticeVO vo);
 	
 }

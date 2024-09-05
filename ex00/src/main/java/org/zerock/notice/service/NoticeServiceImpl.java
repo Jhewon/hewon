@@ -7,8 +7,8 @@ import javax.inject.Inject;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.zerock.board.mapper.BoardMapper;
-import org.zerock.board.vo.BoardVO;
+import org.zerock.notice.mapper.NoticeMapper;
+import org.zerock.notice.vo.NoticeVO;
 
 import com.webjjang.util.page.PageObject;
 
@@ -20,35 +20,35 @@ import lombok.extern.log4j.Log4j;
 @Service
 @Log4j
 // Type이 같으면 식별할 수 있는 문자열 지정 - id를 지정
-@Qualifier("boardServiceImpl")
+@Qualifier("noticeServiceImpl")
 public class NoticeServiceImpl implements NoticeService{
 
 	// 자동 DI 적용 - @Setter, @Autowired, @Inject
 	@Inject
-	private BoardMapper mapper;
+	private NoticeMapper mapper;
 	
-	// 일반 게시판 리스트
+	// 공지사항 리스트
 	@Override
-	public List<BoardVO> list(PageObject pageObject) {
+	public List<NoticeVO> list(PageObject pageObject) {
 		log.info("list() 실행");
 		// 전체 데이터 개수 구하기
 		pageObject.setTotalRow(mapper.getTotalRow(pageObject));
 		return mapper.list(pageObject);
 	}
 	
-	// 일반 게시판 글보기
+	// 공지사항 글보기
 	@Override
-	public BoardVO view(Long no, int inc) {
+	public NoticeVO view(Long no, int inc) {
 		log.info("view() 실행");
 		if(inc == 1) mapper.increase(no);
 		return mapper.view(no);
 	}
 	
-	// 일반 게시판 글등록
+	// 공지사항 글등록
 	// @Transactional - insert 2번이 성공을 해야 commit 한다. 한개라도 오류가 나면 rollback.
 	// @Transactional
 	@Override
-	public Integer write(BoardVO vo) {
+	public Integer write(NoticeVO vo) {
 		Integer result = mapper.write(vo); // 글번호를 시퀀스에서 새로운 번호 사용
 		// log.info(vo);
 		// vo.setNo(10000L);
@@ -56,16 +56,16 @@ public class NoticeServiceImpl implements NoticeService{
 		return result;
 	}
 	
-	// 일반 게시판 글수정
+	// 공지사항 글수정
 	@Override
-	public Integer update(BoardVO vo) {
+	public Integer update(NoticeVO vo) {
 		log.info(vo);
 		return mapper.update(vo);
 	}
 	
-	// 일반 게시판 글삭제
+	// 공지사항 글삭제
 	@Override
-	public Integer delete(BoardVO vo) {
+	public Integer delete(NoticeVO vo) {
 		log.info(vo);
 		return mapper.delete(vo);
 	}

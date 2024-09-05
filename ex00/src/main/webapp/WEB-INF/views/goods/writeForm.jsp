@@ -182,7 +182,7 @@ $(function(){ // HTML 문서가 로딩이 다 되면 실행해 주세요.
 		</div>
 		
 		<div class="form-group">
-		<!-- VO 객체의 프로포티와 이름이 다르다. 파일 자제이므로  DB에는 이름만 저장 -->
+			<!-- VO객체의 프로퍼티와 이름이 다르다. 파일 자체이므로 DB에는 이름만 저장 -->
 			<label for="detailImageFile">상세 설명 이미지</label>
 			<input class="form-control" name="detailImageFile"
 			 id="detailImageFile" type="file">
@@ -194,6 +194,7 @@ $(function(){ // HTML 문서가 로딩이 다 되면 실행해 주세요.
 				rows="7"></textarea>
 		</div>
 		<div class="form-group">
+			<!-- VO객체의 프로퍼티와 이름이 다르다. 파일 자체이므로 DB에는 이름만 저장 -->
 			<label for="imageFile">대표 이미지</label>
 			<input class="form-control" name="imageFile" id="imageFile" required
 			 type="file">
@@ -292,6 +293,7 @@ $(function(){ // HTML 문서가 로딩이 다 되면 실행해 주세요.
 	 		</button>
 	 	</legend>
 	 	<div class="input-group mb-3">
+			<!-- VO객체의 프로퍼티와 이름이 다르다. 파일 자체이므로 DB에는 이름만 저장 -->
 		 	<input class="form-control imageFiles" type="file" name="imageFiles">
 		</div>
 	 	
