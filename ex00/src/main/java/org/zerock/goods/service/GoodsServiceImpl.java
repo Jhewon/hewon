@@ -58,12 +58,36 @@ public class GoodsServiceImpl implements GoodsService{
 	public Integer write(GoodsVO vo, List<GoodsImageVO> goodsImageList,
 			List<GoodsSizeColorVO> goodsSizeColorList,
 			List<GoodsOptionVO> goodsOptionList) {
-		Integer result = mapper.write(vo); // 글번호를 시퀀스에서 새로운 번호 사용
-		// 상품 상세 정보 - vo
+		Integer result = null;
+		// 상품 상세 정보 - vo : 필수 - 처리가 끝나면 goods_no 세팅되서 넘어온다.
+		mapper.write(vo);
+		
 		// 추가 이미지 - goodsImageList. null이 아닌 경우에만 DB에 추가
+		if(goodsImageList != null && goodsImageList.size() > 0) {
+			// goods_no 를 세팅해서 넘긴다.
+			for(GoodsImageVO imageVO : goodsImageList )
+				imageVO.setGoods_no(vo.getGoods_no());
+				mapper.writeImage(goodsImageList);
+		}
+		
 		// 사이즈와 색상 - goodsSizeColorList. null이 아닌 경우에만 DB에 추가
+		if(goodsSizeColorList != null && goodsSizeColorList.size() > 0) {
+			// goods_no 를 세팅해서 넘긴다.
+			for(GoodsSizeColorVO sizeColorVO : goodsSizeColorList )
+				sizeColorVO.setGoods_no(vo.getGoods_no());
+				mapper.writeSizeColor(goodsSizeColorList);
+		}
+		
 		// 옵션 - goodsOptionList. null이 아닌 경우에만 DB에 추가
-		// 가격 - vo
+		if(goodsOptionList != null && goodsOptionList.size() > 0) {
+			// goods_no 를 세팅해서 넘긴다.
+			for(GoodsOptionVO optionVO : goodsOptionList )
+				optionVO.setGoods_no(vo.getGoods_no());
+				mapper.writeOption(goodsOptionList);
+		}
+		
+		// 가격 - vo : 필수
+		result = mapper.writePrice(vo);
 		return result;
 	}
 	
