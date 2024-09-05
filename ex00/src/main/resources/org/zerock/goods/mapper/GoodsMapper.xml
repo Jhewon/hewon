@@ -129,7 +129,12 @@
 	     select goods_sizecolor_seq.nextval,goods_no,size_no,color_no
         	from(
               <foreach collection="list" item="vo" separator=" union all ">
-                 select #{vo.size_no} size_no,#{vo.goods_no} goods_no,#{vo.color_no} color_no from dual
+              <!--  지원되는 JDBC 타입 
+				VARCAHR : 문자열 , INTEGER : 정수 , BIGINT : 큰정수
+				BOUBLE : 실수 , DATE : 날짜 , TIMESTAMP : 타임스탬프
+				BOOLEAN : 논리형
+			 -->
+                 select #{vo.size_no} size_no,#{vo.goods_no} goods_no,#{vo.color_no, jdbcType=BIGINT} color_no from dual
               </foreach>
        		 )   
     </insert>
@@ -164,8 +169,13 @@
 			 -->
 		#{discount , jdbcType=BIGINT},
 		#{discount_rate , jdbcType=INTEGER},
-		#{delivery_charge},#{saved_rate},
-		#{sale_startDate,jdbcType=DATE},#{sale_endDate,jdbcType=DATE})
+		#{delivery_charge},#{saved_rate}
+		<if test="sale_startDate != mull">
+		,#{sale_startDate,jdbcType=DATE}
+		</if>
+		<if test="sale_endDate != null">
+		,#{sale_endDate,jdbcType=DATE})
+		</if>
 	</insert>
 
 	<!-- 상품 수정 -->

@@ -104,6 +104,7 @@ public class GoodsController {
 			@RequestParam(name = "color_nos", required = false ) ArrayList<Long> color_nos,
 			@RequestParam(name = "option_names", required = false) ArrayList<String> option_names,
 			HttpServletRequest request,
+			Long perPageNum,
 			RedirectAttributes rttr) throws Exception {
 		log.info("write.do ------------------------------");
 		log.info(vo);
@@ -193,7 +194,8 @@ public class GoodsController {
 		log.info("상품 등록이 되었습니다.  상품 번호 : " + vo.getGoods_no());
 		rttr.addFlashAttribute("msg", "상품 글등록이 되었습니다.");
 		
-		 return "redirect:list.do";
+		
+		 return "redirect:list.do?perPageNum=" + perPageNum;
 		// return null;
 	}
 	

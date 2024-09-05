@@ -37,5 +37,4 @@ public class GoodsVO {
 		// 할인율이 있응 경우 처리 : 정가 - (정가 * 할인율 / 100) - 10원 미만 절삭
 		return (price - (price * discount_rate / 100)) / 10 * 10;
 	}
-	
 }

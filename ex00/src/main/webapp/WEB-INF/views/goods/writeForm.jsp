@@ -140,7 +140,7 @@ $(function(){ // HTML 문서가 로딩이 다 되면 실행해 주세요.
 <div class="container">
 	<h2>상품 등록</h2>
 	<form action="write.do" method="post" enctype="multipart/form-data">
-
+	<input type="hidden" name="perPagenum" value="${param.perPageNum} ">
 	<!-- px-# : padding 왼쪽 오른쪽 상대적인 설정 (참고:p-#,pl-#,pr-#,pt-#,pb-#,px-#,py-#) -->
 	 <fieldset class="border p-4">
 	 	<legend class="w-auto px-2"><b style="font-size: 14pt;">[상품 기본 정보 입력]</b></legend>
