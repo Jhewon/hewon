@@ -26,7 +26,7 @@
 					(<!-- 일반 조건. -->
 						<!-- 현재 판매되고 있는 물건 - 가격 정보가 현재 가격으로 존재한다. -->
 						<![CDATA[
-						sale_startDate <= trunc(sysdate)
+						sale_startDate <= sysdate
 						and trunc(sysdate) <= sale_endDate
 						]]>
 						<!-- 검색을 달아야 한다. -->
