@@ -160,7 +160,14 @@
 	<insert id="writePrice">
 		<!-- 먼저 GoodsVO의 goods_no를 가져와서 세팅해 준다. -->
 		insert into price(price_no,goods_no,price,discount,discount_rate,
-					delivery_charge,saved_rate,sale_startdate,sale_enddate) 
+					delivery_charge,saved_rate
+						<if test="sale_startDate != mull">
+							,sale_startdate
+						</if>
+						<if test="sale_endDate != null">
+							,sale_enddate
+						</if>
+					) 
 		VALUES (price_seq.nextval,#{goods_no},#{price},
 			<!--  지원되는 JDBC 타입 
 				VARCAHR : 문자열 , INTEGER : 정수 , BIGINT : 큰정수

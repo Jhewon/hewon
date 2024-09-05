@@ -1,0 +1,14 @@
+package org.zerock.goods.vo;
+
+import lombok.Data;
+
+@Data
+public class GoodsSearchCO {
+
+	private Integer cate_code1; // 대분류 검색 - 상품 등록
+	private Integer cate_code2; // 중분류 검색 - 상품 등록
+	private String goods_name; // 상품명에 포함되어 있는 문자 검색
+	private Integer min; // 제일 작은 금액 검색
+	private Integer max; // 제일 큰 금액 검색
+	
+}

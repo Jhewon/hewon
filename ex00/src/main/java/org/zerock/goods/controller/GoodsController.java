@@ -20,6 +20,7 @@ import org.zerock.category.service.CategoryService;
 import org.zerock.goods.service.GoodsService;
 import org.zerock.goods.vo.GoodsImageVO;
 import org.zerock.goods.vo.GoodsOptionVO;
+import org.zerock.goods.vo.GoodsSearchCO;
 import org.zerock.goods.vo.GoodsSizeColorVO;
 import org.zerock.goods.vo.GoodsVO;
 
@@ -49,7 +50,7 @@ public class GoodsController {
 	//--- 상품 리스트 ------------------------------------
 	@GetMapping("/list.do")
 	// 검색을 위한 데이터를 따로 받아야 한다.
-	public String list(Model model, HttpServletRequest request)
+	public String list(Model model, GoodsSearchCO searchVO, HttpServletRequest request)
 			throws Exception {
 		
 		// 페이지 처리를 위한 객체 생겅
@@ -61,7 +62,7 @@ public class GoodsController {
 			pageObject.setPerPageNum(8);
 		
 		// model에 담으로 request에 자동을 담기게 된다. - 처리된 데이터를 Model에 저장
-		model.addAttribute("list", service.list(pageObject));
+		model.addAttribute("list", service.list(pageObject,searchVO));
 		// pageObject에 데이터 가져 오기 전에는 시작 페이지, 끝 페이지, 전체 페이지가 정해지지 않는다.
 		log.info(pageObject);
 		model.addAttribute("pageObject", pageObject);

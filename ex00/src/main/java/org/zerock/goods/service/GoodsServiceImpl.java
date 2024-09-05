@@ -12,6 +12,7 @@ import org.zerock.goods.mapper.GoodsMapper;
 import org.zerock.goods.vo.ColorVO;
 import org.zerock.goods.vo.GoodsImageVO;
 import org.zerock.goods.vo.GoodsOptionVO;
+import org.zerock.goods.vo.GoodsSearchCO;
 import org.zerock.goods.vo.GoodsSizeColorVO;
 import org.zerock.goods.vo.GoodsVO;
 import org.zerock.goods.vo.SizeVO;
@@ -35,7 +36,7 @@ public class GoodsServiceImpl implements GoodsService{
 	
 	// 상품 리스트
 	@Override
-	public List<GoodsVO> list(PageObject pageObject) {
+	public List<GoodsVO> list(PageObject pageObject,GoodsSearchCO searchVO) {
 		// 전체 데이터 개수 구하기
 		pageObject.setTotalRow(mapper.getTotalRow(pageObject));
 		return mapper.list(pageObject);
