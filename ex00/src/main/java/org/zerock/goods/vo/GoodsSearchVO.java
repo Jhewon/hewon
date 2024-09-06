@@ -3,7 +3,7 @@ package org.zerock.goods.vo;
 import lombok.Data;
 
 @Data
-public class GoodsSearchCO {
+public class GoodsSearchVO {
 
 	private Integer cate_code1; // 대분류 검색 - 상품 등록
 	private Integer cate_code2; // 중분류 검색 - 상품 등록

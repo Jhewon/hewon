@@ -20,7 +20,7 @@ import org.zerock.category.service.CategoryService;
 import org.zerock.goods.service.GoodsService;
 import org.zerock.goods.vo.GoodsImageVO;
 import org.zerock.goods.vo.GoodsOptionVO;
-import org.zerock.goods.vo.GoodsSearchCO;
+import org.zerock.goods.vo.GoodsSearchVO;
 import org.zerock.goods.vo.GoodsSizeColorVO;
 import org.zerock.goods.vo.GoodsVO;
 
@@ -50,7 +50,7 @@ public class GoodsController {
 	//--- 상품 리스트 ------------------------------------
 	@GetMapping("/list.do")
 	// 검색을 위한 데이터를 따로 받아야 한다.
-	public String list(Model model, GoodsSearchCO searchVO, HttpServletRequest request)
+	public String list(Model model, GoodsSearchVO searchVO, HttpServletRequest request)
 			throws Exception {
 		
 		// 페이지 처리를 위한 객체 생겅
