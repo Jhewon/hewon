@@ -132,6 +132,27 @@ $(function(){ // HTML 문서가 로딩이 다 되면 실행해 주세요.
 		}
 	);
 	
+	// 판매가 계산 하는 처리 이벤트
+	$("#price, #discount , #discount_rate").keyup(function(){
+		let price = 0;
+		let discount = 0;
+		let discount_rate = 0;
+		let sale_price = 0;
+		price = Number($("#price").val());
+		discount = Number($("#discount").val());
+		console.log(discount);
+		discount_rate = Number($("#discount_rate").val());
+		if(discount > 0){ 
+			sale_price = price - discount;
+		console.log(sale_price);
+				
+		}
+		else if(discount_rate > 0) sale_price = Math.floor( (price - (price * discount_rate / 100)) / 10) * 10;
+		else sale_price = price;
+		
+		$("#sale_price").val(sale_price);
+	});
+	
 });
 </script>
 
@@ -140,7 +161,7 @@ $(function(){ // HTML 문서가 로딩이 다 되면 실행해 주세요.
 <div class="container">
 	<h2>상품 등록</h2>
 	<form action="write.do" method="post" enctype="multipart/form-data">
-	<input type="hidden" name="perPagenum" value="${param.perPageNum} ">
+	<input type="hidden" name="perPageNum" value="${param.perPageNum} ">
 	<!-- px-# : padding 왼쪽 오른쪽 상대적인 설정 (참고:p-#,pl-#,pr-#,pt-#,pb-#,px-#,py-#) -->
 	 <fieldset class="border p-4">
 	 	<legend class="w-auto px-2"><b style="font-size: 14pt;">[상품 기본 정보 입력]</b></legend>
@@ -210,18 +231,23 @@ $(function(){ // HTML 문서가 로딩이 다 되면 실행해 주세요.
 		<!-- 가격 정보 입력 시작 -->
 		<div class="form-group">
 			<label for="price">정가</label>
-			<input class="form-control" name="price"
+			<input class="form-control" name="price" value="0"
 			 id="price" required>
 		</div>
 		<div class="form-group">
 			<label for="discount">할인가</label>
-			<input class="form-control" name="discount"
+			<input class="form-control" name="discount" value="0"
 			 id="discount">
 		</div>
 		<div class="form-group">
 			<label for="discount_rate">할인율</label>
-			<input class="form-control" name="discount_rate"
+			<input class="form-control" name="discount_rate" value="0"
 			 id="discount_rate">
+		</div>
+		<div class="form-group">
+			<label for="sale_price">판매가</label>
+			<input class="form-control" name="sale_price" value="0"
+			 id="sale_price" readonly="readonly">
 		</div>
 		<div class="form-group">
 			<label for="delivery_charge">배송료</label>

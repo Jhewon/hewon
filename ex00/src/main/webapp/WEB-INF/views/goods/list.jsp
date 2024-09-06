@@ -92,6 +92,13 @@ $(function(){
 		location="view.do?no=" + no + "&${pageObject.pageQuery}";
 	});
 	
+	// 대분류를 바꾸면 중분류도 바꿔야한다.
+	$("#cate_code1").change(function(){
+		// 바로 중분류의 데이터를 세팅한다.
+		$("#cate_code2").load("/ajax/getMidList.do?cate_code1=" 
+				+ $("#cate_code1").val() + "&mode=l");
+	});
+	
 	// perPageNum 처리
 	$("#perPageNum").change(function(){
 		// alert("change perPageNum");
@@ -99,10 +106,30 @@ $(function(){
 		$("#searchForm").submit();
 	});
 	
+	
+	// 검색 버튼 이벤트
+	$("#searchBtn").click(function(){
+		
+		//alert("asdasdasd");
+		// 검색 내용이 없으면 검색으로 가지 않는다.
+		if($("#cate_code1").val() == 0 && $("#goods_name").val().trim() == "" 
+				&& $("#min").val() == 0 && $("#min").val() == "" 
+				&& $("#max").val() == 0 && $("#max").val() == ""		
+		){ 
+			alert("안넘어가ㅁ");
+			return false;
+		}
+		
+		
+		// return false;
+	});
+	
 	// 검색 데이터 세팅
-	$("#key").val("${(empty pageObject.key)?'t':pageObject.key}");
-	$("#perPageNum")
-		.val("${(empty pageObject.perPageNum)?'10':pageObject.perPageNum}");
+	$("#cate_code1").val("${searchVO.cate_code1}");
+	$("#cate_code2").val("${searchVO.cate_code2}");
+	$("#goods_name").val("${searchVO.goods_name}");
+	$("#min").val("${searchVO.min}");
+	$("#max").val("${searchVO.max}");
 });
 </script>
 
@@ -112,28 +139,47 @@ $(function(){
 	<h2>상품 리스트</h2>
   <form action="list.do" id="searchForm">
   	<input name="page" value="1" type="hidden">
+  	<input name="perPageNum" value="${pageObject.perPageNum }" type="hidden">
 	  <div class="row">
-	  	<div class="col-md-8">
-	  		<div class="input-group mb-3">
-			  <div class="input-group-prepend">
-			      <select name="key" id="key" class="form-control">
-			      	<option value="t">제목</option>
-			      	<option value="c">내용</option>
-			      	<option value="tc">제목/내용</option>
-			      	<option value="f">파일명</option>
-			      </select>
-			  </div>
-			  <input type="text" class="form-control" placeholder="검색"
-			   id="word" name="word" value="${pageObject.word }">
-			  <div class="input-group-append">
-			      <button class="btn btn-outline-primary">
-			      	<i class="fa fa-search"></i>
-			      </button>
-			  </div>
+	  	<div class="col-md-12 form-inline">
+		  	<div class="form-inline">
+				<div class="form-group">
+					<label for="cate_code1">대분류</label> 
+					<select class="form-control" name="cate_code1" 
+					 id="cate_code1" style="margin: 0 10px;">
+					 <option value="0">대분류 선택</option>
+						<c:forEach items="${bigList }" var="vo">
+							<option value="${vo.cate_code1 }">${vo.cate_name }</option>
+						</c:forEach>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="cate_code2">중분류</label> 
+					<select class="form-control" name="cate_code2"
+					 id="cate_code2"  style="margin: 0 10px;">
+					 <option value="0">대분류선택</option>
+						<!-- ajax를 이용한 중분류 option 로딩하기 -->
+					</select>
+				</div>
 			</div>
+			<div class="form-group">
+				<label for="goods_name">상품명</label>
+				<input class="form-control" name="goods_name" id="goods_name" style="margin: 0 10px;">
+			</div>
+			<div class="form-group">
+				<label for="min">최소 가격</label>
+				<input class="form-control" name="min" id="min" style="margin: 0 10px;" min="0" type="number">
+			</div>
+			<div class="form-group">
+				<label for="max">최대 가격</label>
+				<input class="form-control" name="max" id="max" style="margin: 0 10px;" type="number" min="0">
+			</div>
+			<button id="searchBtn" class="btn btn-dark">검색</button>
+	  		</div>
 	  	</div>
 	  	<!-- col-md-8의 끝 : 검색 -->
-	  	<div class="col-md-4">
+	  	<div class="row">
+	  	<div class="col-md-12">
 	  		<!-- 너비를 조정하기 위한 div 추가. float-right : 오른쪽 정렬 -->
 	  		<div style="width: 200px;" class="float-right">
 			  <div class="input-group mb-3">
@@ -150,7 +196,7 @@ $(function(){
 		  </div>
 	  	</div>
 	  	<!-- col-md-4의 끝 : 한페이지당 표시 데이터 개수 -->
-	  </div>
+	  	</div>
   </form>
   <c:if test="${empty list }">
 	 <div class="jumbotron">

@@ -12,9 +12,9 @@ public class PriceVO {
 	private Integer price;
 	private Integer discount;
 	private Integer discount_rate;
+	private Integer sale_price;
 	private Integer delivery_charge;
 	private Integer saved_rate;
 	private Date sale_startDate;
 	private Date sale_endDate;
-
 }

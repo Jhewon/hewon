@@ -7,7 +7,6 @@ import javax.inject.Inject;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.zerock.category.vo.CategoryVO;
 import org.zerock.goods.mapper.GoodsMapper;
 import org.zerock.goods.vo.ColorVO;
 import org.zerock.goods.vo.GoodsImageVO;
@@ -38,8 +37,8 @@ public class GoodsServiceImpl implements GoodsService{
 	@Override
 	public List<GoodsVO> list(PageObject pageObject,GoodsSearchVO searchVO) {
 		// 전체 데이터 개수 구하기
-		pageObject.setTotalRow(mapper.getTotalRow(pageObject));
-		return mapper.list(pageObject);
+		pageObject.setTotalRow(mapper.getTotalRow(searchVO));
+		return mapper.list(pageObject,searchVO);
 	}
 	
 	// 상품 글보기

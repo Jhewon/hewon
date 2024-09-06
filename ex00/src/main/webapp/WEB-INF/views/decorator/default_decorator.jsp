@@ -134,7 +134,7 @@
 		      <a class="nav-link" href="/notice/list.do">공지사항</a>
 		    </li>
 		    <li class="nav-item ${(module == '/shop')?'active':'' }">
-		      <a class="nav-link" href="/shop/list.do">쇼핑몰</a>
+		      <a class="nav-link" href="/goods/list.do">쇼핑몰</a>
 		    </li>
 		    <li class="nav-item ${(module == '/image')?'active':'' }">
 		      <a class="nav-link" href="/image/list.do">Gallery</a>
