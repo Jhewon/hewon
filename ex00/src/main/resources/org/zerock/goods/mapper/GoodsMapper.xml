@@ -95,17 +95,49 @@
 	<!-- # {obj} 1. 변수의 이름, 2. vo의 getter 이름, 3. Map의 key -->
 	<update id="increase">
 		update goods set hit = hit + 1
-		where no = #{no}
+		where goods_no = #{goods_no}
 	</update>
 
-	<!-- 상품 보기 -->
+	<!-- 상품정보 보기 -->
 	<select id="view" resultType="org.zerock.goods.vo.GoodsVO">
-		select no, title, content, writer, writeDate, hit
-		from goods
-		where no = #{no}
+		select 
+		g.goods_no, g.cate_code1,g.cate_code2,g.goods_name,g.company,g.product_date,g.content,
+		g.image_name, g.detail_image_name,p.price,p.discount,p.discount_rate,
+		p.sale_price , p.delivery_charge,
+		g.hit,p.saved_rate
+		<!-- from 뒤에 사용 할수 있는 것 : 1.테이블 2. select 쿼리 3.view table -->
+		from goods g, price p
+		where (g.goods_no = #{goods_no}) and (g.goods_no = p.goods_no)
+	</select>
+	
+	<!-- 이미지리스트 -->
+	<select id="imageList" resultType="org.zerock.goods.vo.GoodsImageVO">
+		select 
+		goods_no,image_no,image_name
+		<!-- from 뒤에 사용 할수 있는 것 : 1.테이블 2. select 쿼리 3.view table -->
+		from goods_image
+		where goods_no = #{goods_no}
+	</select>
+	
+	<!-- 사이즈 색상 리스트  -->
+	<select id="sizeColorList" resultType="org.zerock.goods.vo.GoodsSizeColorVO">
+		select 
+		g.goods_no,g.color_no,g.goods_sizeColor_no,g.size_no , c.color_name , s.size_name
+		<!-- from 뒤에 사용 할수 있는 것 : 1.테이블 2. select 쿼리 3.view table -->
+		from goods_sizeColor g, basic_size s, basic_color c 
+		where (g.goods_no = #{goods_no}) and ( g.size_no=s.size_no and g.color_no=c.color_no(+))
+	</select>
+	
+	<!-- 옵션 리스트  -->
+	<select id="optionList" resultType="org.zerock.goods.vo.GoodsOptionVO">
+		select 
+		goods_no,goods_option_no,option_name
+		<!-- from 뒤에 사용 할수 있는 것 : 1.테이블 2. select 쿼리 3.view table -->
+		from goods_option
+		where goods_no = #{goods_no}
 	</select>
 
-
+	
 
 
 

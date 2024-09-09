@@ -3,11 +3,13 @@ package org.zerock.goods.vo;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import lombok.Data;
 
 @Data
 public class GoodsSearchVO {
-
+	
 	private Integer cate_code1; // 대분류 검색 - 상품 등록
 	private Integer cate_code2; // 중분류 검색 - 상품 등록
 	private String goods_name; // 상품명에 포함되어 있는 문자 검색
@@ -20,7 +22,7 @@ public class GoodsSearchVO {
 	public String getQuery() throws UnsupportedEncodingException {
 		return "cate_code1="+toStr(cate_code1)+
 				"&cate_code2="+toStr(cate_code2)+
-				"&goods_name="+URLEncoder.encode(goods_name,"utf-8")
+				"&goods_name="+URLEncoder.encode(toStr(goods_name),"utf-8")
 				+"&min="+toStr(min)+"&max="+toStr(max);
 	}
 	
@@ -30,11 +32,10 @@ public class GoodsSearchVO {
 	}
 	// 검색 데이터가 존재하는지 확인 하는 메소드 - return type Boolean 인 경우 get 대신 is 를 붙인다.
 	public Boolean isExist() {
-		if(cate_code1 != null || cate_code1 != 0) return true;
-		if(goods_name != null || goods_name != "") return true;
-		if(min != null || min != 0) return true;
-		if(max != null || max != 0) return true;
-		
+		if(cate_code1 != null && cate_code1 != 0) return true;
+		if(goods_name != null && goods_name != "") return true;
+		if(min != null && min != 0) return true;
+		if(max != null && max != 0) return true;
 		return false;
 	}
 }

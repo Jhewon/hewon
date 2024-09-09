@@ -9,5 +9,7 @@ public class GoodsSizeColorVO {
 	private Long goods_no;
 	private Long size_no;
 	private Long color_no;
+	private String size_name;
+	private String color_name;
 	
 }

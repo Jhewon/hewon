@@ -44,11 +44,28 @@ public class GoodsServiceImpl implements GoodsService{
 	// 상품 글보기
 	@Override
 	@Transactional
-	public GoodsVO view(Long no, int inc) {
+	public GoodsVO view(Long goods_no, int inc) {
 		log.info("view() 실행");
-		if(inc == 1) mapper.increase(no);
-		return mapper.view(no);
+		if(inc == 1) mapper.increase(goods_no);
+		return mapper.view(goods_no);
 	}
+	
+	public List<GoodsImageVO> viewImageList(Long goods_no) {
+		return mapper.imageList(goods_no);
+	}
+	
+	@Override
+	public List<GoodsSizeColorVO> viewSizeColorList(Long goods_no) {
+		// TODO Auto-generated method stub
+		return mapper.sizeColorList(goods_no);
+	}
+
+	@Override
+	public List<GoodsOptionVO> viewOptionList(Long goods_no) {
+		// TODO Auto-generated method stub
+		return mapper.optionList(goods_no);
+	}
+
 	
 	// 상품 글등록
 	@Override
@@ -116,6 +133,7 @@ public class GoodsServiceImpl implements GoodsService{
 		// TODO Auto-generated method stub
 		return mapper.getColor(cate_code1);
 	}
+
 
 	// 삭제할 제품에 대한 이미지를 전부 가져오기 : 상품 이미지 가져오기 -> DB 상품 삭제 -> 이미지 삭제 
 	
