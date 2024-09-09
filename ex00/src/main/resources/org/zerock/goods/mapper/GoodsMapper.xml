@@ -104,10 +104,12 @@
 		g.goods_no, g.cate_code1,g.cate_code2,g.goods_name,g.company,g.product_date,g.content,
 		g.image_name, g.detail_image_name,p.price,p.discount,p.discount_rate,
 		p.sale_price , p.delivery_charge,
-		g.hit,p.saved_rate
+		g.hit,p.saved_rate , c.cate_name
 		<!-- from 뒤에 사용 할수 있는 것 : 1.테이블 2. select 쿼리 3.view table -->
-		from goods g, price p
-		where (g.goods_no = #{goods_no}) and (g.goods_no = p.goods_no)
+		from goods g, price p , category c
+		where (g.goods_no = #{goods_no}) and 
+		(g.goods_no = p.goods_no and g.cate_code1=c.cate_code1 and
+		 g.cate_code2=c.cate_code2)
 	</select>
 	
 	<!-- 이미지리스트 -->
@@ -125,7 +127,7 @@
 		g.goods_no,g.color_no,g.goods_sizeColor_no,g.size_no , c.color_name , s.size_name
 		<!-- from 뒤에 사용 할수 있는 것 : 1.테이블 2. select 쿼리 3.view table -->
 		from goods_sizeColor g, basic_size s, basic_color c 
-		where (g.goods_no = #{goods_no}) and ( g.size_no=s.size_no and g.color_no=c.color_no(+))
+		where (g.goods_no = #{goods_no}) and ( g.size_no=s.size_no and g.color_no=c.color_no(+)) 
 	</select>
 	
 	<!-- 옵션 리스트  -->
@@ -206,10 +208,10 @@
 		insert into price(price_no,goods_no,price,discount,discount_rate,sale_price,
 					delivery_charge,saved_rate
 						<if test="sale_startDate != null">
-							,sale_startdate
+							,sale_startDate
 						</if>
 						<if test="sale_endDate != null">
-							,sale_enddate
+							,sale_endDate
 						</if>
 					) 
 		VALUES (price_seq.nextval,#{goods_no},#{price},
@@ -220,14 +222,15 @@
 			 -->
 		#{discount , jdbcType=BIGINT},
 		#{discount_rate , jdbcType=INTEGER},
-		#{sale_price , jdbcType=INTEGER }
+		#{sale_price , jdbcType=INTEGER },
 		#{delivery_charge},#{saved_rate}
 		<if test="sale_startDate != null">
 		,#{sale_startDate,jdbcType=DATE}
 		</if>
 		<if test="sale_endDate != null">
-		,#{sale_endDate,jdbcType=DATE})
+		,#{sale_endDate,jdbcType=DATE}
 		</if>
+		)
 	</insert>
 
 	<!-- 상품 수정 -->
