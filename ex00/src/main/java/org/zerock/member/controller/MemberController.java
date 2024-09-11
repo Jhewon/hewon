@@ -177,6 +177,5 @@ public class MemberController {
 		
 		return "redirect:/main/main.do";
 	}
-		
 
 }
