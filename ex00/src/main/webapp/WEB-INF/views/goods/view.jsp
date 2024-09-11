@@ -133,7 +133,7 @@ $(function(){
 	  		<div class="col-md-12" >
 	  		<form action="/cart/write.do" method="post">
 	  			<c:if test="${!empty sizeColorList }">
-	  				<div class="form-inline">
+	  				<div class="form-inline float-right" style="margin-top: 6px;">
 		  			  <div class="input-group mb-3">
 					    <div class="input-group-prepend">
 					      <span class="input-group-text">size  </span>
