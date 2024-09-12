@@ -116,14 +116,14 @@
 
 
 	<!-- 회원관리 로그인 -->
-	<select id="login" resultType="com.beetmarket.member.vo.LoginVO">
-		select
-		    m.id, m.name, m.photo, m.newMsgCnt, m.gradeNo, g.gradeName , s.shipNo ,s.shipName , m.email
-		from member m, grade g , membership s 
-		where
-		    (id = #{id} and pw = #{pw})
-		    and (m.gradeNo = g.gradeNo and m.shipNo=s.shipNo)
-	</select>
+<!-- 	<select id="login" resultType="com.beetmarket.member.vo.LoginVO"> -->
+<!-- 		select -->
+<!-- 		    m.id, m.name, m.photo, m.newMsgCnt, m.gradeNo, g.gradeName , s.shipNo ,s.shipName , m.email -->
+<!-- 		from member m, grade g , membership s  -->
+<!-- 		where -->
+<!-- 		    (id = #{id} and pw = #{pw}) -->
+<!-- 		    and (m.gradeNo = g.gradeNo and m.shipNo=s.shipNo) -->
+<!-- 	</select> -->
 
 
 </mapper>

@@ -8,7 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-import org.zerock.member.vo.LoginVO;
+
+import com.beetmarket.member.vo.LoginVO;
 
 import lombok.extern.log4j.Log4j;
 
