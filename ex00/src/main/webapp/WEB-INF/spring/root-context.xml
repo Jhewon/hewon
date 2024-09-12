@@ -24,8 +24,8 @@
 	 <!-- log4jdbc-log4j2 - 로그 출력 드라이버 사용 DB 처리 -->
 	 	<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
 	 	<property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE" />
-	 	<property name="username" value="java" />
-	 	<property name="password" value="java" />
+	 	<property name="username" value="beetmarket" />
+	 	<property name="password" value="beetmarket" />
 	</bean>
 	
 	<bean id="dataSource"

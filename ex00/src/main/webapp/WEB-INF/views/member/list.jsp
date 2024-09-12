@@ -93,6 +93,7 @@ $(function(){
 							  <select class="form-control grade" 
 							   name="gradeNo" data-data="${vo.gradeNo }">
 							  	<option value="1" ${(vo.gradeNo == 1)?"selected":"" }>일반회원</option>
+							  	<option value="5" ${(vo.gradeNo == 5)?"selected":"" }>판매자</option>
 							  	<option value="9" ${(vo.gradeNo == 9)?"selected":"" }>관리자</option>
 							  </select>
 							  <div class="input-group-append">
